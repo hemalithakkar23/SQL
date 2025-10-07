@@ -1,0 +1,360 @@
+SQL> 
+SQL> REM 28 DISPLAY PART OF FIRST_NAME WHICH STARTS WITH VOWEL AND ENDS WITH VOWEL. EXAMPLE : Steven  -> eve
+SQL> 
+SQL> SELECT FIRST_NAME , RTRIM(LTRIM(FIRST_NAME,'QWRTYPSDFGHJKLZXCVBNMqwrtypsdfghjklzxcvbnm'),'QWRTYPSDFGHJKLZXCVBNMqwrtypsdfghjklzxcvbnm') FROM EMPLOYEES;
+
+FIRST_NAME      RTRIM(LTRIM(FIR                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+Steven          eve                                                                                                                                                                                     
+Neena           eena                                                                                                                                                                                    
+Lex             e                                                                                                                                                                                       
+Alexander       Alexande                                                                                                                                                                                
+Bruce           uce                                                                                                                                                                                     
+Diana           iana                                                                                                                                                                                    
+Kevin           evi                                                                                                                                                                                     
+Trenna          enna                                                                                                                                                                                    
+Curtis          urti                                                                                                                                                                                    
+Randall         anda                                                                                                                                                                                    
+Peter           ete                                                                                                                                                                                     
+Eleni           Eleni                                                                                                                                                                                   
+Ellen           Elle                                                                                                                                                                                    
+Jonathon        onatho                                                                                                                                                                                  
+Kimerely        imere                                                                                                                                                                                   
+Jennifer        ennife                                                                                                                                                                                  
+Michael         ichae                                                                                                                                                                                   
+Pat             a                                                                                                                                                                                       
+Shelley         elle                                                                                                                                                                                    
+William         illia                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , RTRIM(LTRIM(FIRST_NAME,'QWRTYPSDFGHJKLZXCVBNMqwrtypsdfghjklzxcvbnm'),'qwrtypsdfghjklzxcvbnm') FROM EMPLOYEES;
+
+FIRST_NAME      RTRIM(LTRIM(FIR                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+Steven          eve                                                                                                                                                                                     
+Neena           eena                                                                                                                                                                                    
+Lex             e                                                                                                                                                                                       
+Alexander       Alexande                                                                                                                                                                                
+Bruce           uce                                                                                                                                                                                     
+Diana           iana                                                                                                                                                                                    
+Kevin           evi                                                                                                                                                                                     
+Trenna          enna                                                                                                                                                                                    
+Curtis          urti                                                                                                                                                                                    
+Randall         anda                                                                                                                                                                                    
+Peter           ete                                                                                                                                                                                     
+Eleni           Eleni                                                                                                                                                                                   
+Ellen           Elle                                                                                                                                                                                    
+Jonathon        onatho                                                                                                                                                                                  
+Kimerely        imere                                                                                                                                                                                   
+Jennifer        ennife                                                                                                                                                                                  
+Michael         ichae                                                                                                                                                                                   
+Pat             a                                                                                                                                                                                       
+Shelley         elle                                                                                                                                                                                    
+William         illia                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM DATE FUNCTIONS + DATE ARITHMETIC
+SQL> 
+SQL> REM LIST OF DAET FUNCTIONS : SYSDATE CURRENT_DATE   ADD_MONTHS MONTHS_BETWEEN     LAST_DAY NEXT_DAY     TRUNC ROUND
+SQL> 
+SQL> 
+SQL> REM SYSDATE : IT RETURNS SERVER MACHINE'S DATE AND TIME INFO.
+SQL> 
+SQL> REM CURRENT_DATE : IT RETURNS CURRENT/LOCAL/CLIENT MACHINE'S DATE AND TIME INFO.
+SQL> 
+SQL> 
+SQL> SELECT SYSDATE , CURRENT_DATE FROM DUAL;
+
+SYSDATE   CURRENT_D                                                                                                                                                                                     
+--------- ---------                                                                                                                                                                                     
+25-NOV-24 25-NOV-24                                                                                                                                                                                     
+
+SQL> REM DATE DEFAULT FORMAT = DD-MON-RR
+SQL> 
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR HH:MI.SS AM DAY';
+
+Session altered.
+
+SQL> SELECT SYSDATE , CURRENT_DATE FROM DUAL;
+
+SYSDATE                                 CURRENT_DATE                                                                                                                                                    
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 09:24.17 PM MONDAY    25-NOVEMBER -2024 09:24.17 PM MONDAY                                                                                                                            
+
+SQL> 
+SQL> 
+SQL> REM DATE HAS 7 PARTS/INTERVALS/VALUES :   CENTURY   YEAR   MONTH   DATE/DAY NUMBER   HOUR   MINUTE   SECOND
+SQL> 
+SQL> REM DATE HAS 7 PARTS/INTERVALS/VALUES :   20        24     11      25                21     24       17
+SQL> 
+SQL> 
+SQL> 
+SQL> REM DATE ARITHMETICS : 1 DATE + INTERVAL = DATE    2 DATE - INTERVAL = DATE    3 DATE - DATE = NUMBER OF DAYS BETWEEN TWO DATES
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                 
+---------------------------------------                                                                                                                                                                 
+25-NOVEMBER -2024 10:17.46 PM MONDAY                                                                                                                                                                    
+
+SQL> SELECT SYSDATE , SYSDATE + 3 , SYSDATE - 2 FROM DUAL;
+
+SYSDATE                                 SYSDATE+3                               SYSDATE-2                                                                                                               
+--------------------------------------- --------------------------------------- ---------------------------------------                                                                                 
+25-NOVEMBER -2024 10:18.26 PM MONDAY    28-NOVEMBER -2024 10:18.26 PM THURSDAY  23-NOVEMBER -2024 10:18.26 PM SATURDAY                                                                                  
+
+SQL> REM 1 DAY = 24 HOURS
+SQL> 
+SQL> REM 1 DAY = 24 HOURS = 1440 MINUTES
+SQL> 
+SQL> REM 1 DAY = 24 HOURS = 1440 MINUTES = 86400 SECONDS
+SQL> 
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 3 , SYSDATE - 2 FROM DUAL;
+
+SYSDATE                                 SYSDATE+3                               SYSDATE-2                                                                                                               
+--------------------------------------- --------------------------------------- ---------------------------------------                                                                                 
+25-NOVEMBER -2024 10:20.18 PM MONDAY    28-NOVEMBER -2024 10:20.18 PM THURSDAY  23-NOVEMBER -2024 10:20.18 PM SATURDAY                                                                                  
+
+SQL> SELECT SYSDATE , SYSDATE + (3/24) , SYSDATE - (2/24) FROM DUAL;
+
+SYSDATE                                 SYSDATE+(3/24)                          SYSDATE-(2/24)                                                                                                          
+--------------------------------------- --------------------------------------- ---------------------------------------                                                                                 
+25-NOVEMBER -2024 10:20.55 PM MONDAY    26-NOVEMBER -2024 01:20.55 AM TUESDAY   25-NOVEMBER -2024 08:20.55 PM MONDAY                                                                                    
+
+SQL> SELECT SYSDATE , SYSDATE + (3/(24*60)) , SYSDATE - (2/1440) FROM DUAL;
+
+SYSDATE                                 SYSDATE+(3/(24*60))                     SYSDATE-(2/1440)                                                                                                        
+--------------------------------------- --------------------------------------- ---------------------------------------                                                                                 
+25-NOVEMBER -2024 10:22.20 PM MONDAY    25-NOVEMBER -2024 10:25.20 PM MONDAY    25-NOVEMBER -2024 10:20.20 PM MONDAY                                                                                    
+
+SQL> SELECT SYSDATE , SYSDATE + (3/(24*60*60)) , SYSDATE - (2/86400) FROM DUAL;
+
+SYSDATE                                 SYSDATE+(3/(24*60*60))                  SYSDATE-(2/86400)                                                                                                       
+--------------------------------------- --------------------------------------- ---------------------------------------                                                                                 
+25-NOVEMBER -2024 10:22.45 PM MONDAY    25-NOVEMBER -2024 10:22.48 PM MONDAY    25-NOVEMBER -2024 10:22.43 PM MONDAY                                                                                    
+
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 1 + 2/24 + 3/1440 + 4/86400 FROM DUAL;
+
+SYSDATE                                 SYSDATE+1+2/24+3/1440+4/86400                                                                                                                                   
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:23.49 PM MONDAY    27-NOVEMBER -2024 12:26.53 AM WEDNESDAY                                                                                                                         
+
+SQL> SELECT SYSDATE , SYSDATE + 1 + 2/24 - 3/1440 - 4/86400 FROM DUAL;
+
+SYSDATE                                 SYSDATE+1+2/24-3/1440-4/86400                                                                                                                                   
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:24.41 PM MONDAY    27-NOVEMBER -2024 12:21.37 AM WEDNESDAY                                                                                                                         
+
+SQL> REM 1 ADD 2 DAYS TO SYSDATE
+SQL> 
+SQL> REM 2 SUBTRACT 5 MINUTES FROM CURRENT_DATE
+SQL> 
+SQL> REM 3 ADD 4 HOURS TO SYSDATE
+SQL> 
+SQL> REM 4 SUBTRACT 10 SECONDS FROM CURRENT_DATE
+SQL> 
+SQL> REM 5 ADD 3 DAYS , SUBTRACT 10 MINUTES , ADD 20 SECONDS , SUBTRACT 2 HOURS : CURRENT_DATE
+SQL> 
+SQL> 
+SQL> REM ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR HH_MI:SS AM DAY';
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 ADD 2 DAYS TO SYSDATE
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 2 FROM DUAL;
+
+SYSDATE                                 SYSDATE+2                                                                                                                                                       
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:39.55 PM MONDAY    27-NOVEMBER -2024 10:39.55 PM WEDNESDAY                                                                                                                         
+
+SQL> REM 2 SUBTRACT 5 MINUTES FROM CURRENT_DATE
+SQL> 
+SQL> SELECT CURRENT_DATE , CURRENT_DATE - 5/1440 FROM DUAL;
+
+CURRENT_DATE                            CURRENT_DATE-5/1440                                                                                                                                             
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:40.11 PM MONDAY    25-NOVEMBER -2024 10:35.11 PM MONDAY                                                                                                                            
+
+SQL> REM 3 ADD 4 HOURS TO SYSDATE
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 4/24 FROM DUAL;
+
+SYSDATE                                 SYSDATE+4/24                                                                                                                                                    
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:40.20 PM MONDAY    26-NOVEMBER -2024 02:40.20 AM TUESDAY                                                                                                                           
+
+SQL> REM 4 SUBTRACT 10 SECONDS FROM CURRENT_DATE
+SQL> 
+SQL> SEELCT CURRENT_DATE, CURRENT_DATE - 10/86400 FROM DUAL;
+SP2-0734: unknown command beginning "SEELCT CUR..." - rest of line ignored.
+SQL> 
+SQL> SELECT CURRENT_DATE, CURRENT_DATE - 10/86400 FROM DUAL;
+
+CURRENT_DATE                            CURRENT_DATE-10/86400                                                                                                                                           
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:40.39 PM MONDAY    25-NOVEMBER -2024 10:40.29 PM MONDAY                                                                                                                            
+
+SQL> REM 5 ADD 3 DAYS , SUBTRACT 10 MINUTES , ADD 20 SECONDS , SUBTRACT 2 HOURS : CURRENT_DATE
+SQL> 
+SQL> SELECT CURRENT_DATE , CURRENT_DATE + 3 - 10/1440 + 20/86400 - 2/24 FROM DUAL;
+
+CURRENT_DATE                            CURRENT_DATE+3-10/1440+20/86400-2/24                                                                                                                            
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:41.08 PM MONDAY    28-NOVEMBER -2024 08:31.28 PM THURSDAY                                                                                                                          
+
+SQL> REM 1 WEEK = 7 DAYS
+SQL> 
+SQL> REM ADD 3 WEEKS TO SYSDATE
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 21 FROM DUAL;
+
+SYSDATE                                 SYSDATE+21                                                                                                                                                      
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:44.47 PM MONDAY    16-DECEMBER -2024 10:44.47 PM MONDAY                                                                                                                            
+
+SQL> REM ADD 37 WEEKS TO SYSDATE
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 7*37 FROM DUAL;
+
+SYSDATE                                 SYSDATE+7*37                                                                                                                                                    
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:45.03 PM MONDAY    11-AUGUST   -2025 10:45.03 PM MONDAY                                                                                                                            
+
+SQL> REM 1 MONTH = ?? DAYS (28/29/30/31)
+SQL> 
+SQL> REM ADD_MONTHS : IT IS USED TO ADD/SUBTRACT MONTHS/QUARTERS/YEARS/CENTURIES TO/FROM DATE VALUE
+SQL> 
+SQL> REM ADD_MONTHS(DATE,MONTHS)
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE ,2) , ADD_MONTHS(SYSDATE,-3) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,2)                   ADD_MONTHS(SYSDATE,-3)                                                                                                  
+--------------------------------------- --------------------------------------- ---------------------------------------                                                                                 
+25-NOVEMBER -2024 10:46.46 PM MONDAY    25-JANUARY  -2025 10:46.46 PM SATURDAY  25-AUGUST   -2024 10:46.46 PM SUNDAY                                                                                    
+
+SQL> REM 31-JAN-24 + 1 MONTH = 29-FEB-24
+SQL> 
+SQL> REM 30-JAN-24 + 1 MONTH = 29-FEB-24
+SQL> 
+SQL> REM 29-JAN-24 + 1 MONTH = 29-FEB-24
+SQL> 
+SQL> REM 28-JAN-24 + 1 MONTH = 28-FEB-24
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 31-JAN-23 + 1 MONTH = 28-FEB-23
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 29-FEB-24 + 1 MONTH = 31-MAR-24
+SQL> 
+SQL> REM 28-FEB-24 + 1 MONTH = 28-MAR-24
+SQL> 
+SQL> 
+SQL> REM 28-FEB-23 + 1 MONTH = 31-MAR-23
+SQL> 
+SQL> REM 27-FEB-23 + 1 MONTH = 27-MAR-23
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 2 PARTS : HALF
+SQL> 
+SQL> REM 4 PARTS = QUARTER
+SQL> 
+SQL> REM 1 YEAR = 12 MONTHS = 4 PARTS = EACH PART WILL HAVE 3 MONTHS
+SQL> 
+SQL> REM 1 QUARTER = 3 MONTHS
+SQL> 
+SQL> REM ADD 3 QUARTERS TO SYSDATE
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,3*3) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,3*3)                                                                                                                                         
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:51.47 PM MONDAY    25-AUGUST   -2025 10:51.47 PM MONDAY                                                                                                                            
+
+SQL> REM ADD 39 QUARTERS TO SYSDATE
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,3*39) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,3*39)                                                                                                                                        
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:51.57 PM MONDAY    25-AUGUST   -2034 10:51.57 PM FRIDAY                                                                                                                            
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,-3*39) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,-3*39)                                                                                                                                       
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:52.11 PM MONDAY    25-FEBRUARY -2015 10:52.11 PM WEDNESDAY                                                                                                                         
+
+SQL> REM 1 YEAR = 12 MONTHS
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,12)                                                                                                                                          
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:52.24 PM MONDAY    25-NOVEMBER -2025 10:52.24 PM TUESDAY                                                                                                                           
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12*5) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,12*5)                                                                                                                                        
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:52.30 PM MONDAY    25-NOVEMBER -2029 10:52.30 PM SUNDAY                                                                                                                            
+
+SQL> REM 1 CENTURY = 100 YEARS
+SQL> 
+SQL> REM 1 YEAR = 12 MONTHS
+SQL> 
+SQL> REM 1 CENTURY = 1200 MONTHS = 12 * 100
+SQL> 
+SQL> 
+SQL> REM ADD 1 CENTURY TO SYSDATE
+SQL> 
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12*100) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,12*100)                                                                                                                                      
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:53.22 PM MONDAY    25-NOVEMBER -2124 10:53.22 PM SATURDAY                                                                                                                          
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,12*100*3) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,12*100*3)                                                                                                                                    
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:53.35 PM MONDAY    25-NOVEMBER -2324 10:53.35 PM TUESDAY                                                                                                                           
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,-12*100*1) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,-12*100*1)                                                                                                                                   
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:53.46 PM MONDAY    25-NOVEMBER -1924 10:53.46 PM TUESDAY                                                                                                                           
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,-12*100*2) FROM DUAL;
+
+SYSDATE                                 ADD_MONTHS(SYSDATE,-12*100*2)                                                                                                                                   
+--------------------------------------- ---------------------------------------                                                                                                                         
+25-NOVEMBER -2024 10:53.57 PM MONDAY    25-NOVEMBER -1824 10:53.57 PM THURSDAY                                                                                                                          
+
+SQL> REM SECONDS , MINUTES , HOURS , DAYS , WEEKS , MONTHS , QUARTERS , YEARS , CENTURIES
+SQL> 
+SQL> 
+SQL> REM 1 CENTURY = 1200 MONTHS
+SQL> 
+SQL> REM 1 YEAR = 12 MONTHS
+SQL> 
+SQL> REM1 ADD 2 MONTHS TO SYSDATE
+SQL> 
+SQL> REM 2 SUBTRACT 5 QUARTERS FROM CURRENT_DATE
+SQL> 
+SQL> REM 3 ADD 5 YEARS TO SYSDATE
+SQL> 
+SQL> REM 4 SUBTRACT 2 CENTURIES FROM CURRENT_DATE
+SQL> 
+SQL> SPOOL OFF

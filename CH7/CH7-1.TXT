@@ -1,0 +1,304 @@
+SQL> 
+SQL> REM SUB QUERY :
+SQL> 
+SQL> REM SUB QUERY : IT IS SELECT STATEMENT WITHIN ANOTHER STATEMENT.
+SQL> 
+SQL> REM OUTER / INNER
+SQL> 
+SQL> REM PARENT / CHILD
+SQL> 
+SQL> REM MAIN / SUB
+SQL> 
+SQL> REM OUTER STATEMENT MAY BE SELECT , CREATE , INSERT , UPDATE , DELETE ...
+SQL> 
+SQL> REM INNER STATEMENT IS GENERALLY SELECT ONLY.
+SQL> 
+SQL> 
+SQL> REM CHAPTER 7 : SELECT ... (SELECT ...);
+SQL> 
+SQL> REM CHPATER 9 : INSERT , UPDATE , DELETE ... (SELECT ...);
+SQL> 
+SQL> REM CHPATER 10 : CREATE ... AS SELECT ...
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM WE CAN NEST SUB QUERY INTINITE TIMES.
+SQL> 
+SQL> REM EXECUTION PRECDENCE WILL BE FROM INNER MOST FUNCTION TO OUTER MOST FUNCTION.
+SQL> 
+SQL> REM RESULT OF ONLY OUTER MOST STATEMENT WILL GET DISPLAYED.
+SQL> 
+SQL> REM RESULT OF ALL OTHER STATEMENTS WILL BE USED BY IT'S CORRESPONDING OUTER STATEMENT.
+SQL> 
+SQL> REM A(B(C))
+SQL> 
+SQL> REM C -> B -> A
+SQL> 
+SQL> 
+SQL> REM SUB QUERY CAN BE USED TO SOLVE BELOW 4 TYPES OF QUESTIONS :
+SQL> 
+SQL> REM 1 IF WE WANT TO COMPARE SUMMARY ITEM/GROUP FUNCTION IN 'WHERE' CLAUSE.
+SQL> 
+SQL> REM 2 OUR MAIN REQUIREMENT HAS SOME HIDDEN REQUIREMENT.
+SQL> 
+SQL> REM 3 IF WE WANT TO COMPARE NESTED SUMMARY ITEM IN 'HAVING' CLAUSE.
+SQL> 
+SQL> REM 4 IF WE WANT TO USE RESULT OF SUB QUERY AS ONE OF THE TABLE OF MAIN QUERY.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 IF WE WANT TO COMPARE SUMMARY ITEM/GROUP FUNCTION IN 'WHERE' CLAUSE.
+SQL> 
+SQL> REM SELECT EXECUTION PRECEDENCE : FROM -> WHERE -> GROUP BY -> HAVING -> COLUMN ALIAS ATTACHMENT -> ORDER BY -> OFFSET -> FETCH -> SELECT ..
+SQL> 
+SQL> REM DISPLAY THOSE WHO GET HIGHER SALARY THAN AVERAGE SALARY PAID BY COMPANY
+SQL> 
+SQL> REM SALARY > AVG(SALARY)
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES
+  2  WHERE SALARY > AVG(SALARY);
+WHERE SALARY > AVG(SALARY)
+               *
+ERROR at line 2:
+ORA-00934: group function is not allowed here 
+
+
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES
+  2  WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME          SALARY                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Steven               24000                                                                                                                                                                              
+Neena                17000                                                                                                                                                                              
+Lex                  17000                                                                                                                                                                              
+Alexander             9000                                                                                                                                                                              
+Eleni                10500                                                                                                                                                                              
+Ellen                11000                                                                                                                                                                              
+Michael              13000                                                                                                                                                                              
+Shelley              12000                                                                                                                                                                              
+
+8 rows selected.
+
+SQL> SELECT 'SHRI' || 210 + 210 FROM DUAL;
+SELECT 'SHRI' || 210 + 210 FROM DUAL
+               *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT 'SHRI' || (210 + 210) FROM DUAL;
+
+'SHRI'|                                                                                                                                                                                                 
+-------                                                                                                                                                                                                 
+SHRI420                                                                                                                                                                                                 
+
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES
+  2  WHERE (SELECT AVG(SALARY) FROM EMPLOYEES) < SALARY;
+
+FIRST_NAME          SALARY                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Steven               24000                                                                                                                                                                              
+Neena                17000                                                                                                                                                                              
+Lex                  17000                                                                                                                                                                              
+Alexander             9000                                                                                                                                                                              
+Eleni                10500                                                                                                                                                                              
+Ellen                11000                                                                                                                                                                              
+Michael              13000                                                                                                                                                                              
+Shelley              12000                                                                                                                                                                              
+
+8 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE               JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                       
+----------- --------------- --------------- ---------- -------------------- ----------------------- ---------- ---------- -------------- ---------- -------------                                       
+        100 Steven          King            SKING      515.123.4567         17-JUL-1987 12_00.00 AM AD_PRES         24000                                      90                                       
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-1989 12_00.00 AM AD_VP           17000                       100            90                                       
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-1993 12_00.00 AM AD_VP           17000                       100            90                                       
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-1990 12_00.00 AM IT_PROG          9000                       102            60                                       
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-1991 12_00.00 AM IT_PROG          6000                       103            60                                       
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-1999 12_00.00 AM IT_PROG          4200                       103            60                                       
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-1999 12_00.00 AM ST_MAN           5800                       100            50                                       
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-1995 12_00.00 AM ST_CLERK         3500                       124            50                                       
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-1997 12_00.00 AM ST_CLERK         3100                       124            50                                       
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-1998 12_00.00 AM ST_CLERK         2600                       124            50                                       
+        144 Peter           Vargas                     650.121.2004         09-JUL-1998 12_00.00 AM ST_CLERK         2500                       124            50                                       
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-2000 12_00.00 AM SA_MAN          10500             .2        100            80                                       
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-1996 12_00.00 AM SA_REP          11000             .3        149            80                                       
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-1998 12_00.00 AM SA_REP           8600             .3        149            80                                       
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-1999 12_00.00 AM SA_REP           7000            .15        149                                                     
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-1987 12_00.00 AM AD_ASST          4400                       101            10                                       
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-1996 12_00.00 AM MK_MAN          13000                       100            20                                       
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-1997 12_00.00 AM MK_REP           6000                       201            20                                       
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-1994 12_00.00 AM AC_MGR          12000                       101           110                                       
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-1994 12_00.00 AM AC_ACCOUNT       8300                       205           110                                       
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE WHO GETS LOWER SALARY THAN AVERAGE SALARY PAID BY COMPANY.
+SQL> 
+SQL> REM 2 DISPLAY INFO. ABOUT EMPLOYEE WHO GETS HIGHEST SALARY IN COMPANY.
+SQL> 
+SQL> REM 3 DISPLAY INFO. ABOUT EMPLOYEE WHO WERE HIRED FIRST IN COMPANY.
+SQL> 
+SQL> REM 4 DISPLAY INFO. ABOUT EMPLOYEE WHO GET EITHER LOWEST OR HIGHEST COMMISSION_PCT IN COMPANY.
+SQL> 
+SQL> REM 5 DISPLAY INFO. ABOUT ALL OTHER THAN THOSE WHO GETS EITHER LOWEST OR HIGHEST COMMISSION   A M O U N T   IN COMPANY.
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE WHO GETS LOWER SALARY THAN AVERAGE SALARY PAID BY COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY < (SELECT AVG(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME          SALARY                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Bruce                 6000                                                                                                                                                                              
+Diana                 4200                                                                                                                                                                              
+Kevin                 5800                                                                                                                                                                              
+Trenna                3500                                                                                                                                                                              
+Curtis                3100                                                                                                                                                                              
+Randall               2600                                                                                                                                                                              
+Peter                 2500                                                                                                                                                                              
+Jonathon              8600                                                                                                                                                                              
+Kimerely              7000                                                                                                                                                                              
+Jennifer              4400                                                                                                                                                                              
+Pat                   6000                                                                                                                                                                              
+William               8300                                                                                                                                                                              
+
+12 rows selected.
+
+SQL> REM 2 DISPLAY INFO. ABOUT EMPLOYEE WHO GETS HIGHEST SALARY IN COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY = (SELECT MAX(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME          SALARY                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Steven               24000                                                                                                                                                                              
+
+SQL> REM 3 DISPLAY INFO. ABOUT EMPLOYEE WHO WERE HIRED FIRST IN COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE
+  2  FROM EMPLOYEES
+  3  WHERE HIRE_DATE = (SELECT MIN(HIRE_DATE) FROM EMPLOYEES);
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                               
+--------------- -----------------------                                                                                                                                                                 
+Steven          17-JUL-1987 12_00.00 AM                                                                                                                                                                 
+
+SQL> CONN SCOTT/TIGER
+Connected.
+SQL> 
+SQL> FROM EMPLOYEES
+SP2-0734: unknown command beginning "FROM EMPLO..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE
+  2  FROM EMPLOYEES
+  3  WHERE HIRE_DATE = (SELECT MIN(HIRE_DATE) FROM EMPLOYEES);
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                               
+--------------- ---------                                                                                                                                                                               
+Steven          17-JUL-87                                                                                                                                                                               
+
+SQL> REM 4 DISPLAY INFO. ABOUT EMPLOYEE WHO GET EITHER LOWEST OR HIGHEST COMMISSION_PCT IN COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , COMMISSION_PCT
+  2  FROM EMPLOYEES
+  3  WHERE COMMISSION_PCT = (SELECT MIN(COMMISSION_PCT FROM EMPLOYEES)
+  4  OR    COMMISSION_PCT = (SELECT MAX(COMMISSION_PCT FROM EMPLOYEES)
+  5  
+SQL> 
+SQL> SELECT FIRST_NAME , COMMISSION_PCT
+  2  FROM EMPLOYEES
+  3  WHERE COMMISSION_PCT = (SELECT MIN(COMMISSION_PCT) FROM EMPLOYEES)
+  4  OR    COMMISSION_PCT = (SELECT MAX(COMMISSION_PCT) FROM EMPLOYEES);
+
+FIRST_NAME      COMMISSION_PCT                                                                                                                                                                          
+--------------- --------------                                                                                                                                                                          
+Ellen                       .3                                                                                                                                                                          
+Jonathon                    .3                                                                                                                                                                          
+Kimerely                   .15                                                                                                                                                                          
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT
+  2  FROM EMPLOYEES
+  3  WHERE COMMISSION_PCT = ANY ((SELECT MIN(COMMISSION_PCT) FROM EMPLOYEES)
+  4                             ,(SELECT MAX(COMMISSION_PCT) FROM EMPLOYEES));
+
+FIRST_NAME      COMMISSION_PCT                                                                                                                                                                          
+--------------- --------------                                                                                                                                                                          
+Ellen                       .3                                                                                                                                                                          
+Jonathon                    .3                                                                                                                                                                          
+Kimerely                   .15                                                                                                                                                                          
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT
+  2  FROM EMPLOYEES
+  3  WHERE COMMISSION_PCT = SOME ((SELECT MIN(COMMISSION_PCT) FROM EMPLOYEES)
+  4                              ,(SELECT MAX(COMMISSION_PCT) FROM EMPLOYEES));
+
+FIRST_NAME      COMMISSION_PCT                                                                                                                                                                          
+--------------- --------------                                                                                                                                                                          
+Ellen                       .3                                                                                                                                                                          
+Jonathon                    .3                                                                                                                                                                          
+Kimerely                   .15                                                                                                                                                                          
+
+SQL> SELECT FIRST_NAME , COMMISSION_PCT
+  2  FROM EMPLOYEES
+  3  WHERE COMMISSION_PCT IN ((SELECT MIN(COMMISSION_PCT) FROM EMPLOYEES)
+  4                          ,(SELECT MAX(COMMISSION_PCT) FROM EMPLOYEES));
+
+FIRST_NAME      COMMISSION_PCT                                                                                                                                                                          
+--------------- --------------                                                                                                                                                                          
+Ellen                       .3                                                                                                                                                                          
+Jonathon                    .3                                                                                                                                                                          
+Kimerely                   .15                                                                                                                                                                          
+
+SQL> REM 5 DISPLAY INFO. ABOUT ALL OTHER THAN THOSE WHO GETS EITHER LOWEST OR HIGHEST COMMISSION   A M O U N T   IN COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY * COMMISSION_PCT COMM_AMT
+  2  FROM EMPLOYEES
+  3  WHERE SALARY * COMMISSION_PCT <> (SELECT MIN(SALARY*COMMISSION_PCT) FROM EMPLOYEES)
+  4  AND   SALARY * COMMISSION_PCT <> (SELECT MAX(SALARY*COMMISSION_PCT) FROM EMPLOYEES);
+
+FIRST_NAME        COMM_AMT                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Eleni                 2100                                                                                                                                                                              
+Jonathon              2580                                                                                                                                                                              
+
+SQL> SELECT FIRST_NAME , SALARY * COMMISSION_PCT COMM_AMT
+  2  FROM EMPLOYEES
+  3  WHERE SALARY * COMMISSION_PCT <> ALL ((SELECT MIN(SALARY*COMMISSION_PCT) FROM EMPLOYEES)
+  4                                        (SELECT MAX(SALARY*COMMISSION_PCT) FROM EMPLOYEES));
+                                      (SELECT MAX(SALARY*COMMISSION_PCT) FROM EMPLOYEES))
+                                      *
+ERROR at line 4:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT FIRST_NAME , SALARY * COMMISSION_PCT COMM_AMT
+  2  FROM EMPLOYEES
+  3  WHERE SALARY * COMMISSION_PCT <> ALL ((SELECT MIN(SALARY*COMMISSION_PCT) FROM EMPLOYEES),
+  4                                        (SELECT MAX(SALARY*COMMISSION_PCT) FROM EMPLOYEES));
+
+FIRST_NAME        COMM_AMT                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Eleni                 2100                                                                                                                                                                              
+Jonathon              2580                                                                                                                                                                              
+
+SQL> SELECT FIRST_NAME , SALARY * COMMISSION_PCT COMM_AMT
+  2  FROM EMPLOYEES
+  3  WHERE SALARY * COMMISSION_PCT NOT IN ((SELECT MIN(SALARY*COMMISSION_PCT) FROM EMPLOYEES)
+  4                                       ,(SELECT MAX(SALARY*COMMISSION_PCT) FROM EMPLOYEES));
+
+FIRST_NAME        COMM_AMT                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Eleni                 2100                                                                                                                                                                              
+Jonathon              2580                                                                                                                                                                              
+
+SQL> SPOOL OFF

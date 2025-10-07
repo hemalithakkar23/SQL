@@ -1,0 +1,1089 @@
+SQL> 
+SQL> REM DATE FUNCTIONS : NEXT_DAY   TRUNC ROUND
+SQL> 
+SQL> 
+SQL> 
+SQL> REM NEXT_DAY : IT RETURNS DATE ON WHICH SPECIFIED DAY FALLS.
+SQL> 
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR';
+
+Session altered.
+
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                 
+-----------------                                                                                                                                                                                       
+29-NOVEMBER -2024                                                                                                                                                                                       
+
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR DAY';
+
+Session altered.
+
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                 
+---------------------------                                                                                                                                                                             
+29-NOVEMBER -2024 FRIDAY                                                                                                                                                                                
+
+SQL> SELECT SYSDATE , NEXT_DAY( SYSDATE , 'TUE' ) FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'TUE')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+29-NOVEMBER -2024 FRIDAY    03-DECEMBER -2024 TUESDAY                                                                                                                                                   
+
+SQL> SELECT SYSDATE , NEXT_DAY( SYSDATE , 'SAT' ) FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'SAT')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+29-NOVEMBER -2024 FRIDAY    30-NOVEMBER -2024 SATURDAY                                                                                                                                                  
+
+SQL> SELECT SYSDATE , NEXT_DAY( SYSDATE , 'SUN' ) FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'SUN')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+29-NOVEMBER -2024 FRIDAY    01-DECEMBER -2024 SUNDAY                                                                                                                                                    
+
+SQL> SELECT SYSDATE , NEXT_DAY( SYSDATE , 'FRI' ) FROM DUAL;
+
+SYSDATE                     NEXT_DAY(SYSDATE,'FRI')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+29-NOVEMBER -2024 FRIDAY    06-DECEMBER -2024 FRIDAY                                                                                                                                                    
+
+SQL> 
+SQL> 
+SQL> REM COMPANY PAYS WEEKLY SALARY ON EVERY TUESDAY. FIND FIRST WEEKLY SALARY DATE FOR EACH EMPLOYEE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(HIRE_DATE,'TUE') FROM EMPLOYEES;
+
+HIRE_DATE                   NEXT_DAY(HIRE_DATE,'TUE')                                                                                                                                                   
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    21-JULY     -1987 TUESDAY                                                                                                                                                   
+21-SEPTEMBER-1989 THURSDAY  26-SEPTEMBER-1989 TUESDAY                                                                                                                                                   
+13-JANUARY  -1993 WEDNESDAY 19-JANUARY  -1993 TUESDAY                                                                                                                                                   
+03-JANUARY  -1990 WEDNESDAY 09-JANUARY  -1990 TUESDAY                                                                                                                                                   
+21-MAY      -1991 TUESDAY   28-MAY      -1991 TUESDAY                                                                                                                                                   
+07-FEBRUARY -1999 SUNDAY    09-FEBRUARY -1999 TUESDAY                                                                                                                                                   
+16-NOVEMBER -1999 TUESDAY   23-NOVEMBER -1999 TUESDAY                                                                                                                                                   
+17-OCTOBER  -1995 TUESDAY   24-OCTOBER  -1995 TUESDAY                                                                                                                                                   
+29-JANUARY  -1997 WEDNESDAY 04-FEBRUARY -1997 TUESDAY                                                                                                                                                   
+15-MARCH    -1998 SUNDAY    17-MARCH    -1998 TUESDAY                                                                                                                                                   
+09-JULY     -1998 THURSDAY  14-JULY     -1998 TUESDAY                                                                                                                                                   
+29-JANUARY  -2000 SATURDAY  01-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+11-MAY      -1996 SATURDAY  14-MAY      -1996 TUESDAY                                                                                                                                                   
+24-MARCH    -1998 TUESDAY   31-MARCH    -1998 TUESDAY                                                                                                                                                   
+24-MAY      -1999 MONDAY    25-MAY      -1999 TUESDAY                                                                                                                                                   
+17-SEPTEMBER-1987 THURSDAY  22-SEPTEMBER-1987 TUESDAY                                                                                                                                                   
+17-FEBRUARY -1996 SATURDAY  20-FEBRUARY -1996 TUESDAY                                                                                                                                                   
+17-AUGUST   -1997 SUNDAY    19-AUGUST   -1997 TUESDAY                                                                                                                                                   
+07-JUNE     -1994 TUESDAY   14-JUNE     -1994 TUESDAY                                                                                                                                                   
+07-JUNE     -1994 TUESDAY   14-JUNE     -1994 TUESDAY                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM 1 COMPANY PAYS WEEKLY SALARY ON EVERY SATURDAY. FIND FIRST WEEKLY SALARY DATE.
+SQL> 
+SQL> REM 2 COMPANY PAYS WEEKLY SALARY ON EVERY MONDAY. FIND SECOND WEEKLY SALARY DATE.
+SQL> 
+SQL> REM 3 COMPANY PAYS WEEKLY SALARY ON EVERY WEDNESDAY. FIND THIRD WEEKLY SALARY DATE.
+SQL> 
+SQL> REM 4 COMPANY PAYS WEEKLY SALARY ON EVERY TUESDAY. FIND 15th WEEKLY SALARY DATE.
+SQL> 
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR DAY';
+
+Session altered.
+
+SQL> 
+SQL> 
+SQL> REM 1 COMPANY PAYS WEEKLY SALARY ON EVERY SATURDAY. FIND FIRST WEEKLY SALARY DATE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(HIRE_DAET,'SAT') FROM EMPLOYEES;
+SELECT HIRE_DATE , NEXT_DAY(HIRE_DAET,'SAT') FROM EMPLOYEES
+                            *
+ERROR at line 1:
+ORA-00904: "HIRE_DAET": invalid identifier 
+
+
+SQL> SELECT HIRE_DATE , NEXT_DAY(HIRE_DATE,'SAT') FROM EMPLOYEES;
+
+HIRE_DATE                   NEXT_DAY(HIRE_DATE,'SAT')                                                                                                                                                   
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    18-JULY     -1987 SATURDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  23-SEPTEMBER-1989 SATURDAY                                                                                                                                                  
+13-JANUARY  -1993 WEDNESDAY 16-JANUARY  -1993 SATURDAY                                                                                                                                                  
+03-JANUARY  -1990 WEDNESDAY 06-JANUARY  -1990 SATURDAY                                                                                                                                                  
+21-MAY      -1991 TUESDAY   25-MAY      -1991 SATURDAY                                                                                                                                                  
+07-FEBRUARY -1999 SUNDAY    13-FEBRUARY -1999 SATURDAY                                                                                                                                                  
+16-NOVEMBER -1999 TUESDAY   20-NOVEMBER -1999 SATURDAY                                                                                                                                                  
+17-OCTOBER  -1995 TUESDAY   21-OCTOBER  -1995 SATURDAY                                                                                                                                                  
+29-JANUARY  -1997 WEDNESDAY 01-FEBRUARY -1997 SATURDAY                                                                                                                                                  
+15-MARCH    -1998 SUNDAY    21-MARCH    -1998 SATURDAY                                                                                                                                                  
+09-JULY     -1998 THURSDAY  11-JULY     -1998 SATURDAY                                                                                                                                                  
+29-JANUARY  -2000 SATURDAY  05-FEBRUARY -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  18-MAY      -1996 SATURDAY                                                                                                                                                  
+24-MARCH    -1998 TUESDAY   28-MARCH    -1998 SATURDAY                                                                                                                                                  
+24-MAY      -1999 MONDAY    29-MAY      -1999 SATURDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  19-SEPTEMBER-1987 SATURDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  24-FEBRUARY -1996 SATURDAY                                                                                                                                                  
+17-AUGUST   -1997 SUNDAY    23-AUGUST   -1997 SATURDAY                                                                                                                                                  
+07-JUNE     -1994 TUESDAY   11-JUNE     -1994 SATURDAY                                                                                                                                                  
+07-JUNE     -1994 TUESDAY   11-JUNE     -1994 SATURDAY                                                                                                                                                  
+
+20 rows selected.
+
+SQL> REM 2 COMPANY PAYS WEEKLY SALARY ON EVERY MONDAY. FIND SECOND WEEKLY SALARY DATE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(HIRE_DATE,'MON')+7 "2nd WSD" FROM EMPLOYEES;
+
+HIRE_DATE                   2nd WSD                                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    27-JULY     -1987 MONDAY                                                                                                                                                    
+21-SEPTEMBER-1989 THURSDAY  02-OCTOBER  -1989 MONDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 25-JANUARY  -1993 MONDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 15-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   03-JUNE     -1991 MONDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    15-FEBRUARY -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   29-NOVEMBER -1999 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   30-OCTOBER  -1995 MONDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 10-FEBRUARY -1997 MONDAY                                                                                                                                                    
+15-MARCH    -1998 SUNDAY    23-MARCH    -1998 MONDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  20-JULY     -1998 MONDAY                                                                                                                                                    
+29-JANUARY  -2000 SATURDAY  07-FEBRUARY -2000 MONDAY                                                                                                                                                    
+11-MAY      -1996 SATURDAY  20-MAY      -1996 MONDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   06-APRIL    -1998 MONDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    07-JUNE     -1999 MONDAY                                                                                                                                                    
+17-SEPTEMBER-1987 THURSDAY  28-SEPTEMBER-1987 MONDAY                                                                                                                                                    
+17-FEBRUARY -1996 SATURDAY  26-FEBRUARY -1996 MONDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    25-AUGUST   -1997 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   20-JUNE     -1994 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   20-JUNE     -1994 MONDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM 3 COMPANY PAYS WEEKLY SALARY ON EVERY WEDNESDAY. FIND THIRD WEEKLY SALARY DATE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(HIRE_DATE,'WED')+(7*2) "3rd WSD" FROM EMPLOYEES;
+
+HIRE_DATE                   3rd WSD                                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    05-AUGUST   -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  11-OCTOBER  -1989 WEDNESDAY                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY 03-FEBRUARY -1993 WEDNESDAY                                                                                                                                                 
+03-JANUARY  -1990 WEDNESDAY 24-JANUARY  -1990 WEDNESDAY                                                                                                                                                 
+21-MAY      -1991 TUESDAY   05-JUNE     -1991 WEDNESDAY                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY    24-FEBRUARY -1999 WEDNESDAY                                                                                                                                                 
+16-NOVEMBER -1999 TUESDAY   01-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY   01-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 19-FEBRUARY -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+09-JULY     -1998 THURSDAY  29-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  16-FEBRUARY -2000 WEDNESDAY                                                                                                                                                 
+11-MAY      -1996 SATURDAY  29-MAY      -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   08-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    09-JUNE     -1999 WEDNESDAY                                                                                                                                                 
+17-SEPTEMBER-1987 THURSDAY  07-OCTOBER  -1987 WEDNESDAY                                                                                                                                                 
+17-FEBRUARY -1996 SATURDAY  06-MARCH    -1996 WEDNESDAY                                                                                                                                                 
+17-AUGUST   -1997 SUNDAY    03-SEPTEMBER-1997 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   22-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   22-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM 4 COMPANY PAYS WEEKLY SALARY ON EVERY TUESDAY. FIND 15th WEEKLY SALARY DATE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(HIRE_DATE,'TUE')+(7*14) "15th WSD" FROM EMPLOYEES;
+
+HIRE_DATE                   15th WSD                                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    27-OCTOBER  -1987 TUESDAY                                                                                                                                                   
+21-SEPTEMBER-1989 THURSDAY  02-JANUARY  -1990 TUESDAY                                                                                                                                                   
+13-JANUARY  -1993 WEDNESDAY 27-APRIL    -1993 TUESDAY                                                                                                                                                   
+03-JANUARY  -1990 WEDNESDAY 17-APRIL    -1990 TUESDAY                                                                                                                                                   
+21-MAY      -1991 TUESDAY   03-SEPTEMBER-1991 TUESDAY                                                                                                                                                   
+07-FEBRUARY -1999 SUNDAY    18-MAY      -1999 TUESDAY                                                                                                                                                   
+16-NOVEMBER -1999 TUESDAY   29-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+17-OCTOBER  -1995 TUESDAY   30-JANUARY  -1996 TUESDAY                                                                                                                                                   
+29-JANUARY  -1997 WEDNESDAY 13-MAY      -1997 TUESDAY                                                                                                                                                   
+15-MARCH    -1998 SUNDAY    23-JUNE     -1998 TUESDAY                                                                                                                                                   
+09-JULY     -1998 THURSDAY  20-OCTOBER  -1998 TUESDAY                                                                                                                                                   
+29-JANUARY  -2000 SATURDAY  09-MAY      -2000 TUESDAY                                                                                                                                                   
+11-MAY      -1996 SATURDAY  20-AUGUST   -1996 TUESDAY                                                                                                                                                   
+24-MARCH    -1998 TUESDAY   07-JULY     -1998 TUESDAY                                                                                                                                                   
+24-MAY      -1999 MONDAY    31-AUGUST   -1999 TUESDAY                                                                                                                                                   
+17-SEPTEMBER-1987 THURSDAY  29-DECEMBER -1987 TUESDAY                                                                                                                                                   
+17-FEBRUARY -1996 SATURDAY  28-MAY      -1996 TUESDAY                                                                                                                                                   
+17-AUGUST   -1997 SUNDAY    25-NOVEMBER -1997 TUESDAY                                                                                                                                                   
+07-JUNE     -1994 TUESDAY   20-SEPTEMBER-1994 TUESDAY                                                                                                                                                   
+07-JUNE     -1994 TUESDAY   20-SEPTEMBER-1994 TUESDAY                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM COMPANY PAYS MONTHLY SALARY IN NEXT MONTH ON 3rd WEDNESDAY.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(LAST_DAY(HIRE_DATE),'WED')+(7*2) FROM EMPLOYEES;
+
+HIRE_DATE                   NEXT_DAY(LAST_DAY(HIRE_DATE                                                                                                                                                 
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    19-AUGUST   -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  18-OCTOBER  -1989 WEDNESDAY                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY 17-FEBRUARY -1993 WEDNESDAY                                                                                                                                                 
+03-JANUARY  -1990 WEDNESDAY 21-FEBRUARY -1990 WEDNESDAY                                                                                                                                                 
+21-MAY      -1991 TUESDAY   19-JUNE     -1991 WEDNESDAY                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY    17-MARCH    -1999 WEDNESDAY                                                                                                                                                 
+16-NOVEMBER -1999 TUESDAY   15-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY   15-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 19-FEBRUARY -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    15-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+09-JULY     -1998 THURSDAY  19-AUGUST   -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  16-FEBRUARY -2000 WEDNESDAY                                                                                                                                                 
+11-MAY      -1996 SATURDAY  19-JUNE     -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   15-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    16-JUNE     -1999 WEDNESDAY                                                                                                                                                 
+17-SEPTEMBER-1987 THURSDAY  21-OCTOBER  -1987 WEDNESDAY                                                                                                                                                 
+17-FEBRUARY -1996 SATURDAY  20-MARCH    -1996 WEDNESDAY                                                                                                                                                 
+17-AUGUST   -1997 SUNDAY    17-SEPTEMBER-1997 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   20-JULY     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   20-JULY     -1994 WEDNESDAY                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM 1 -> 1-7 , 2 -> 8-14 , 3 -> 15-21 , 4 -> 22-28 , 5 -> 29 ONWARDS
+SQL> 
+SQL> REM 1 COMPANY PAYS MONTHLY SALARY IN MONTH, ON 2nd FRIDAY. FIND FMSD.
+SQL> 
+SQL> REM 2 COMPANY PAYS MONTHLY SALARY IN MONTH, ON 4th MONDAY. FIND FMSD.
+SQL> 
+SQL> REM 3 COMPANY PAYS MONTHLY SALARY IN MONTH, ON 3rd WEDNESDAY. FIND FMSD.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH, ON 2nd FRIDAY. FIND FMSD.
+SQL> 
+SQL> REM 2 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH, ON 4th MONDAY. FIND FMSD.
+SQL> 
+SQL> REM 3 COMPANY PAYS MONTHLY SALARY IN NEXTMONTH, ON 3rd WEDNESDAY. FIND FMSD.
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH, ON 2nd FRIDAY. FIND FMSD.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(LAST_DAY(HIRE_DATE),'FRI')+7 FMSD FROM EMPLOYEES;
+
+HIRE_DATE                   FMSD                                                                                                                                                                        
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    14-AUGUST   -1987 FRIDAY                                                                                                                                                    
+21-SEPTEMBER-1989 THURSDAY  13-OCTOBER  -1989 FRIDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 12-FEBRUARY -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 09-FEBRUARY -1990 FRIDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   14-JUNE     -1991 FRIDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    12-MARCH    -1999 FRIDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   10-DECEMBER -1999 FRIDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   10-NOVEMBER -1995 FRIDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 14-FEBRUARY -1997 FRIDAY                                                                                                                                                    
+15-MARCH    -1998 SUNDAY    10-APRIL    -1998 FRIDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  14-AUGUST   -1998 FRIDAY                                                                                                                                                    
+29-JANUARY  -2000 SATURDAY  11-FEBRUARY -2000 FRIDAY                                                                                                                                                    
+11-MAY      -1996 SATURDAY  14-JUNE     -1996 FRIDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   10-APRIL    -1998 FRIDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    11-JUNE     -1999 FRIDAY                                                                                                                                                    
+17-SEPTEMBER-1987 THURSDAY  09-OCTOBER  -1987 FRIDAY                                                                                                                                                    
+17-FEBRUARY -1996 SATURDAY  08-MARCH    -1996 FRIDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    12-SEPTEMBER-1997 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   08-JULY     -1994 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   08-JULY     -1994 FRIDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM 2 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH, ON 4th MONDAY. FIND FMSD.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(LAST_DAY(HIRE_DATE),'MON')+(7*3) FMSD FROM EMPLOYEES;
+
+HIRE_DATE                   FMSD                                                                                                                                                                        
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    24-AUGUST   -1987 MONDAY                                                                                                                                                    
+21-SEPTEMBER-1989 THURSDAY  23-OCTOBER  -1989 MONDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 22-FEBRUARY -1993 MONDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 26-FEBRUARY -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   24-JUNE     -1991 MONDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    22-MARCH    -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   27-DECEMBER -1999 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   27-NOVEMBER -1995 MONDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 24-FEBRUARY -1997 MONDAY                                                                                                                                                    
+15-MARCH    -1998 SUNDAY    27-APRIL    -1998 MONDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  24-AUGUST   -1998 MONDAY                                                                                                                                                    
+29-JANUARY  -2000 SATURDAY  28-FEBRUARY -2000 MONDAY                                                                                                                                                    
+11-MAY      -1996 SATURDAY  24-JUNE     -1996 MONDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   27-APRIL    -1998 MONDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    28-JUNE     -1999 MONDAY                                                                                                                                                    
+17-SEPTEMBER-1987 THURSDAY  26-OCTOBER  -1987 MONDAY                                                                                                                                                    
+17-FEBRUARY -1996 SATURDAY  25-MARCH    -1996 MONDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    22-SEPTEMBER-1997 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   25-JULY     -1994 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   25-JULY     -1994 MONDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM 3 COMPANY PAYS MONTHLY SALARY IN NEXTMONTH, ON 3rd WEDNESDAY. FIND FMSD.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(LAST_DAY(HIRE_DATE),'WED')+(7*2) FMSD FROM EMPLOYEES;
+
+HIRE_DATE                   FMSD                                                                                                                                                                        
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    19-AUGUST   -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  18-OCTOBER  -1989 WEDNESDAY                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY 17-FEBRUARY -1993 WEDNESDAY                                                                                                                                                 
+03-JANUARY  -1990 WEDNESDAY 21-FEBRUARY -1990 WEDNESDAY                                                                                                                                                 
+21-MAY      -1991 TUESDAY   19-JUNE     -1991 WEDNESDAY                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY    17-MARCH    -1999 WEDNESDAY                                                                                                                                                 
+16-NOVEMBER -1999 TUESDAY   15-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY   15-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 19-FEBRUARY -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    15-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+09-JULY     -1998 THURSDAY  19-AUGUST   -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  16-FEBRUARY -2000 WEDNESDAY                                                                                                                                                 
+11-MAY      -1996 SATURDAY  19-JUNE     -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   15-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    16-JUNE     -1999 WEDNESDAY                                                                                                                                                 
+17-SEPTEMBER-1987 THURSDAY  21-OCTOBER  -1987 WEDNESDAY                                                                                                                                                 
+17-FEBRUARY -1996 SATURDAY  20-MARCH    -1996 WEDNESDAY                                                                                                                                                 
+17-AUGUST   -1997 SUNDAY    17-SEPTEMBER-1997 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   20-JULY     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   20-JULY     -1994 WEDNESDAY                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM COMPANY PAYS MONTHLY SALARY IN NEXT MONTH ON 3rd THURSDAY. FIND 4th MONTHLY SALARY DATE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(ADD_MONTHS(LAST_DAY(HIRE_DATE),3),'THU')+(7*2) "4th MSD" FROM EMPLOYEES;
+
+HIRE_DATE                   4th MSD                                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    19-NOVEMBER -1987 THURSDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  18-JANUARY  -1990 THURSDAY                                                                                                                                                  
+13-JANUARY  -1993 WEDNESDAY 20-MAY      -1993 THURSDAY                                                                                                                                                  
+03-JANUARY  -1990 WEDNESDAY 17-MAY      -1990 THURSDAY                                                                                                                                                  
+21-MAY      -1991 TUESDAY   19-SEPTEMBER-1991 THURSDAY                                                                                                                                                  
+07-FEBRUARY -1999 SUNDAY    17-JUNE     -1999 THURSDAY                                                                                                                                                  
+16-NOVEMBER -1999 TUESDAY   16-MARCH    -2000 THURSDAY                                                                                                                                                  
+17-OCTOBER  -1995 TUESDAY   15-FEBRUARY -1996 THURSDAY                                                                                                                                                  
+29-JANUARY  -1997 WEDNESDAY 15-MAY      -1997 THURSDAY                                                                                                                                                  
+15-MARCH    -1998 SUNDAY    16-JULY     -1998 THURSDAY                                                                                                                                                  
+09-JULY     -1998 THURSDAY  19-NOVEMBER -1998 THURSDAY                                                                                                                                                  
+29-JANUARY  -2000 SATURDAY  18-MAY      -2000 THURSDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  19-SEPTEMBER-1996 THURSDAY                                                                                                                                                  
+24-MARCH    -1998 TUESDAY   16-JULY     -1998 THURSDAY                                                                                                                                                  
+24-MAY      -1999 MONDAY    16-SEPTEMBER-1999 THURSDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  21-JANUARY  -1988 THURSDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  20-JUNE     -1996 THURSDAY                                                                                                                                                  
+17-AUGUST   -1997 SUNDAY    18-DECEMBER -1997 THURSDAY                                                                                                                                                  
+07-JUNE     -1994 TUESDAY   20-OCTOBER  -1994 THURSDAY                                                                                                                                                  
+07-JUNE     -1994 TUESDAY   20-OCTOBER  -1994 THURSDAY                                                                                                                                                  
+
+20 rows selected.
+
+SQL> REM 1 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH ON 2nd FRIDAY. FIND 3rd MONTHLY SALARY DATE.
+SQL> 
+SQL> REM 2 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH ON 4th MONDAY. FIND 6th MONTHLY SALARY DATE.
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH ON 2nd FRIDAY. FIND 3rd MONTHLY SALARY DATE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(ADD_MONTHS(LAST_DAY(HIRE_DATE),2),'FRI')+7 "3rd MSD" FROM EMPLOYEES;
+
+HIRE_DATE                   3rd MSD                                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    09-OCTOBER  -1987 FRIDAY                                                                                                                                                    
+21-SEPTEMBER-1989 THURSDAY  08-DECEMBER -1989 FRIDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 09-APRIL    -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 13-APRIL    -1990 FRIDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   09-AUGUST   -1991 FRIDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    14-MAY      -1999 FRIDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   11-FEBRUARY -2000 FRIDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   12-JANUARY  -1996 FRIDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 11-APRIL    -1997 FRIDAY                                                                                                                                                    
+15-MARCH    -1998 SUNDAY    12-JUNE     -1998 FRIDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  09-OCTOBER  -1998 FRIDAY                                                                                                                                                    
+29-JANUARY  -2000 SATURDAY  14-APRIL    -2000 FRIDAY                                                                                                                                                    
+11-MAY      -1996 SATURDAY  09-AUGUST   -1996 FRIDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   12-JUNE     -1998 FRIDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    13-AUGUST   -1999 FRIDAY                                                                                                                                                    
+17-SEPTEMBER-1987 THURSDAY  11-DECEMBER -1987 FRIDAY                                                                                                                                                    
+17-FEBRUARY -1996 SATURDAY  10-MAY      -1996 FRIDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    14-NOVEMBER -1997 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   09-SEPTEMBER-1994 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   09-SEPTEMBER-1994 FRIDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM 2 COMPANY PAYS MONTHLY SALARY IN NEXT MONTH ON 4th MONDAY. FIND 6th MONTHLY SALARY DATE.
+SQL> 
+SQL> SELECT HIRE_DATE , NEXT_DAY(ADD_MONTHS(LAST_DAY(HIRE_DATE),5),'MON')+(7*3) "6th MSD" FROM EMPLOYEES;
+
+HIRE_DATE                   6th MSD                                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    25-JANUARY  -1988 MONDAY                                                                                                                                                    
+21-SEPTEMBER-1989 THURSDAY  26-MARCH    -1990 MONDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 26-JULY     -1993 MONDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 23-JULY     -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   25-NOVEMBER -1991 MONDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    23-AUGUST   -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   22-MAY      -2000 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   22-APRIL    -1996 MONDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 28-JULY     -1997 MONDAY                                                                                                                                                    
+15-MARCH    -1998 SUNDAY    28-SEPTEMBER-1998 MONDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  25-JANUARY  -1999 MONDAY                                                                                                                                                    
+29-JANUARY  -2000 SATURDAY  24-JULY     -2000 MONDAY                                                                                                                                                    
+11-MAY      -1996 SATURDAY  25-NOVEMBER -1996 MONDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   28-SEPTEMBER-1998 MONDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    22-NOVEMBER -1999 MONDAY                                                                                                                                                    
+17-SEPTEMBER-1987 THURSDAY  28-MARCH    -1988 MONDAY                                                                                                                                                    
+17-FEBRUARY -1996 SATURDAY  26-AUGUST   -1996 MONDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    23-FEBRUARY -1998 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   26-DECEMBER -1994 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   26-DECEMBER -1994 MONDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM TRUNC : WE CAN MAINLY TRUNC DATE IN 3 STYLES : 1 MONTH 2 Q/QUARTER 3 YEAR
+SQL> 
+SQL> 
+SQL> REM TRUNC DATE WITH MONTH : IT WILL RETURN SAME MONTH'S FIRST DATE. 10-JAN-24 -> 01-JAN-24    , 30-JAN-24 -> 01-JAN-24
+SQL> 
+SQL> REM 1 YEAR = 4 QUARTERS EACH OF 3 MONTHS
+SQL> 
+SQL> REM Q1 : JAN FEB MAR : 01JAN TO 31MAR
+SQL> 
+SQL> REM Q2 : APR MAY JUN : 01APR TO 30JUN
+SQL> 
+SQL> REM Q3 : JUL AUG SEP : 01JUL TO 30SEP
+SQL> 
+SQL> REM Q4 : OCT NOV DEC : 01OCT TO 31DEC
+SQL> 
+SQL> 
+SQL> 
+SQL> REM TRUNC DATE WITH Q/QUARTER : IT WILL RETURN SAME QUARTER'S FIRST DATE. 10-FEB-24 -> 01-JAN-24    , 25-SEP-24 -> 01-JUL-24
+SQL> 
+SQL> 
+SQL> REM TRUNC DATE WITH YEAR : IT WILL RETURN SAME YEAR'S FIRST DATE. 10-FEB-24 -> 01-JAN-24    , 25-SEP-24 -> 01-JAN-24   , 31-DEC-24 -> 01-JAN-24
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT HIRE_DATE , TRUNC(HIRE_DATE,'MONTH') FROM EMPLOYEES;
+
+HIRE_DATE                   TRUNC(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-JULY     -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  01-SEPTEMBER-1989 FRIDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-MAY      -1991 WEDNESDAY                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-NOVEMBER -1999 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   01-OCTOBER  -1995 SUNDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   01-MARCH    -1998 SUNDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    01-MAY      -1999 SATURDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  01-SEPTEMBER-1987 TUESDAY                                                                                                                                                   
+17-FEBRUARY -1996 SATURDAY  01-FEBRUARY -1996 THURSDAY                                                                                                                                                  
+17-AUGUST   -1997 SUNDAY    01-AUGUST   -1997 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , TRUNC(HIRE_DATE,'Q') FROM EMPLOYEES;
+
+HIRE_DATE                   TRUNC(HIRE_DATE,'Q')                                                                                                                                                        
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-JULY     -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  01-JULY     -1989 SATURDAY                                                                                                                                                  
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-APRIL    -1991 MONDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-OCTOBER  -1999 FRIDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   01-OCTOBER  -1995 SUNDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  01-APRIL    -1996 MONDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+24-MAY      -1999 MONDAY    01-APRIL    -1999 THURSDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  01-JULY     -1987 WEDNESDAY                                                                                                                                                 
+17-FEBRUARY -1996 SATURDAY  01-JANUARY  -1996 MONDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-JULY     -1997 TUESDAY                                                                                                                                                   
+07-JUNE     -1994 TUESDAY   01-APRIL    -1994 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-APRIL    -1994 FRIDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , TRUNC(HIRE_DATE,'YEAR') FROM EMPLOYEES;
+
+HIRE_DATE                   TRUNC(HIRE_DATE,'YEAR')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-JANUARY  -1987 THURSDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  01-JANUARY  -1989 SUNDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-JANUARY  -1991 TUESDAY                                                                                                                                                   
+07-FEBRUARY -1999 SUNDAY    01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   01-JANUARY  -1995 SUNDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+09-JULY     -1998 THURSDAY  01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+29-JANUARY  -2000 SATURDAY  01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  01-JANUARY  -1996 MONDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+24-MAY      -1999 MONDAY    01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+17-SEPTEMBER-1987 THURSDAY  01-JANUARY  -1987 THURSDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  01-JANUARY  -1996 MONDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JANUARY  -1994 SATURDAY                                                                                                                                                  
+07-JUNE     -1994 TUESDAY   01-JANUARY  -1994 SATURDAY                                                                                                                                                  
+
+20 rows selected.
+
+SQL> REM FIND NUMBER OF DAYS WORKED IN JOINING MONTH.
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES;
+
+HIRE_DATE                                                                                                                                                                                               
+---------------------------                                                                                                                                                                             
+17-JULY     -1987 FRIDAY                                                                                                                                                                                
+21-SEPTEMBER-1989 THURSDAY                                                                                                                                                                              
+13-JANUARY  -1993 WEDNESDAY                                                                                                                                                                             
+03-JANUARY  -1990 WEDNESDAY                                                                                                                                                                             
+21-MAY      -1991 TUESDAY                                                                                                                                                                               
+07-FEBRUARY -1999 SUNDAY                                                                                                                                                                                
+16-NOVEMBER -1999 TUESDAY                                                                                                                                                                               
+17-OCTOBER  -1995 TUESDAY                                                                                                                                                                               
+29-JANUARY  -1997 WEDNESDAY                                                                                                                                                                             
+15-MARCH    -1998 SUNDAY                                                                                                                                                                                
+09-JULY     -1998 THURSDAY                                                                                                                                                                              
+29-JANUARY  -2000 SATURDAY                                                                                                                                                                              
+11-MAY      -1996 SATURDAY                                                                                                                                                                              
+24-MARCH    -1998 TUESDAY                                                                                                                                                                               
+24-MAY      -1999 MONDAY                                                                                                                                                                                
+17-SEPTEMBER-1987 THURSDAY                                                                                                                                                                              
+17-FEBRUARY -1996 SATURDAY                                                                                                                                                                              
+17-AUGUST   -1997 SUNDAY                                                                                                                                                                                
+07-JUNE     -1994 TUESDAY                                                                                                                                                                               
+07-JUNE     -1994 TUESDAY                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , LAST_DAY(HIRE_DATE) - HIRE_DATE + 1 DAYS_WORKED FROM EMPLOYEES;
+
+HIRE_DATE                   DAYS_WORKED                                                                                                                                                                 
+--------------------------- -----------                                                                                                                                                                 
+17-JULY     -1987 FRIDAY             15                                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY           10                                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY          19                                                                                                                                                                 
+03-JANUARY  -1990 WEDNESDAY          29                                                                                                                                                                 
+21-MAY      -1991 TUESDAY            11                                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY             22                                                                                                                                                                 
+16-NOVEMBER -1999 TUESDAY            15                                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY            15                                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY           3                                                                                                                                                                 
+15-MARCH    -1998 SUNDAY             17                                                                                                                                                                 
+09-JULY     -1998 THURSDAY           23                                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY            3                                                                                                                                                                 
+11-MAY      -1996 SATURDAY           21                                                                                                                                                                 
+24-MARCH    -1998 TUESDAY             8                                                                                                                                                                 
+24-MAY      -1999 MONDAY              8                                                                                                                                                                 
+17-SEPTEMBER-1987 THURSDAY           14                                                                                                                                                                 
+17-FEBRUARY -1996 SATURDAY           13                                                                                                                                                                 
+17-AUGUST   -1997 SUNDAY             15                                                                                                                                                                 
+07-JUNE     -1994 TUESDAY            24                                                                                                                                                                 
+07-JUNE     -1994 TUESDAY            24                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM 1 FIND NUMBER OF DAYS WORKED IN JOINING MONTH.
+SQL> 
+SQL> REM 2 FIND DAY NUMBER OF MONTH ON WHICH COMPAY HIRED THE EMPLOYEES.
+SQL> 
+SQL> 
+SQL> REM MONTH MON MM RM
+SQL> 
+SQL> REM Q
+SQL> 
+SQL> REM YEAR YY YYYY RR RRRR
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 FIND NUMBER OF DAYS WORKED IN JOINING MONTH.
+SQL> 
+SQL> SELECT HIRE_DATE , TRUNC(HIRE_DATE,'MONTH') FROM EMPLOYEES;
+
+HIRE_DATE                   TRUNC(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-JULY     -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  01-SEPTEMBER-1989 FRIDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-MAY      -1991 WEDNESDAY                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-NOVEMBER -1999 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   01-OCTOBER  -1995 SUNDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   01-MARCH    -1998 SUNDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    01-MAY      -1999 SATURDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  01-SEPTEMBER-1987 TUESDAY                                                                                                                                                   
+17-FEBRUARY -1996 SATURDAY  01-FEBRUARY -1996 THURSDAY                                                                                                                                                  
+17-AUGUST   -1997 SUNDAY    01-AUGUST   -1997 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , ADD_MONTHS(TRUNC(HIRE_DATE,'MONTH'),1) FROM EMPLOYEES;
+
+HIRE_DATE                   ADD_MONTHS(TRUNC(HIRE_DATE,                                                                                                                                                 
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-AUGUST   -1987 SATURDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  01-OCTOBER  -1989 SUNDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-FEBRUARY -1993 MONDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-FEBRUARY -1990 THURSDAY                                                                                                                                                  
+21-MAY      -1991 TUESDAY   01-JUNE     -1991 SATURDAY                                                                                                                                                  
+07-FEBRUARY -1999 SUNDAY    01-MARCH    -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY   01-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 01-FEBRUARY -1997 SATURDAY                                                                                                                                                  
+15-MARCH    -1998 SUNDAY    01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+09-JULY     -1998 THURSDAY  01-AUGUST   -1998 SATURDAY                                                                                                                                                  
+29-JANUARY  -2000 SATURDAY  01-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+11-MAY      -1996 SATURDAY  01-JUNE     -1996 SATURDAY                                                                                                                                                  
+24-MARCH    -1998 TUESDAY   01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    01-JUNE     -1999 TUESDAY                                                                                                                                                   
+17-SEPTEMBER-1987 THURSDAY  01-OCTOBER  -1987 THURSDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  01-MARCH    -1996 FRIDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-SEPTEMBER-1997 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JULY     -1994 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JULY     -1994 FRIDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , ADD_MONTHS(TRUNC(HIRE_DATE,'MONTH'),1) - HIRE_DATE "DAYS WORKED" FROM EMPLOYEES;
+
+HIRE_DATE                   DAYS WORKED                                                                                                                                                                 
+--------------------------- -----------                                                                                                                                                                 
+17-JULY     -1987 FRIDAY             15                                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY           10                                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY          19                                                                                                                                                                 
+03-JANUARY  -1990 WEDNESDAY          29                                                                                                                                                                 
+21-MAY      -1991 TUESDAY            11                                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY             22                                                                                                                                                                 
+16-NOVEMBER -1999 TUESDAY            15                                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY            15                                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY           3                                                                                                                                                                 
+15-MARCH    -1998 SUNDAY             17                                                                                                                                                                 
+09-JULY     -1998 THURSDAY           23                                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY            3                                                                                                                                                                 
+11-MAY      -1996 SATURDAY           21                                                                                                                                                                 
+24-MARCH    -1998 TUESDAY             8                                                                                                                                                                 
+24-MAY      -1999 MONDAY              8                                                                                                                                                                 
+17-SEPTEMBER-1987 THURSDAY           14                                                                                                                                                                 
+17-FEBRUARY -1996 SATURDAY           13                                                                                                                                                                 
+17-AUGUST   -1997 SUNDAY             15                                                                                                                                                                 
+07-JUNE     -1994 TUESDAY            24                                                                                                                                                                 
+07-JUNE     -1994 TUESDAY            24                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM 2 FIND DAY NUMBER OF MONTH ON WHICH COMPAY HIRED THE EMPLOYEES.
+SQL> 
+SQL> SELECT HIRE_DATE , TRUNC(HIRE_DATE,'MONTH') FROM EMPLOYEES;
+
+HIRE_DATE                   TRUNC(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-JULY     -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  01-SEPTEMBER-1989 FRIDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-MAY      -1991 WEDNESDAY                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-NOVEMBER -1999 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   01-OCTOBER  -1995 SUNDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   01-MARCH    -1998 SUNDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    01-MAY      -1999 SATURDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  01-SEPTEMBER-1987 TUESDAY                                                                                                                                                   
+17-FEBRUARY -1996 SATURDAY  01-FEBRUARY -1996 THURSDAY                                                                                                                                                  
+17-AUGUST   -1997 SUNDAY    01-AUGUST   -1997 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , HIRE_DATE - TRUNC(HIRE_DATE,'MONTH') + 1 "DAY NUMBER" FROM EMPLOYEES;
+
+HIRE_DATE                   DAY NUMBER                                                                                                                                                                  
+--------------------------- ----------                                                                                                                                                                  
+17-JULY     -1987 FRIDAY            17                                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY          21                                                                                                                                                                  
+13-JANUARY  -1993 WEDNESDAY         13                                                                                                                                                                  
+03-JANUARY  -1990 WEDNESDAY          3                                                                                                                                                                  
+21-MAY      -1991 TUESDAY           21                                                                                                                                                                  
+07-FEBRUARY -1999 SUNDAY             7                                                                                                                                                                  
+16-NOVEMBER -1999 TUESDAY           16                                                                                                                                                                  
+17-OCTOBER  -1995 TUESDAY           17                                                                                                                                                                  
+29-JANUARY  -1997 WEDNESDAY         29                                                                                                                                                                  
+15-MARCH    -1998 SUNDAY            15                                                                                                                                                                  
+09-JULY     -1998 THURSDAY           9                                                                                                                                                                  
+29-JANUARY  -2000 SATURDAY          29                                                                                                                                                                  
+11-MAY      -1996 SATURDAY          11                                                                                                                                                                  
+24-MARCH    -1998 TUESDAY           24                                                                                                                                                                  
+24-MAY      -1999 MONDAY            24                                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY          17                                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY          17                                                                                                                                                                  
+17-AUGUST   -1997 SUNDAY            17                                                                                                                                                                  
+07-JUNE     -1994 TUESDAY            7                                                                                                                                                                  
+07-JUNE     -1994 TUESDAY            7                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> REM 1 FIND NUMBER OF DAYS WORKED IN JOINING QUARTER.
+SQL> 
+SQL> REM 2 FIND DAY NUMBER OF YEAR ON WHICH COMPANY HIRED THE EMPLOYEES.
+SQL> 
+SQL> 
+SQL> REM 1 FIND NUMBER OF DAYS WORKED IN JOINING QUARTER.
+SQL> 
+SQL> SELECT HIRE_DATE , ADD_MONTHS(TRUNC(HIRE_DATE,'Q'),3) - HIRE_DATE "DAY WRKD IN QTR" FROM EMPLOYEES;
+
+HIRE_DATE                   DAY WRKD IN QTR                                                                                                                                                             
+--------------------------- ---------------                                                                                                                                                             
+17-JULY     -1987 FRIDAY                 76                                                                                                                                                             
+21-SEPTEMBER-1989 THURSDAY               10                                                                                                                                                             
+13-JANUARY  -1993 WEDNESDAY              78                                                                                                                                                             
+03-JANUARY  -1990 WEDNESDAY              88                                                                                                                                                             
+21-MAY      -1991 TUESDAY                41                                                                                                                                                             
+07-FEBRUARY -1999 SUNDAY                 53                                                                                                                                                             
+16-NOVEMBER -1999 TUESDAY                46                                                                                                                                                             
+17-OCTOBER  -1995 TUESDAY                76                                                                                                                                                             
+29-JANUARY  -1997 WEDNESDAY              62                                                                                                                                                             
+15-MARCH    -1998 SUNDAY                 17                                                                                                                                                             
+09-JULY     -1998 THURSDAY               84                                                                                                                                                             
+29-JANUARY  -2000 SATURDAY               63                                                                                                                                                             
+11-MAY      -1996 SATURDAY               51                                                                                                                                                             
+24-MARCH    -1998 TUESDAY                 8                                                                                                                                                             
+24-MAY      -1999 MONDAY                 38                                                                                                                                                             
+17-SEPTEMBER-1987 THURSDAY               14                                                                                                                                                             
+17-FEBRUARY -1996 SATURDAY               44                                                                                                                                                             
+17-AUGUST   -1997 SUNDAY                 45                                                                                                                                                             
+07-JUNE     -1994 TUESDAY                24                                                                                                                                                             
+07-JUNE     -1994 TUESDAY                24                                                                                                                                                             
+
+20 rows selected.
+
+SQL> REM 2 FIND DAY NUMBER OF YEAR ON WHICH COMPANY HIRED THE EMPLOYEES.
+SQL> 
+SQL> SELECT HIRE_DATE , HIRE_DATE - TRUNC(HIRE_DATE,'YEAR') + 1 "DAY NO. OF YEAR" FROM EMPLOYEES;
+
+HIRE_DATE                   DAY NO. OF YEAR                                                                                                                                                             
+--------------------------- ---------------                                                                                                                                                             
+17-JULY     -1987 FRIDAY                198                                                                                                                                                             
+21-SEPTEMBER-1989 THURSDAY              264                                                                                                                                                             
+13-JANUARY  -1993 WEDNESDAY              13                                                                                                                                                             
+03-JANUARY  -1990 WEDNESDAY               3                                                                                                                                                             
+21-MAY      -1991 TUESDAY               141                                                                                                                                                             
+07-FEBRUARY -1999 SUNDAY                 38                                                                                                                                                             
+16-NOVEMBER -1999 TUESDAY               320                                                                                                                                                             
+17-OCTOBER  -1995 TUESDAY               290                                                                                                                                                             
+29-JANUARY  -1997 WEDNESDAY              29                                                                                                                                                             
+15-MARCH    -1998 SUNDAY                 74                                                                                                                                                             
+09-JULY     -1998 THURSDAY              190                                                                                                                                                             
+29-JANUARY  -2000 SATURDAY               29                                                                                                                                                             
+11-MAY      -1996 SATURDAY              132                                                                                                                                                             
+24-MARCH    -1998 TUESDAY                83                                                                                                                                                             
+24-MAY      -1999 MONDAY                144                                                                                                                                                             
+17-SEPTEMBER-1987 THURSDAY              260                                                                                                                                                             
+17-FEBRUARY -1996 SATURDAY               48                                                                                                                                                             
+17-AUGUST   -1997 SUNDAY                229                                                                                                                                                             
+07-JUNE     -1994 TUESDAY               158                                                                                                                                                             
+07-JUNE     -1994 TUESDAY               158                                                                                                                                                             
+
+20 rows selected.
+
+SQL> REM ROUND : WE CAN ROUND DATE IN 3 STYLES : 1 MONTH 2 Q 3 YEAR
+SQL> 
+SQL> SELECT 7.4 , TRUNC(7.4) , ROUND(7.4) FROM DUAL;
+
+       7.4 TRUNC(7.4) ROUND(7.4)                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+       7.4          7          7                                                                                                                                                                        
+
+SQL> SELECT 7.6 , TRUNC(7.6) , ROUND(7.6) FROM DUAL;
+
+       7.6 TRUNC(7.6) ROUND(7.6)                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+       7.6          7          8                                                                                                                                                                        
+
+SQL> REM FH : 0 TO 4 , SH : 5 TO 9
+SQL> 
+SQL> REM ROUND DATE MONTH :
+SQL> 
+SQL> REM 1 MONTH = FIRST HALF : 1 TO 15 , SECOND HALF : 16 - .. (28/29/30/31)
+SQL> 
+SQL> REM IF INPUT DATE FALLS IN FIRST HALF, IT WILL RETURN FIRST DATE OF SAME MONTH.
+SQL> 
+SQL> REM IF INPUT DATE FALLS IN SECOND HALF, IT WILL RETURN FIRST DATE OF NEXT MONTH.
+SQL> 
+SQL> 
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES ORDER BY SUBSTR(HIRE_DATE,1,2);
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-FEBRUARY -1996 SATURDAY  01-MARCH    -1996 FRIDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-SEPTEMBER-1997 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   01-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-AUGUST   -1987 SATURDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  01-OCTOBER  -1987 THURSDAY                                                                                                                                                  
+21-MAY      -1991 TUESDAY   01-JUNE     -1991 SATURDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  01-OCTOBER  -1989 SUNDAY                                                                                                                                                    
+24-MAY      -1999 MONDAY    01-JUNE     -1999 TUESDAY                                                                                                                                                   
+24-MARCH    -1998 TUESDAY   01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 01-FEBRUARY -1997 SATURDAY                                                                                                                                                  
+29-JANUARY  -2000 SATURDAY  01-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM Q1 : 1JAN TO 31MAR : FIRST HALF : 1JAN TO 15FEB , SECOND HALF : 16FEB TO 31MAR
+SQL> 
+SQL> REM Q2 : 1APR TO 30JUN : FIRST HALF : 1APR TO 15MAY , SECOND HALF : 16MAY TO 30JUN
+SQL> 
+SQL> REM Q3 : 1JUL TO 30SEP : FIRST HALF : 1JUL TO 15AUG , SECOND HALF : 16AUG TO 30SEP
+SQL> 
+SQL> REM Q4 : 1OCT TO 31DEC : FIRST HALF : 1OCT TO 15NOV , SECOND HALF : 16NOV TO 31DEC
+SQL> 
+SQL> 
+SQL> 
+SQL> REM IF INPUT DATE FALLS IN FIRST HALF, IT WILL RETURN FIRST DATE OF SAME QUARTER.
+SQL> 
+SQL> REM IF INPUT DATE FALLS IN SECOND HALF, IT WILL RETURN FIRST DATE OF NEXT QUARTER.
+SQL> 
+SQL> 
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'Q') FROM EMPLOYEES;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'Q')                                                                                                                                                        
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-JULY     -1987 WEDNESDAY                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  01-OCTOBER  -1989 SUNDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-JULY     -1991 MONDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+17-OCTOBER  -1995 TUESDAY   01-OCTOBER  -1995 SUNDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  01-APRIL    -1996 MONDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    01-JULY     -1999 THURSDAY                                                                                                                                                  
+17-SEPTEMBER-1987 THURSDAY  01-OCTOBER  -1987 THURSDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  01-APRIL    -1996 MONDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-OCTOBER  -1997 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JULY     -1994 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JULY     -1994 FRIDAY                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM ROUND WITH YEAR :
+SQL> 
+SQL> REM 1 YEAR = 12 MONTHS
+SQL> 
+SQL> REM FIRST HALF : 1JAN TO 30JUN   , SECOND HALF : 1JUL TO 31DEC
+SQL> 
+SQL> REM IF INPUT DATE FALLS IN FIRST HALF, IT WILL RETURN FIRST DATE OF SAME YAER.
+SQL> 
+SQL> REM IF INPUT DATE FALLS IN SECOND HALF, IT WILL RETURN FIRST DATE OF NEXT YAER.
+SQL> 
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'YEAR') FROM EMPLOYEES;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'YEAR')                                                                                                                                                     
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-JANUARY  -1988 FRIDAY                                                                                                                                                    
+21-SEPTEMBER-1989 THURSDAY  01-JANUARY  -1990 MONDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-JANUARY  -1991 TUESDAY                                                                                                                                                   
+07-FEBRUARY -1999 SUNDAY    01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+17-OCTOBER  -1995 TUESDAY   01-JANUARY  -1996 MONDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-JANUARY  -1997 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+09-JULY     -1998 THURSDAY  01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+29-JANUARY  -2000 SATURDAY  01-JANUARY  -2000 SATURDAY                                                                                                                                                  
+11-MAY      -1996 SATURDAY  01-JANUARY  -1996 MONDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+24-MAY      -1999 MONDAY    01-JANUARY  -1999 FRIDAY                                                                                                                                                    
+17-SEPTEMBER-1987 THURSDAY  01-JANUARY  -1988 FRIDAY                                                                                                                                                    
+17-FEBRUARY -1996 SATURDAY  01-JANUARY  -1996 MONDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-JANUARY  -1998 THURSDAY                                                                                                                                                  
+07-JUNE     -1994 TUESDAY   01-JANUARY  -1994 SATURDAY                                                                                                                                                  
+07-JUNE     -1994 TUESDAY   01-JANUARY  -1994 SATURDAY                                                                                                                                                  
+
+20 rows selected.
+
+SQL> 
+SQL> REM DISPLAY THOSE WHO WERE HIRED IN FIRST HALF OF ANY MONTH. : ROUND
+SQL> 
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-AUGUST   -1987 SATURDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  01-OCTOBER  -1989 SUNDAY                                                                                                                                                    
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-JUNE     -1991 SATURDAY                                                                                                                                                  
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY   01-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 01-FEBRUARY -1997 SATURDAY                                                                                                                                                  
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  01-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    01-JUNE     -1999 TUESDAY                                                                                                                                                   
+17-SEPTEMBER-1987 THURSDAY  01-OCTOBER  -1987 THURSDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  01-MARCH    -1996 FRIDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-SEPTEMBER-1997 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES WHERE ROUND(HIRE_DATE,'MONTH') < HIRE_DATE;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+8 rows selected.
+
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES WHERE ROUND(HIRE_DATE,'MONTH') > HIRE_DATE;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-AUGUST   -1987 SATURDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  01-OCTOBER  -1989 SUNDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-JUNE     -1991 SATURDAY                                                                                                                                                  
+16-NOVEMBER -1999 TUESDAY   01-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY   01-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 01-FEBRUARY -1997 SATURDAY                                                                                                                                                  
+29-JANUARY  -2000 SATURDAY  01-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+24-MARCH    -1998 TUESDAY   01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    01-JUNE     -1999 TUESDAY                                                                                                                                                   
+17-SEPTEMBER-1987 THURSDAY  01-OCTOBER  -1987 THURSDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  01-MARCH    -1996 FRIDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-SEPTEMBER-1997 MONDAY                                                                                                                                                    
+
+12 rows selected.
+
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES WHERE ROUND(HIRE_DATE,'Q') < HIRE_DATE;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-AUGUST   -1987 SATURDAY                                                                                                                                                  
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+17-OCTOBER  -1995 TUESDAY   01-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -1997 WEDNESDAY 01-FEBRUARY -1997 SATURDAY                                                                                                                                                  
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+29-JANUARY  -2000 SATURDAY  01-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES WHERE ROUND(HIRE_DATE,'Q') > HIRE_DATE;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+21-SEPTEMBER-1989 THURSDAY  01-OCTOBER  -1989 SUNDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-JUNE     -1991 SATURDAY                                                                                                                                                  
+16-NOVEMBER -1999 TUESDAY   01-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+24-MARCH    -1998 TUESDAY   01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    01-JUNE     -1999 TUESDAY                                                                                                                                                   
+17-SEPTEMBER-1987 THURSDAY  01-OCTOBER  -1987 THURSDAY                                                                                                                                                  
+17-FEBRUARY -1996 SATURDAY  01-MARCH    -1996 FRIDAY                                                                                                                                                    
+17-AUGUST   -1997 SUNDAY    01-SEPTEMBER-1997 MONDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+11 rows selected.
+
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES WHERE ROUND(HIRE_DATE,'YEAR') < HIRE_DATE;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+13-JANUARY  -1993 WEDNESDAY 01-JANUARY  -1993 FRIDAY                                                                                                                                                    
+03-JANUARY  -1990 WEDNESDAY 01-JANUARY  -1990 MONDAY                                                                                                                                                    
+21-MAY      -1991 TUESDAY   01-JUNE     -1991 SATURDAY                                                                                                                                                  
+07-FEBRUARY -1999 SUNDAY    01-FEBRUARY -1999 MONDAY                                                                                                                                                    
+29-JANUARY  -1997 WEDNESDAY 01-FEBRUARY -1997 SATURDAY                                                                                                                                                  
+15-MARCH    -1998 SUNDAY    01-MARCH    -1998 SUNDAY                                                                                                                                                    
+29-JANUARY  -2000 SATURDAY  01-FEBRUARY -2000 TUESDAY                                                                                                                                                   
+11-MAY      -1996 SATURDAY  01-MAY      -1996 WEDNESDAY                                                                                                                                                 
+24-MARCH    -1998 TUESDAY   01-APRIL    -1998 WEDNESDAY                                                                                                                                                 
+24-MAY      -1999 MONDAY    01-JUNE     -1999 TUESDAY                                                                                                                                                   
+17-FEBRUARY -1996 SATURDAY  01-MARCH    -1996 FRIDAY                                                                                                                                                    
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+07-JUNE     -1994 TUESDAY   01-JUNE     -1994 WEDNESDAY                                                                                                                                                 
+
+13 rows selected.
+
+SQL> SELECT HIRE_DATE , ROUND(HIRE_DATE,'MONTH') FROM EMPLOYEES WHERE ROUND(HIRE_DATE,'YEAR') > HIRE_DATE;
+
+HIRE_DATE                   ROUND(HIRE_DATE,'MONTH')                                                                                                                                                    
+--------------------------- ---------------------------                                                                                                                                                 
+17-JULY     -1987 FRIDAY    01-AUGUST   -1987 SATURDAY                                                                                                                                                  
+21-SEPTEMBER-1989 THURSDAY  01-OCTOBER  -1989 SUNDAY                                                                                                                                                    
+16-NOVEMBER -1999 TUESDAY   01-DECEMBER -1999 WEDNESDAY                                                                                                                                                 
+17-OCTOBER  -1995 TUESDAY   01-NOVEMBER -1995 WEDNESDAY                                                                                                                                                 
+09-JULY     -1998 THURSDAY  01-JULY     -1998 WEDNESDAY                                                                                                                                                 
+17-SEPTEMBER-1987 THURSDAY  01-OCTOBER  -1987 THURSDAY                                                                                                                                                  
+17-AUGUST   -1997 SUNDAY    01-SEPTEMBER-1997 MONDAY                                                                                                                                                    
+
+7 rows selected.
+
+SQL> SPOOL OFF

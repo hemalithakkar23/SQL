@@ -1,0 +1,945 @@
+SQL> 
+SQL> REM TO_CHAR : TO CONVERT NUMBER TYPE VALUE INTO CHARACTER TYPE VALUE
+SQL> 
+SQL> REM TO_CHAR SYNTAX : TO_CHAR('value','format')
+SQL> 
+SQL> REM LIST OF VALID NUMBER FORMAT CHARACTERS :  9 0   . ,   D G   $ L U   S MI PR   EEEE or eeee  V
+SQL> 
+SQL> 
+SQL> SELECT * FROM POSNEGNO;
+
+        NO                                                                                                                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                                                                                                                      
+        12                                                                                                                                                                                                                                                                                                                                                                                                      
+                                                                                                                                                                                                                                                                                                                                                                                                                
+         0                                                                                                                                                                                                                                                                                                                                                                                                      
+       -12                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> SELECT NO , TO_CHAR(NO , '99')  FROM POSNEGNO;
+
+        NO TO_                                                                                                                                                                                                                                                                                                                                                                                                  
+---------- ---                                                                                                                                                                                                                                                                                                                                                                                                  
+        12  12                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                
+         0   0                                                                                                                                                                                                                                                                                                                                                                                                  
+       -12 -12                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> SELECT NO , TO_CHAR(NO , 'S99')  FROM POSNEGNO;
+
+        NO TO_                                                                                                                                                                                                                                                                                                                                                                                                  
+---------- ---                                                                                                                                                                                                                                                                                                                                                                                                  
+        12 +12                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                
+         0  +0                                                                                                                                                                                                                                                                                                                                                                                                  
+       -12 -12                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> SELECT NO , TO_CHAR(NO , '99S')  FROM POSNEGNO;
+
+        NO TO_                                                                                                                                                                                                                                                                                                                                                                                                  
+---------- ---                                                                                                                                                                                                                                                                                                                                                                                                  
+        12 12+                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                
+         0  0+                                                                                                                                                                                                                                                                                                                                                                                                  
+       -12 12-                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> SELECT NO , TO_CHAR(NO , 'S99S')  FROM POSNEGNO;
+SELECT NO , TO_CHAR(NO , 'S99S')  FROM POSNEGNO
+                         *
+ERROR at line 1:
+ORA-01481: invalid number format model 
+
+
+SQL> SELECT NO , TO_CHAR(NO , '99MI')  FROM POSNEGNO;
+
+        NO TO_                                                                                                                                                                                                                                                                                                                                                                                                  
+---------- ---                                                                                                                                                                                                                                                                                                                                                                                                  
+        12 12                                                                                                                                                                                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                                                                                                                                                                                
+         0  0                                                                                                                                                                                                                                                                                                                                                                                                   
+       -12 12-                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> SELECT NO , TO_CHAR(NO , 'MI99')  FROM POSNEGNO;
+SELECT NO , TO_CHAR(NO , 'MI99')  FROM POSNEGNO
+                         *
+ERROR at line 1:
+ORA-01481: invalid number format model 
+
+
+SQL> SELECT NO , TO_CHAR(NO , '99PR')  FROM POSNEGNO;
+
+        NO TO_C                                                                                                                                                                                                                                                                                                                                                                                                 
+---------- ----                                                                                                                                                                                                                                                                                                                                                                                                 
+        12  12                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                
+         0   0                                                                                                                                                                                                                                                                                                                                                                                                  
+       -12 <12>                                                                                                                                                                                                                                                                                                                                                                                                 
+
+SQL> SELECT NO , TO_CHAR(NO , 'PR99')  FROM POSNEGNO;
+SELECT NO , TO_CHAR(NO , 'PR99')  FROM POSNEGNO
+                         *
+ERROR at line 1:
+ORA-01481: invalid number format model 
+
+
+SQL> -12345.67 -> [12345.67]
+SP2-0734: unknown command beginning "-12345.67 ..." - rest of line ignored.
+SQL> 
+SQL> REM -12345.67 -> [12345.67]
+SQL> 
+SQL> SELECT TO_CHAR('-12345.67','99999.99PR') FROM DUAL;
+
+TO_CHAR('-                                                                                                                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                                                                                                                      
+<12345.67>                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> SELECT TRANSLATE(TO_CHAR('-12345.67','99999.99PR'),'<>','[]') FROM DUAL;
+
+TRANSLATE(TO_CHAR('-12345.67','99999.99P                                                                                                                                                                                                                                                                                                                                                                        
+----------------------------------------                                                                                                                                                                                                                                                                                                                                                                        
+[12345.67]                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> 
+SQL> 
+SQL> SELECT SALARY , TO_CHAR(SALARY,'99.99') FROM EMPLOYEES;
+
+    SALARY TO_CHA                                                                                                                                                                                                                                                                                                                                                                                               
+---------- ------                                                                                                                                                                                                                                                                                                                                                                                               
+     24000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+     17000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+     17000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      9000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      6000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      4200 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      5800 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      3500 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      3100 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      2600 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      2500 ######                                                                                                                                                                                                                                                                                                                                                                                               
+     10500 ######                                                                                                                                                                                                                                                                                                                                                                                               
+     11000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      8600 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      7000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      4400 ######                                                                                                                                                                                                                                                                                                                                                                                               
+     13000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      6000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+     12000 ######                                                                                                                                                                                                                                                                                                                                                                                               
+      8300 ######                                                                                                                                                                                                                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT SALARY , TO_CHAR(SALARY,'99.99EEEE') FROM EMPLOYEES;
+
+    SALARY TO_CHAR(SA                                                                                                                                                                                                                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                                                                                                                                                                                                                           
+     24000   2.40E+04                                                                                                                                                                                                                                                                                                                                                                                           
+     17000   1.70E+04                                                                                                                                                                                                                                                                                                                                                                                           
+     17000   1.70E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      9000   9.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      6000   6.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      4200   4.20E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      5800   5.80E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      3500   3.50E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      3100   3.10E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      2600   2.60E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      2500   2.50E+03                                                                                                                                                                                                                                                                                                                                                                                           
+     10500   1.05E+04                                                                                                                                                                                                                                                                                                                                                                                           
+     11000   1.10E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      8600   8.60E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      7000   7.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      4400   4.40E+03                                                                                                                                                                                                                                                                                                                                                                                           
+     13000   1.30E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      6000   6.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+     12000   1.20E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      8300   8.30E+03                                                                                                                                                                                                                                                                                                                                                                                           
+
+20 rows selected.
+
+SQL> REM 2.4E+04 = 2.4 * POWER(10,4)
+SQL> 
+SQL> SELECT 9 , POWER(3,2) FROM DUAL;
+
+         9 POWER(3,2)                                                                                                                                                                                                                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                                                                                                                                                                                                                           
+         9          9                                                                                                                                                                                                                                                                                                                                                                                           
+
+SQL> SELECT 2.4 * POWER(10,4) FROM DUAL;
+
+2.4*POWER(10,4)                                                                                                                                                                                                                                                                                                                                                                                                 
+---------------                                                                                                                                                                                                                                                                                                                                                                                                 
+          24000                                                                                                                                                                                                                                                                                                                                                                                                 
+
+SQL> SELECT SALARY , TO_CHAR(SALARY,'99.99eeee') FROM EMPLOYEES;
+
+    SALARY TO_CHAR(SA                                                                                                                                                                                                                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                                                                                                                                                                                                                           
+     24000   2.40E+04                                                                                                                                                                                                                                                                                                                                                                                           
+     17000   1.70E+04                                                                                                                                                                                                                                                                                                                                                                                           
+     17000   1.70E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      9000   9.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      6000   6.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      4200   4.20E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      5800   5.80E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      3500   3.50E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      3100   3.10E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      2600   2.60E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      2500   2.50E+03                                                                                                                                                                                                                                                                                                                                                                                           
+     10500   1.05E+04                                                                                                                                                                                                                                                                                                                                                                                           
+     11000   1.10E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      8600   8.60E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      7000   7.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+      4400   4.40E+03                                                                                                                                                                                                                                                                                                                                                                                           
+     13000   1.30E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      6000   6.00E+03                                                                                                                                                                                                                                                                                                                                                                                           
+     12000   1.20E+04                                                                                                                                                                                                                                                                                                                                                                                           
+      8300   8.30E+03                                                                                                                                                                                                                                                                                                                                                                                           
+
+20 rows selected.
+
+SQL> SELECT SALARY , TO_CHAR(SALARY,'99.99Eeee') FROM EMPLOYEES;
+SELECT SALARY , TO_CHAR(SALARY,'99.99Eeee') FROM EMPLOYEES
+                               *
+ERROR at line 1:
+ORA-01481: invalid number format model 
+
+
+SQL> SELECT SALARY , TO_CHAR(SALARY,'99.99eee') FROM EMPLOYEES;
+SELECT SALARY , TO_CHAR(SALARY,'99.99eee') FROM EMPLOYEES
+                               *
+ERROR at line 1:
+ORA-01481: invalid number format model 
+
+
+SQL> SELECT SALARY , TO_CHAR(SALARY,'99.99eeeee') FROM EMPLOYEES;
+SELECT SALARY , TO_CHAR(SALARY,'99.99eeeee') FROM EMPLOYEES
+                               *
+ERROR at line 1:
+ORA-01481: invalid number format model 
+
+
+SQL> SELECT 234 , TO_CHAR('234','999V0000000') FROM DUAL;
+
+       234 TO_CHAR('23                                                                                                                                                                                                                                                                                                                                                                                          
+---------- -----------                                                                                                                                                                                                                                                                                                                                                                                          
+       234  2340000000                                                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> SELECT 234 , TO_CHAR('234','999V00000') FROM DUAL;
+
+       234 TO_CHAR('                                                                                                                                                                                                                                                                                                                                                                                            
+---------- ---------                                                                                                                                                                                                                                                                                                                                                                                            
+       234  23400000                                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> SELECT 234 , TO_CHAR('234','999V000') FROM DUAL;
+
+       234 TO_CHAR                                                                                                                                                                                                                                                                                                                                                                                              
+---------- -------                                                                                                                                                                                                                                                                                                                                                                                              
+       234  234000                                                                                                                                                                                                                                                                                                                                                                                              
+
+SQL> REM LIST OF VALID NUMBER FORMAT CHARACTERS :  9 0   . ,   D G   $ L U   S MI PR   EEEE or eeee  V
+SQL> 
+SQL> 
+SQL> REM D G L U
+SQL> 
+SQL> 
+SQL> REM TO_CHAR : TO CONVERT DATE TYPE VALUE INTO CHARACTER TYPE VALUE.
+SQL> 
+SQL> REM TO_CHAR SYNTAX : TO_CHAR( 'VALUE
+SQL> 
+SQL> REM TO_CHAR SYNTAX : TO_CHAR( 'VALUE' , 'FORMAT' )
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : D DD DDD DY dy Dy DAY day Day
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : MM RM rm Rm MON mon Mon MONTH month Month
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : Y YY YYY YYYY RR RRRR year Year YEAR
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : W WW Q J
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : TH SP FM FX
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : HH HH12 HH24 MI SS SSSSS
+SQL> 
+SQL> REM LIST OF VALID DATE FORMAT CHARACTERS : AM am Am A.M. a.m. PM pm Pm P.M. p.m.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM TO_CHAR : TO DISPLAY DATE VALUE IN USER DEFINED/NON-DEFAULT FORMATS.
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                                                                                                                                                                                                                         
+---------                                                                                                                                                                                                                                                                                                                                                                                                       
+24-JAN-25                                                                                                                                                                                                                                                                                                                                                                                                       
+
+SQL> SELECT * FROM NLS_SESSION_PARAMETERS;
+
+PARAMETER                                                                                                                VALUE                                                                                                                                                                                                                                                                                  
+------------------------------------------------------------------------------------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                       
+NLS_LANGUAGE                                                                                                             AMERICAN                                                                                                                                                                                                                                                                               
+NLS_TERRITORY                                                                                                            AMERICA                                                                                                                                                                                                                                                                                
+NLS_CURRENCY                                                                                                             $                                                                                                                                                                                                                                                                                      
+NLS_ISO_CURRENCY                                                                                                         AMERICA                                                                                                                                                                                                                                                                                
+NLS_NUMERIC_CHARACTERS                                                                                                   .,                                                                                                                                                                                                                                                                                     
+NLS_CALENDAR                                                                                                             GREGORIAN                                                                                                                                                                                                                                                                              
+NLS_DATE_FORMAT                                                                                                          DD-MON-RR                                                                                                                                                                                                                                                                              
+NLS_DATE_LANGUAGE                                                                                                        AMERICAN                                                                                                                                                                                                                                                                               
+NLS_SORT                                                                                                                 BINARY                                                                                                                                                                                                                                                                                 
+NLS_TIME_FORMAT                                                                                                          HH.MI.SSXFF AM                                                                                                                                                                                                                                                                         
+NLS_TIMESTAMP_FORMAT                                                                                                     DD-MON-RR HH.MI.SSXFF AM                                                                                                                                                                                                                                                               
+NLS_TIME_TZ_FORMAT                                                                                                       HH.MI.SSXFF AM TZR                                                                                                                                                                                                                                                                     
+NLS_TIMESTAMP_TZ_FORMAT                                                                                                  DD-MON-RR HH.MI.SSXFF AM TZR                                                                                                                                                                                                                                                           
+NLS_DUAL_CURRENCY                                                                                                        $                                                                                                                                                                                                                                                                                      
+NLS_COMP                                                                                                                 BINARY                                                                                                                                                                                                                                                                                 
+NLS_LENGTH_SEMANTICS                                                                                                     BYTE                                                                                                                                                                                                                                                                                   
+NLS_NCHAR_CONV_EXCP                                                                                                      FALSE                                                                                                                                                                                                                                                                                  
+
+17 rows selected.
+
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MONTH-RRRR HH:MI.SS AM DAY';
+
+Session altered.
+
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                                                                                                                                                                                                                         
+---------------------------------------                                                                                                                                                                                                                                                                                                                                                                         
+24-JANUARY  -2025 10:12.56 PM FRIDAY                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'D DD DDD DY dy Dy DAY day Day') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'DDDDDDDYDYDYDAYDAYDAY')                                                                                                                                                                                                                                                                                                                                
+--------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                          
+24-JANUARY  -2025 10:13.18 PM FRIDAY    6 24 024 FRI fri Fri FRIDAY    friday    Friday                                                                                                                                                                                                                                                                                                                         
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'MM RM rm Rm MON mon Mon MONTH month Month') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'MMRMRMRMMONMONMONMONTHMONTHMONTH')                                                                                                                                                                                                                                                                                                                     
+--------------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                 
+24-JANUARY  -2025 10:15.47 PM FRIDAY    01 I    i    I    JAN jan Jan JANUARY   january   January                                                                                                                                                                                                                                                                                                               
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'Y YY YYY YYYY RR RRRR year Year YEAR') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'YYYYYYYYYYRRRRRRYEARYEARYEAR')                                                                                                                                                                                                                                                                                                                         
+--------------------------------------- ------------------------------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                  
+24-JANUARY  -2025 10:17.49 PM FRIDAY    5 25 025 2025 25 2025 twenty twenty-five Twenty Twenty-Five TWENTY TWENTY-FIVE                                                                                                                                                                                                                                                                                          
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'MONTH month Month MontH mONTh mOnTh MoNtH MOnth moNTH') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'MONTHMONTHMONTHMONTHMONTHMONTHMONTHMONTHMONTH')                                                                                                                                                                                                                                                                                                        
+--------------------------------------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------                            
+24-JANUARY  -2025 10:20.06 PM FRIDAY    JANUARY   january   January   January   january   january   January   JANUARY   january                                                                                                                                                                                                                                                                                 
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'W WW Q J') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDAT                                                                                                                                                                                                                                                                                                                                                          
+--------------------------------------- --------------                                                                                                                                                                                                                                                                                                                                                          
+24-JANUARY  -2025 10:21.39 PM FRIDAY    4 04 1 2460700                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> REM J = JULIAN DAY NUMBER
+SQL> 
+SQL> REM JULIAN DATE : 01-JAN-4712BC (BEFORE CHRIST) = JULIAN DAY NUMBER 1
+SQL> 
+SQL> REM               02-JAN-4712BC (BEFORE CHRIST) = JULIAN DAY NUMBER 2
+SQL> 
+SQL> REM               31-JAN-4712BC (BEFORE CHRIST) = JULIAN DAY NUMBER 31
+SQL> 
+SQL> REM               01-FEB-4712BC (BEFORE CHRIST) = JULIAN DAY NUMBER 32
+SQL> 
+SQL> REM               02-FEB-4712BC (BEFORE CHRIST) = JULIAN DAY NUMBER 33
+SQL> 
+SQL> REM               24-JAN-2025AD (ANNO DOMINI)   = JULIAN DAY NUMBER 2460700
+SQL> 
+SQL> 
+SQL> REM               31-DEC-9999AD (ANNO DOMINI)   = JULIAN DAY NUMBER 5373484
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM TO CONVERT NUMBER INTO SPELLING/WORDS
+SQL> 
+SQL> SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL;
+Enter value for no: 1
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('1','J'),'JSP') FROM DUAL
+
+TO_                                                                                                                                                                                                                                                                                                                                                                                                             
+---                                                                                                                                                                                                                                                                                                                                                                                                             
+ONE                                                                                                                                                                                                                                                                                                                                                                                                             
+
+SQL> /
+Enter value for no: 12
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('12','J'),'JSP') FROM DUAL
+
+TO_CHA                                                                                                                                                                                                                                                                                                                                                                                                          
+------                                                                                                                                                                                                                                                                                                                                                                                                          
+TWELVE                                                                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> /
+Enter value for no: 123
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('123','J'),'JSP') FROM DUAL
+
+TO_CHAR(TO_DATE('123','J                                                                                                                                                                                                                                                                                                                                                                                        
+------------------------                                                                                                                                                                                                                                                                                                                                                                                        
+ONE HUNDRED TWENTY-THREE                                                                                                                                                                                                                                                                                                                                                                                        
+
+SQL> /
+Enter value for no: 1234
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('1234','J'),'JSP') FROM DUAL
+
+TO_CHAR(TO_DATE('1234','J'),'JSP')                                                                                                                                                                                                                                                                                                                                                                              
+------------------------------------                                                                                                                                                                                                                                                                                                                                                                            
+ONE THOUSAND TWO HUNDRED THIRTY-FOUR                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> /
+Enter value for no: 12345
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('12345','J'),'JSP') FROM DUAL
+
+TO_CHAR(TO_DATE('12345','J'),'JSP')                                                                                                                                                                                                                                                                                                                                                                             
+----------------------------------------                                                                                                                                                                                                                                                                                                                                                                        
+TWELVE THOUSAND THREE HUNDRED FORTY-FIVE                                                                                                                                                                                                                                                                                                                                                                        
+
+SQL> /
+Enter value for no: 123456
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('123456','J'),'JSP') FROM DUAL
+
+TO_CHAR(TO_DATE('123456','J'),'JSP')                                                                                                                                                                                                                                                                                                                                                                            
+--------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                        
+ONE HUNDRED TWENTY-THREE THOUSAND FOUR HUNDRED FIFTY-SIX                                                                                                                                                                                                                                                                                                                                                        
+
+SQL> /
+Enter value for no: 1234567
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('1234567','J'),'JSP') FROM DUAL
+
+TO_CHAR(TO_DATE('1234567','J'),'JSP')                                                                                                                                                                                                                                                                                                                                                                           
+---------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                           
+ONE MILLION TWO HUNDRED THIRTY-FOUR THOUSAND FIVE HUNDRED SIXTY-SEVEN                                                                                                                                                                                                                                                                                                                                           
+
+SQL> /
+Enter value for no: 12345678
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('12345678','J'),'JSP') FROM DUAL
+SELECT TO_CHAR(TO_DATE('12345678','J'),'JSP') FROM DUAL
+                       *
+ERROR at line 1:
+ORA-01830: date format picture ends before converting entire input string 
+
+
+SQL> /
+Enter value for no: 5373484
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('5373484','J'),'JSP') FROM DUAL
+
+TO_CHAR(TO_DATE('5373484','J'),'JSP')                                                                                                                                                                                                                                                                                                                                                                           
+--------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                      
+FIVE MILLION THREE HUNDRED SEVENTY-THREE THOUSAND FOUR HUNDRED EIGHTY-FOUR                                                                                                                                                                                                                                                                                                                                      
+
+SQL> /
+Enter value for no: 5373485
+old   1: SELECT TO_CHAR(TO_DATE('&NO','J'),'JSP') FROM DUAL
+new   1: SELECT TO_CHAR(TO_DATE('5373485','J'),'JSP') FROM DUAL
+SELECT TO_CHAR(TO_DATE('5373485','J'),'JSP') FROM DUAL
+                       *
+ERROR at line 1:
+ORA-01854: julian date must be between 1 and 5373484 
+
+
+SQL> SELECT TO_CHAR(SYSDATE,'DD DDTH DDSP DDSPTH DDTHSP ddSPTH DdSPTH') FROM DUAL;
+
+TO_CHAR(SYSDATE,'DDDDTHDDSPDDSPTHDDTHSPDDSPTHDDSPTH')                                                                                                                                                                                                                                                                                                                                                           
+--------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                
+24 24TH TWENTY-FOUR TWENTY-FOURTH TWENTY-FOURTH twenty-fourth Twenty-Fourth                                                                                                                                                                                                                                                                                                                                     
+
+SQL> REM ONE TWO THREE FOUR
+SQL> 
+SQL> REM FIRST SECOND THIRD FOURTH
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                                                                                                                                                                                                                         
+---------------------------------------                                                                                                                                                                                                                                                                                                                                                                         
+24-JANUARY  -2025 10:31.53 PM FRIDAY                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                                                                                                                                                                                                                         
+---------------------------------------                                                                                                                                                                                                                                                                                                                                                                         
+24-JANUARY  -2025 10:32.03 PM FRIDAY                                                                                                                                                                                                                                                                                                                                                                            
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDD-MONTH-RRRR HH:MI.SS AM DAY') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'FMDD-MONTH-RRRRHH:MI.SSAMDAY')                                                                                                                                                                                                                                                                                                                         
+--------------------------------------- ---------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                           
+24-JANUARY  -2025 10:32.42 PM FRIDAY    24-JANUARY-2025 10:32.42 PM FRIDAY                                                                                                                                                                                                                                                                                                                                      
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDD-MONTH-RRRR HH:MI.SS AM DAY') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'FMDD-MONTH-RRRRHH:MI.SSAMDAY')                                                                                                                                                                                                                                                                                                                         
+--------------------------------------- ---------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                           
+24-JANUARY  -2025 10:32.56 PM FRIDAY    24-JANUARY-2025 10:32.56 PM FRIDAY                                                                                                                                                                                                                                                                                                                                      
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDD-MONTH-RRRR HH:MI.SS AM DAY') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'FMDD-MONTH-RRRRHH:MI.SSAMDAY')                                                                                                                                                                                                                                                                                                                         
+--------------------------------------- ---------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                           
+24-JANUARY  -2025 10:33.02 PM FRIDAY    24-JANUARY-2025 10:33.2 PM FRIDAY                                                                                                                                                                                                                                                                                                                                       
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDD-MONTH-RRRR DAY HH:MI.SS AM') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'FMDD-MONTH-RRRRDAYHH:MI.SSAM')                                                                                                                                                                                                                                                                                                                         
+--------------------------------------- ---------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                           
+24-JANUARY  -2025 10:33.26 PM FRIDAY    24-JANUARY-2025 FRIDAY 10:33.26 PM                                                                                                                                                                                                                                                                                                                                      
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDD-MONTH-RRRR FMDAY HH:MI.SS AM') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'FMDD-MONTH-RRRRFMDAYHH:MI.SSAM')                                                                                                                                                                                                                                                                                                                       
+--------------------------------------- ---------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                           
+24-JANUARY  -2025 10:33.43 PM FRIDAY    24-JANUARY-2025 FRIDAY    10:33.43 PM                                                                                                                                                                                                                                                                                                                                   
+
+SQL> REM TOGGLE : OFF/ON...
+SQL> 
+SQL> REM 12 NOON : MERIDIAN TIME
+SQL> 
+SQL> REM BEFORE 12 NOON : ANTI MERIDIAN : AM
+SQL> 
+SQL> REM AFTER  12 NOON : POST/PAST MERIDIAN : PM
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS]') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'HHHH                                                                                                                                                                                                                                                                                                                                                   
+--------------------------------------- ---------------------                                                                                                                                                                                                                                                                                                                                                   
+24-JANUARY  -2025 10:36.35 PM FRIDAY    10 10 22 36 35 81395]                                                                                                                                                                                                                                                                                                                                                   
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'HHH                                                                                                                                                                                                                                                                                                                                                    
+--------------------------------------- --------------------                                                                                                                                                                                                                                                                                                                                                    
+24-JANUARY  -2025 10:36.42 PM FRIDAY    10 10 22 36 42 81402                                                                                                                                                                                                                                                                                                                                                    
+
+SQL> 
+SQL> REM 1 DAY = 86400 SECONDS
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'HHH                                                                                                                                                                                                                                                                                                                                                    
+--------------------------------------- --------------------                                                                                                                                                                                                                                                                                                                                                    
+24-JANUARY  -2025 10:37.44 PM FRIDAY    10 10 22 37 44 81464                                                                                                                                                                                                                                                                                                                                                    
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'HHH                                                                                                                                                                                                                                                                                                                                                    
+--------------------------------------- --------------------                                                                                                                                                                                                                                                                                                                                                    
+24-JANUARY  -2025 10:38.05 PM FRIDAY    10 10 22 38 05 81485                                                                                                                                                                                                                                                                                                                                                    
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'HHH                                                                                                                                                                                                                                                                                                                                                    
+--------------------------------------- --------------------                                                                                                                                                                                                                                                                                                                                                    
+24-JANUARY  -2025 10:38.06 PM FRIDAY    10 10 22 38 06 81486                                                                                                                                                                                                                                                                                                                                                    
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'HH HH12 HH24 MI SS SSSSS') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'HHH                                                                                                                                                                                                                                                                                                                                                    
+--------------------------------------- --------------------                                                                                                                                                                                                                                                                                                                                                    
+24-JANUARY  -2025 10:38.08 PM FRIDAY    10 10 22 38 08 81488                                                                                                                                                                                                                                                                                                                                                    
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'AM am Am A.M. a.m. PM pm Pm P.M. p.m.') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'AMAMAMA.M.A.M.PMPMPM                                                                                                                                                                                                                                                                                                                                   
+--------------------------------------- -------------------------------------                                                                                                                                                                                                                                                                                                                                   
+24-JANUARY  -2025 10:38.32 PM FRIDAY    PM pm Pm P.M. p.m. PM pm Pm P.M. p.m.                                                                                                                                                                                                                                                                                                                                   
+
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'AM am Am A.M. a.m. A.m. PM pm Pm P.M. p.m. P.m.') FROM DUAL;
+
+SYSDATE                                 TO_CHAR(SYSDATE,'AMAMAMA.M.A.M.A.M.PMPMPMP.M.P.                                                                                                                                                                                                                                                                                                                         
+--------------------------------------- -----------------------------------------------                                                                                                                                                                                                                                                                                                                         
+24-JANUARY  -2025 10:39.09 PM FRIDAY    PM pm Pm P.M. p.m. P.M. PM pm Pm P.M. p.m. P.M.                                                                                                                                                                                                                                                                                                                         
+
+SQL> CONN SCOTT/TIGER
+Connected.
+SQL> 
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                                                                                                                                                                                                                         
+---------                                                                                                                                                                                                                                                                                                                                                                                                       
+24-JAN-25                                                                                                                                                                                                                                                                                                                                                                                                       
+
+SQL> SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= '31-DEC-95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT');
+Enter value for dt: 31-DEC-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-95')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-DEC-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-1995')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-DECEMBER-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DECEMBER-1995')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-12-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-1995')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-1995')
+                                                                        *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> /
+Enter value for dt: 31-12-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-95')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-95')
+                                                                        *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','DD-MM-RRRR');
+Enter value for dt: 31-12=1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','DD-MM-RRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12=1995','DD-MM-RRRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-12-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','DD-MM-RRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-1995','DD-MM-RRRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-12-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','DD-MM-RRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-95','DD-MM-RRRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MM-RRRR');
+Enter value for dt: 31-12-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MM-RRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-1995','FXDD-MM-RRRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-12-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MM-RRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-95','FXDD-MM-RRRR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-95','FXDD-MM-RRRR')
+                                                                        *
+ERROR at line 1:
+ORA-01862: the numeric value does not match the length of the format item 
+
+
+SQL> /
+Enter value for dt: 31-12=1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MM-RRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12=1995','FXDD-MM-RRRR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12=1995','FXDD-MM-RRRR')
+                                                                        *
+ERROR at line 1:
+ORA-01861: literal does not match format string 
+
+
+SQL> REM FX : FIXED FORMAT
+SQL> 
+SQL> /
+Enter value for dt: 
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MM-RRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('','FXDD-MM-RRRR')
+
+no rows selected
+
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-RR');
+Enter value for dt: 31-DEC-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-RR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-95','FXDD-MON-RR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-DEC-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-RR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-1995','FXDD-MON-RR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-1995','FXDD-MON-RR')
+                                                                        *
+ERROR at line 1:
+ORA-01830: date format picture ends before converting entire input string 
+
+
+SQL> SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRR');
+Enter value for dt: /
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('/','FXDD-MON-FXRR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('/','FXDD-MON-FXRR')
+                                                                        *
+ERROR at line 1:
+ORA-01858: a non-numeric character was found where a numeric was expected 
+
+
+SQL> /
+Enter value for dt: 31-12-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-95','FXDD-MON-FXRR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-12-95','FXDD-MON-FXRR')
+                                                                        *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> /
+Enter value for dt: 31-DEC-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-95','FXDD-MON-FXRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-DEC-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-1995','FXDD-MON-FXRR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-1995','FXDD-MON-FXRR')
+                                                                        *
+ERROR at line 1:
+ORA-01830: date format picture ends before converting entire input string 
+
+
+SQL> SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRRRR');
+Enter value for dt: 31-DEC-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-1995','FXDD-MON-FXRRRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-DEC-95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC-95','FXDD-MON-FXRRRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> /
+Enter value for dt: 31-DEC/95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC/95','FXDD-MON-FXRRRR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-DEC/95','FXDD-MON-FXRRRR')
+                                                                        *
+ERROR at line 1:
+ORA-01861: literal does not match format string 
+
+
+SQL> /
+Enter value for dt: 31DEC95
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31DEC95','FXDD-MON-FXRRRR')
+SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31DEC95','FXDD-MON-FXRRRR')
+                                                                        *
+ERROR at line 1:
+ORA-01861: literal does not match format string 
+
+
+SQL> /
+Enter value for dt: 31-dec-1995
+old   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('&DT','FXDD-MON-FXRRRR')
+new   1: SELECT FIRST_NAME , HIRE_dATE FROM EMPLOYEES WHERE HIRE_DATE <= TO_DATE('31-dec-1995','FXDD-MON-FXRRRR')
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                                                                                                                       
+--------------- ---------                                                                                                                                                                                                                                                                                                                                                                                       
+Steven          17-JUL-87                                                                                                                                                                                                                                                                                                                                                                                       
+Neena           21-SEP-89                                                                                                                                                                                                                                                                                                                                                                                       
+Lex             13-JAN-93                                                                                                                                                                                                                                                                                                                                                                                       
+Alexander       03-JAN-90                                                                                                                                                                                                                                                                                                                                                                                       
+Bruce           21-MAY-91                                                                                                                                                                                                                                                                                                                                                                                       
+Trenna          17-OCT-95                                                                                                                                                                                                                                                                                                                                                                                       
+Jennifer        17-SEP-87                                                                                                                                                                                                                                                                                                                                                                                       
+Shelley         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+William         07-JUN-94                                                                                                                                                                                                                                                                                                                                                                                       
+
+9 rows selected.
+
+SQL> SELECT TO_CHAR(SYSDATE,'"Today is" ddth "day of month" Month, "year" Yyyysp.') FROM DUAL;
+
+TO_CHAR(SYSDATE,'"TODAYIS"DDTH"DAYOFMONTH"MONTH,"YEAR"YYYYSP.')                                                                                                                                                                                                                                                                                                                                                 
+-----------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                               
+Today is 24th day of month January  , year Two Thousand Twenty-Five.                                                                                                                                                                                                                                                                                                                                            
+
+SQL> SELECT TO_CHAR(SYSDATE,'FM"Today is" ddth "day of month" Month, "year" Yyyysp.') FROM DUAL;
+
+TO_CHAR(SYSDATE,'FM"TODAYIS"DDTH"DAYOFMONTH"MONTH,"YEAR"YYYYSP.')                                                                                                                                                                                                                                                                                                                                               
+-----------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                               
+Today is 24th day of month January, year Two Thousand Twenty-Five.                                                                                                                                                                                                                                                                                                                                              
+
+SQL> SELECT TO_CHAR(SYSDATE,'Year Yyyysp') FROM DUAL;
+
+TO_CHAR(SYSDATE,'YEARYYYYSP')                                                                                                                                                                                                                                                                                                                                                                                   
+-------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                           
+Twenty Twenty-Five Two Thousand Twenty-Five                                                                                                                                                                                                                                                                                                                                                                     
+
+SQL> SPOOL OFF

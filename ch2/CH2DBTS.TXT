@@ -1,0 +1,920 @@
+SQL> 
+SQL> REM DISPLAY FIRST_NAME , SALARY , COMMISSION_PCT , HIRE_DATE. EMPLOYEE SHOULD NOT GET ANY COMMISSION AND SHOULD BE HIRED IN FIRST QUARTER OF ANY YEAR. DISPLAY ALL OTHER THAN FIRST TWO HIGHEST PAID EMPLOYEES.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY , COMMISSION_PCT , HIRE_DATE
+  2  FROM EMPLOYEES
+  3  WHERE COMMISSION_PCT IS NULL AND (HIRE_DATE LIKE '%JAN%' OR HIRE_DATE LIKE '%FEB%' OR HIRE_DATE LIKE '%MAR%')
+  4  ORDER BY SALARY DESC
+  5  OFFSET 2 ROWS;
+
+FIRST_NAME          SALARY COMMISSION_PCT HIRE_DATE                                                                                                                                                                                                                                                         
+--------------- ---------- -------------- ---------                                                                                                                                                                                                                                                         
+Alexander             9000                03-JAN-90                                                                                                                                                                                                                                                         
+Diana                 4200                07-FEB-99                                                                                                                                                                                                                                                         
+Curtis                3100                29-JAN-97                                                                                                                                                                                                                                                         
+Randall               2600                15-MAR-98                                                                                                                                                                                                                                                         
+
+SQL> REM DISPLAY ROWS BETWEEN 6 AND 14
+SQL> 
+SQL> REM OFFSET = START - 1 = 6 - 1 = 5
+SQL> 
+SQL> REM FETCH = LAST - OFFSET = 14 - 5 = 9
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                         
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                                                                                                                         
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                                                                                                                         
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                                                                                                                         
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                                                                                                                         
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                                                                                                                         
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                                                                                                                         
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                                                                                                                         
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                                                                                                                         
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                                                                                                                         
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                                                                                                                         
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                                                                                                                         
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                                                                                                                         
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                                                                                                                         
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                                                                                                                         
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                                                                                                                         
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                                                                                                                       
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                                                                                                                         
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                                                                                                                         
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                                                                                                                         
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                                                                                                                         
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                                                                                                                         
+
+20 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES OFFSET 5 ROWS FETCH NEXT 9 ROWS ONLY;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                         
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                                                                                                                         
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                                                                                                                         
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                                                                                                                         
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                                                                                                                         
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                                                                                                                         
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                                                                                                                         
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                                                                                                                         
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                                                                                                                         
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                                                                                                                         
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                                                                                                                         
+
+9 rows selected.
+
+SQL> SELECT * FROM MPSLIKETBL;
+
+NAME                                                                                                                                                                                                                                                                                                        
+------------------------------                                                                                                                                                                                                                                                                              
+AMIT%^PATEL                                                                                                                                                                                                                                                                                                 
+AMIT% PATEL                                                                                                                                                                                                                                                                                                 
+AMIT PATEL                                                                                                                                                                                                                                                                                                  
+AMIT_PATEL                                                                                                                                                                                                                                                                                                  
+AMIT%PATEL                                                                                                                                                                                                                                                                                                  
+AMIT_ PATEL                                                                                                                                                                                                                                                                                                 
+AMIT_%PATEL                                                                                                                                                                                                                                                                                                 
+AMIT%_PATEL                                                                                                                                                                                                                                                                                                 
+AMIT  PATEL                                                                                                                                                                                                                                                                                                 
+TAPAN PATEL                                                                                                                                                                                                                                                                                                 
+PARMAR TARAK                                                                                                                                                                                                                                                                                                
+AMIT^PATEL                                                                                                                                                                                                                                                                                                  
+
+12 rows selected.
+
+SQL> REM DISPLAY THOSE NAME WHICH HAS T , ANY CHARACTER AND P
+SQL> 
+SQL> SELECT NAME FROM MPSLIKETBL WHERE NAME LIKE '%T_P%';
+
+NAME                                                                                                                                                                                                                                                                                                        
+------------------------------                                                                                                                                                                                                                                                                              
+AMIT PATEL                                                                                                                                                                                                                                                                                                  
+AMIT_PATEL                                                                                                                                                                                                                                                                                                  
+AMIT%PATEL                                                                                                                                                                                                                                                                                                  
+TAPAN PATEL                                                                                                                                                                                                                                                                                                 
+AMIT^PATEL                                                                                                                                                                                                                                                                                                  
+
+SQL> REM DISPLAY THOSE NAME WHICH HAS T , _ AND P
+SQL> 
+SQL> 
+SQL> SELECT NAME FROM MPSLIKETBL WHERE NAME LIKE '%T#_P%' ESCAPE '#';
+
+NAME                                                                                                                                                                                                                                                                                                        
+------------------------------                                                                                                                                                                                                                                                                              
+AMIT_PATEL                                                                                                                                                                                                                                                                                                  
+
+SQL> REM DISPLAY THOSE NAME WHICH HAS T , _ , % AND P
+SQL> 
+SQL> SELECT NAME FROM MPSLIKETBL WHERE NAME LIKE '%T#_#%P%' ESCAPE '#';
+
+NAME                                                                                                                                                                                                                                                                                                        
+------------------------------                                                                                                                                                                                                                                                                              
+AMIT_%PATEL                                                                                                                                                                                                                                                                                                 
+
+SQL> REM DISPLAY LAST_NAME , MANAGER_ID , HIRE_DATE , SALARY. EMPLOYEES SHOULD REPORT TO OTHER THAN MANAGER 124,101,103 AND HIRED IN ANY OF JAN, JUN OR JUL MONTH OF ANY YEAR. DISPLAY FIRST 6 HIGHEST PAID EMPLOYEES' INFO.
+SQL> 
+SQL> SELECT LAST_NAME , MANAGER_ID , HIRE_DATE , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE MANAGER_ID NOT IN (124,101,103) AND HIRE_DATE LIKE %J%
+  4  ORDER BY SALARY
+  5  FETCH FIRST 6 ROWS ONLY;
+WHERE MANAGER_ID NOT IN (124,101,103) AND HIRE_DATE LIKE %J%
+                                                         *
+ERROR at line 3:
+ORA-00911: invalid character 
+
+
+SQL> SELECT LAST_NAME , MANAGER_ID , HIRE_DATE , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE MANAGER_ID NOT IN (124,101,103) AND HIRE_DATE LIKE '%J%'
+  4  ORDER BY SALARY
+  5  FETCH FIRST 6 ROWS ONLY;
+
+LAST_NAME       MANAGER_ID HIRE_DATE     SALARY                                                                                                                                                                                                                                                             
+--------------- ---------- --------- ----------                                                                                                                                                                                                                                                             
+Gietz                  205 07-JUN-94       8300                                                                                                                                                                                                                                                             
+Hunold                 102 03-JAN-90       9000                                                                                                                                                                                                                                                             
+Zlotkey                100 29-JAN-00      10500                                                                                                                                                                                                                                                             
+De Haan                100 13-JAN-93      17000                                                                                                                                                                                                                                                             
+
+SQL> SELECT LAST_NAME , MANAGER_ID , HIRE_DATE , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE MANAGER_ID NOT IN (124,101,103) AND HIRE_DATE LIKE '%J%'
+  4  ORDER BY SALARY DESC
+  5  FETCH FIRST 6 ROWS ONLY;
+
+LAST_NAME       MANAGER_ID HIRE_DATE     SALARY                                                                                                                                                                                                                                                             
+--------------- ---------- --------- ----------                                                                                                                                                                                                                                                             
+De Haan                100 13-JAN-93      17000                                                                                                                                                                                                                                                             
+Zlotkey                100 29-JAN-00      10500                                                                                                                                                                                                                                                             
+Hunold                 102 03-JAN-90       9000                                                                                                                                                                                                                                                             
+Gietz                  205 07-JUN-94       8300                                                                                                                                                                                                                                                             
+
+SQL> REM SORT ROWS ON DEPARTMENT_ID COLUMN. DISPLAY FIRST_NAME , DEPARTMENT_ID. DISPLAY 5 OR MORE ROWS WITH DUPLICATE VALUES.
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID
+  2  FROM EMPLOYEES
+  3  ORDER BY 2
+  4  FETCH FIRST 5 ROWS WITH TIES;
+
+FIRST_NAME      DEPARTMENT_ID                                                                                                                                                                                                                                                                               
+--------------- -------------                                                                                                                                                                                                                                                                               
+Jennifer                   10                                                                                                                                                                                                                                                                               
+Michael                    20                                                                                                                                                                                                                                                                               
+Pat                        20                                                                                                                                                                                                                                                                               
+Kevin                      50                                                                                                                                                                                                                                                                               
+Peter                      50                                                                                                                                                                                                                                                                               
+Randall                    50                                                                                                                                                                                                                                                                               
+Curtis                     50                                                                                                                                                                                                                                                                               
+Trenna                     50                                                                                                                                                                                                                                                                               
+
+8 rows selected.
+
+SQL> REM DISPLAY JOB_ID WHICH CONTAINS _ , FOLLOWED BY ANY NO. OF CHARACTERS , P.
+SQL> 
+SQL> 
+SQL> SELECT JOB_ID FROM EMPLOYEES;
+
+JOB_ID                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                  
+AD_PRES                                                                                                                                                                                                                                                                                                     
+AD_VP                                                                                                                                                                                                                                                                                                       
+AD_VP                                                                                                                                                                                                                                                                                                       
+IT_PROG                                                                                                                                                                                                                                                                                                     
+IT_PROG                                                                                                                                                                                                                                                                                                     
+IT_PROG                                                                                                                                                                                                                                                                                                     
+ST_MAN                                                                                                                                                                                                                                                                                                      
+ST_CLERK                                                                                                                                                                                                                                                                                                    
+ST_CLERK                                                                                                                                                                                                                                                                                                    
+ST_CLERK                                                                                                                                                                                                                                                                                                    
+ST_CLERK                                                                                                                                                                                                                                                                                                    
+SA_MAN                                                                                                                                                                                                                                                                                                      
+SA_REP                                                                                                                                                                                                                                                                                                      
+SA_REP                                                                                                                                                                                                                                                                                                      
+SA_REP                                                                                                                                                                                                                                                                                                      
+AD_ASST                                                                                                                                                                                                                                                                                                     
+MK_MAN                                                                                                                                                                                                                                                                                                      
+MK_REP                                                                                                                                                                                                                                                                                                      
+AC_MGR                                                                                                                                                                                                                                                                                                      
+AC_ACCOUNT                                                                                                                                                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT JOB_ID FROM EMPLOYEES WHERE JOB_ID LIKE '%^_%P' ESCAPE '^';
+
+JOB_ID                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                  
+AD_VP                                                                                                                                                                                                                                                                                                       
+AD_VP                                                                                                                                                                                                                                                                                                       
+SA_REP                                                                                                                                                                                                                                                                                                      
+SA_REP                                                                                                                                                                                                                                                                                                      
+SA_REP                                                                                                                                                                                                                                                                                                      
+MK_REP                                                                                                                                                                                                                                                                                                      
+
+6 rows selected.
+
+SQL> REM A-J  , K-P , OTHERS
+SQL> 
+SQL> REM DISPLAY THOSE WHO WERE HIRED IN YEAR 94 OR 96 AND GETS SALARY HIGHER THAN 10000. (DON'T USE MULTI ROW OPERATORS)
+SQL> 
+SQL> SELECT *
+  2  FROM EMPLOYEES
+  3  WHERE HIRE_DATE LIKE '%94' OR HIRE_DATE LIKE '%96' AND SALARY > 10000;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                         
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                                                                                                                         
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                                                                                                                         
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                                                                                                                         
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                                                                                                                         
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                                                                                                                         
+
+SQL> SELECT *
+  2  FROM EMPLOYEES
+  3  WHERE (HIRE_DATE LIKE '%94' OR HIRE_DATE LIKE '%96') AND SALARY > 10000;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                         
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                                                                                                                         
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                                                                                                                         
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                                                                                                                         
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                                                                                                                         
+
+SQL> REM DISPLAY DEPARTMENT_ID , JOB_ID , SALARY , FIRST_NAME SORT ROWS ON ALL FOUR COLUMNS USING COLUMN NAME, COLUMN POSITION , COLUMN ALIAS , ASC , DESC AND NULLS FIRST OPTION IN SINGLE COMMAND ONLY
+SQL> DISPLAY FIRST_NAME HAVING LENGTH UPTO 6
+SP2-0734: unknown command beginning "DISPLAY FI..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> SELECT DEPARTMENT_ID , JOB_ID , SALARY , FIRST_NAME
+  2  FROM EMPLOYEES
+  3  ORDER BY
+  4  
+SQL> 
+SQL> SELECT DEPARTMENT_ID , JOB_ID , SALARY PAYMENT, FIRST_NAME
+  2  FROM EMPLOYEES
+  3  ORDER BY 1 NULLS FIRST, JOB_ID DESC , PAYMENT ASC;
+
+DEPARTMENT_ID JOB_ID        PAYMENT FIRST_NAME                                                                                                                                                                                                                                                              
+------------- ---------- ---------- ---------------                                                                                                                                                                                                                                                         
+              SA_REP           7000 Kimerely                                                                                                                                                                                                                                                                
+           10 AD_ASST          4400 Jennifer                                                                                                                                                                                                                                                                
+           20 MK_REP           6000 Pat                                                                                                                                                                                                                                                                     
+           20 MK_MAN          13000 Michael                                                                                                                                                                                                                                                                 
+           50 ST_MAN           5800 Kevin                                                                                                                                                                                                                                                                   
+           50 ST_CLERK         2500 Peter                                                                                                                                                                                                                                                                   
+           50 ST_CLERK         2600 Randall                                                                                                                                                                                                                                                                 
+           50 ST_CLERK         3100 Curtis                                                                                                                                                                                                                                                                  
+           50 ST_CLERK         3500 Trenna                                                                                                                                                                                                                                                                  
+           60 IT_PROG          4200 Diana                                                                                                                                                                                                                                                                   
+           60 IT_PROG          6000 Bruce                                                                                                                                                                                                                                                                   
+           60 IT_PROG          9000 Alexander                                                                                                                                                                                                                                                               
+           80 SA_REP           8600 Jonathon                                                                                                                                                                                                                                                                
+           80 SA_REP          11000 Ellen                                                                                                                                                                                                                                                                   
+           80 SA_MAN          10500 Eleni                                                                                                                                                                                                                                                                   
+           90 AD_VP           17000 Lex                                                                                                                                                                                                                                                                     
+           90 AD_VP           17000 Neena                                                                                                                                                                                                                                                                   
+           90 AD_PRES         24000 Steven                                                                                                                                                                                                                                                                  
+          110 AC_MGR          12000 Shelley                                                                                                                                                                                                                                                                 
+          110 AC_ACCOUNT       8300 William                                                                                                                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , JOB_ID , SALARY PAYMENT, FIRST_NAME
+  2  FROM EMPLOYEES
+  3  ORDER BY 1 NULLS FIRST, JOB_ID DESC , PAYMENT ASC , 4;
+
+DEPARTMENT_ID JOB_ID        PAYMENT FIRST_NAME                                                                                                                                                                                                                                                              
+------------- ---------- ---------- ---------------                                                                                                                                                                                                                                                         
+              SA_REP           7000 Kimerely                                                                                                                                                                                                                                                                
+           10 AD_ASST          4400 Jennifer                                                                                                                                                                                                                                                                
+           20 MK_REP           6000 Pat                                                                                                                                                                                                                                                                     
+           20 MK_MAN          13000 Michael                                                                                                                                                                                                                                                                 
+           50 ST_MAN           5800 Kevin                                                                                                                                                                                                                                                                   
+           50 ST_CLERK         2500 Peter                                                                                                                                                                                                                                                                   
+           50 ST_CLERK         2600 Randall                                                                                                                                                                                                                                                                 
+           50 ST_CLERK         3100 Curtis                                                                                                                                                                                                                                                                  
+           50 ST_CLERK         3500 Trenna                                                                                                                                                                                                                                                                  
+           60 IT_PROG          4200 Diana                                                                                                                                                                                                                                                                   
+           60 IT_PROG          6000 Bruce                                                                                                                                                                                                                                                                   
+           60 IT_PROG          9000 Alexander                                                                                                                                                                                                                                                               
+           80 SA_REP           8600 Jonathon                                                                                                                                                                                                                                                                
+           80 SA_REP          11000 Ellen                                                                                                                                                                                                                                                                   
+           80 SA_MAN          10500 Eleni                                                                                                                                                                                                                                                                   
+           90 AD_VP           17000 Lex                                                                                                                                                                                                                                                                     
+           90 AD_VP           17000 Neena                                                                                                                                                                                                                                                                   
+           90 AD_PRES         24000 Steven                                                                                                                                                                                                                                                                  
+          110 AC_MGR          12000 Shelley                                                                                                                                                                                                                                                                 
+          110 AC_ACCOUNT       8300 William                                                                                                                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM DISPLAY DEPARTMENT_ID , JOB_ID , SALARY , FIRST_NAME SORT ROWS ON ALL FOUR COLUMNS USING COLUMN NAME, COLUMN POSITION , COLUMN ALIAS , ASC , DESC AND NULLS FIRST OPTION IN SINGLE COMMAND ONLY
+SQL> 
+SQL> REM DISPLAY FIRST_NAME HAVING LENGTH UPTO 6
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '______';
+
+FIRST_NAME                                                                                                                                                                                                                                                                                                  
+---------------                                                                                                                                                                                                                                                                                             
+Steven                                                                                                                                                                                                                                                                                                      
+Trenna                                                                                                                                                                                                                                                                                                      
+Curtis                                                                                                                                                                                                                                                                                                      
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME NOT LIKE '_______%';
+
+FIRST_NAME                                                                                                                                                                                                                                                                                                  
+---------------                                                                                                                                                                                                                                                                                             
+Steven                                                                                                                                                                                                                                                                                                      
+Neena                                                                                                                                                                                                                                                                                                       
+Lex                                                                                                                                                                                                                                                                                                         
+Bruce                                                                                                                                                                                                                                                                                                       
+Diana                                                                                                                                                                                                                                                                                                       
+Kevin                                                                                                                                                                                                                                                                                                       
+Trenna                                                                                                                                                                                                                                                                                                      
+Curtis                                                                                                                                                                                                                                                                                                      
+Peter                                                                                                                                                                                                                                                                                                       
+Eleni                                                                                                                                                                                                                                                                                                       
+Ellen                                                                                                                                                                                                                                                                                                       
+Pat                                                                                                                                                                                                                                                                                                         
+
+12 rows selected.
+
+SQL> REM DISPLAY THOSE WHOSE SALARY IS IN THE RANGE OF 6000 AND 11000 AND WHOSE HIREYEAR IS IN THE RANGE OF 93 TO 98 (DON'T USE BETWEEN)
+SQL> 
+SQL> SELECT *
+  2  FROM EMPLOYEES
+  3  WHERE SALARY >= 6000 AND SALARY <= 11000 AND HIRE_DATE >= '1JAN93' AND HIRE_DATE <= '31DEC98';
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                         
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                                                                                                                         
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                                                                                                                         
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                                                                                                                         
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                                                                                                                         
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                                                                                                                         
+
+SQL> REM DISPLAY THOSE LAST NAME WHICH CONTAINTS ALHABET 'o' ON 4th POSITION.
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '___o%';
+
+LAST_NAME                                                                                                                                                                                                                                                                                                   
+---------------                                                                                                                                                                                                                                                                                             
+Hunold                                                                                                                                                                                                                                                                                                      
+Matos                                                                                                                                                                                                                                                                                                       
+
+SQL> REM display first_name,last_name,salary. spelling length of first_name must be 6 or less and spelling length of last_name must be 6 or more . display all other than 3 lowest paid employees.
+SQL> 
+SQL> SELECT FIRST_NAME , LAST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE FIRST_NAME NOT LIKE '_______%' AND LAST_NAME LIKE '______%'
+  4  ORDER BY SALARY
+  5  OFFSET 3 ROWS;
+
+FIRST_NAME      LAST_NAME           SALARY                                                                                                                                                                                                                                                                  
+--------------- --------------- ----------                                                                                                                                                                                                                                                                  
+Kevin           Mourgos               5800                                                                                                                                                                                                                                                                  
+Eleni           Zlotkey              10500                                                                                                                                                                                                                                                                  
+Lex             De Haan              17000                                                                                                                                                                                                                                                                  
+Neena           Kochhar              17000                                                                                                                                                                                                                                                                  
+
+SQL> 
+SQL> 
+SQL> SELECT 'OM NAMAH SHIVAYA!' FROM DUAL;
+
+'OMNAMAHSHIVAYA!'                                                                                                                                                                                                                                                                                           
+-----------------                                                                                                                                                                                                                                                                                           
+OM NAMAH SHIVAYA!                                                                                                                                                                                                                                                                                           
+
+SQL> SELECT 'OM NAMAH SHIVAYA !' "PANCHAKSHAR MANTRA" FROM DUAL;
+
+PANCHAKSHAR MANTRA                                                                                                                                                                                                                                                                                          
+------------------                                                                                                                                                                                                                                                                                          
+OM NAMAH SHIVAYA !                                                                                                                                                                                                                                                                                          
+
+SQL> REM DISPLAY LAST_NAME WHOSE SPELLING STARTS WITH ALPHABET 'H' AND HAS LENGTH OF 8 OR LESS CHARACTERS.
+SQL> DISPLAY THOSE WHOSE JOB_ID IS ONE OF THE IT_PROG , SA_REP , AD_VP OR WHO REPORTS TO ONE OF THE MANAGER_ID 124 , 149 (DON'T USE ANY OR SOME)
+SP2-0734: unknown command beginning "DISPLAY TH..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> REM DISPLAY LAST_NAME WHOSE SPELLING STARTS WITH ALPHABET 'H' AND HAS LENGTH OF 8 OR LESS CHARACTERS.
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE 'H%' AND LAST_NAME NOT LIKE '_________%';
+
+LAST_NAME                                                                                                                                                                                                                                                                                                   
+---------------                                                                                                                                                                                                                                                                                             
+Hunold                                                                                                                                                                                                                                                                                                      
+Higgins                                                                                                                                                                                                                                                                                                     
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME NOT LIKE 'H________%';
+
+LAST_NAME                                                                                                                                                                                                                                                                                                   
+---------------                                                                                                                                                                                                                                                                                             
+King                                                                                                                                                                                                                                                                                                        
+Kochhar                                                                                                                                                                                                                                                                                                     
+De Haan                                                                                                                                                                                                                                                                                                     
+Hunold                                                                                                                                                                                                                                                                                                      
+Ernst                                                                                                                                                                                                                                                                                                       
+Lorentz                                                                                                                                                                                                                                                                                                     
+Mourgos                                                                                                                                                                                                                                                                                                     
+Rajs                                                                                                                                                                                                                                                                                                        
+Davies                                                                                                                                                                                                                                                                                                      
+Matos                                                                                                                                                                                                                                                                                                       
+Vargas                                                                                                                                                                                                                                                                                                      
+Zlotkey                                                                                                                                                                                                                                                                                                     
+Abel                                                                                                                                                                                                                                                                                                        
+Taylor                                                                                                                                                                                                                                                                                                      
+Grant                                                                                                                                                                                                                                                                                                       
+Whalen                                                                                                                                                                                                                                                                                                      
+Fay                                                                                                                                                                                                                                                                                                         
+Higgins                                                                                                                                                                                                                                                                                                     
+Gietz                                                                                                                                                                                                                                                                                                       
+
+19 rows selected.
+
+SQL> REM DISPLAY THOSE WHOSE JOB_ID IS ONE OF THE IT_PROG , SA_REP , AD_VP OR WHO REPORTS TO ONE OF THE MANAGER_ID 124 , 149 (DON'T USE ANY OR SOME)
+SQL> 
+SQL> SELECT FIRST_NAME , JOB_ID , MANAGER_ID
+  2  FROM EMPLOYEES
+  3  WHERE JOB_ID IN ('IT_PROG','SA_REP','AD_VP') OR MANAGER_ID IN (124,149);
+
+FIRST_NAME      JOB_ID     MANAGER_ID                                                                                                                                                                                                                                                                       
+--------------- ---------- ----------                                                                                                                                                                                                                                                                       
+Neena           AD_VP             100                                                                                                                                                                                                                                                                       
+Lex             AD_VP             100                                                                                                                                                                                                                                                                       
+Alexander       IT_PROG           102                                                                                                                                                                                                                                                                       
+Bruce           IT_PROG           103                                                                                                                                                                                                                                                                       
+Diana           IT_PROG           103                                                                                                                                                                                                                                                                       
+Trenna          ST_CLERK          124                                                                                                                                                                                                                                                                       
+Curtis          ST_CLERK          124                                                                                                                                                                                                                                                                       
+Randall         ST_CLERK          124                                                                                                                                                                                                                                                                       
+Peter           ST_CLERK          124                                                                                                                                                                                                                                                                       
+Ellen           SA_REP            149                                                                                                                                                                                                                                                                       
+Jonathon        SA_REP            149                                                                                                                                                                                                                                                                       
+Kimerely        SA_REP            149                                                                                                                                                                                                                                                                       
+
+12 rows selected.
+
+SQL> REM DISPLAY LAST_NAME WHOSE SPELLING STARTS WITH ALPHABET 'H' AND HAS LENGTH OF 8 OR LESS CHARACTERS.
+SQL> 
+SQL> REM DISPLAY ALL EMPLOYEES OF DEPARTMENT 80 BUT ONLY THOSE EMPLOYEES OF 110 WHO GETS HIGHER SALARY THAN 10000.
+SQL> 
+SQL> SELECT *
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID = 80 OR DEPARTMENT_ID = 110 AND SALARY > 10000;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                         
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                                                                                                                         
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                                                                                                                         
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                                                                                                                         
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                                                                                                                         
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                                                                                                                         
+
+SQL> REM SINGLE ROW OPERATORS : TO COMPARE SINGLE VALUE WITHIN SINGLE CONDITION
+SQL> 
+SQL> REM WHERE condition
+SQL> 
+SQL> REM CONDITION SYNTAX : operand1   operator    operand2
+SQL> 
+SQL> REM                    SALARY     >           10000
+SQL> 
+SQL> 
+SQL> REM LIST OF COMPARISON OPERATOR : = < > <= >=    <> != ^=
+SQL> 
+SQL> REM NUMBER VALUES ARE USED WITHOUT SINGLE QUOTES
+SQL> 
+SQL> REM CHARACTER VALUES ARE USED WITHIN SINGLE QUOTES AND ARE CASE SENSITIVE. RAM AND ram are DIFERENT/NOT EQUAL
+SQL> 
+SQL> REM DATE VALUES ARE FORMAT SENSITIVE : 1 DEFAULT DD-MON-RR
+SQL> 
+SQL> REM 2 COMPATIABLE FORMATS : DD/MON/RR   DD/MON\RR  DD/MONRR  DDMONRR  DDMONTHRR  DDmonthRR   DDMonthRR   DDmOnThRR   DDMONRRRR    DDMONTHRRRR
+SQL> 
+SQL> 
+SQL> REM | &
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES WHERE SALARY = 6000;
+
+FIRST_NAME          SALARY                                                                                                                                                                                                                                                                                  
+--------------- ----------                                                                                                                                                                                                                                                                                  
+Bruce                 6000                                                                                                                                                                                                                                                                                  
+Pat                   6000                                                                                                                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES WHERE 6000 = SALARY;
+
+FIRST_NAME          SALARY                                                                                                                                                                                                                                                                                  
+--------------- ----------                                                                                                                                                                                                                                                                                  
+Bruce                 6000                                                                                                                                                                                                                                                                                  
+Pat                   6000                                                                                                                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES WHERE '6000' = SALARY;
+
+FIRST_NAME          SALARY                                                                                                                                                                                                                                                                                  
+--------------- ----------                                                                                                                                                                                                                                                                                  
+Bruce                 6000                                                                                                                                                                                                                                                                                  
+Pat                   6000                                                                                                                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES WHERE "6000" = SALARY;
+SELECT FIRST_NAME , SALARY FROM EMPLOYEES WHERE "6000" = SALARY
+                                                *
+ERROR at line 1:
+ORA-00904: "6000": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID <> 'IT_PROG';
+
+FIRST_NAME          SALARY JOB_ID                                                                                                                                                                                                                                                                           
+--------------- ---------- ----------                                                                                                                                                                                                                                                                       
+Steven               24000 AD_PRES                                                                                                                                                                                                                                                                          
+Neena                17000 AD_VP                                                                                                                                                                                                                                                                            
+Lex                  17000 AD_VP                                                                                                                                                                                                                                                                            
+Kevin                 5800 ST_MAN                                                                                                                                                                                                                                                                           
+Trenna                3500 ST_CLERK                                                                                                                                                                                                                                                                         
+Curtis                3100 ST_CLERK                                                                                                                                                                                                                                                                         
+Randall               2600 ST_CLERK                                                                                                                                                                                                                                                                         
+Peter                 2500 ST_CLERK                                                                                                                                                                                                                                                                         
+Eleni                10500 SA_MAN                                                                                                                                                                                                                                                                           
+Ellen                11000 SA_REP                                                                                                                                                                                                                                                                           
+Jonathon              8600 SA_REP                                                                                                                                                                                                                                                                           
+Kimerely              7000 SA_REP                                                                                                                                                                                                                                                                           
+Jennifer              4400 AD_ASST                                                                                                                                                                                                                                                                          
+Michael              13000 MK_MAN                                                                                                                                                                                                                                                                           
+Pat                   6000 MK_REP                                                                                                                                                                                                                                                                           
+Shelley              12000 AC_MGR                                                                                                                                                                                                                                                                           
+William               8300 AC_ACCOUNT                                                                                                                                                                                                                                                                       
+
+17 rows selected.
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID <> 'IT_PROg';
+
+FIRST_NAME          SALARY JOB_ID                                                                                                                                                                                                                                                                           
+--------------- ---------- ----------                                                                                                                                                                                                                                                                       
+Steven               24000 AD_PRES                                                                                                                                                                                                                                                                          
+Neena                17000 AD_VP                                                                                                                                                                                                                                                                            
+Lex                  17000 AD_VP                                                                                                                                                                                                                                                                            
+Alexander             9000 IT_PROG                                                                                                                                                                                                                                                                          
+Bruce                 6000 IT_PROG                                                                                                                                                                                                                                                                          
+Diana                 4200 IT_PROG                                                                                                                                                                                                                                                                          
+Kevin                 5800 ST_MAN                                                                                                                                                                                                                                                                           
+Trenna                3500 ST_CLERK                                                                                                                                                                                                                                                                         
+Curtis                3100 ST_CLERK                                                                                                                                                                                                                                                                         
+Randall               2600 ST_CLERK                                                                                                                                                                                                                                                                         
+Peter                 2500 ST_CLERK                                                                                                                                                                                                                                                                         
+Eleni                10500 SA_MAN                                                                                                                                                                                                                                                                           
+Ellen                11000 SA_REP                                                                                                                                                                                                                                                                           
+Jonathon              8600 SA_REP                                                                                                                                                                                                                                                                           
+Kimerely              7000 SA_REP                                                                                                                                                                                                                                                                           
+Jennifer              4400 AD_ASST                                                                                                                                                                                                                                                                          
+Michael              13000 MK_MAN                                                                                                                                                                                                                                                                           
+Pat                   6000 MK_REP                                                                                                                                                                                                                                                                           
+Shelley              12000 AC_MGR                                                                                                                                                                                                                                                                           
+William               8300 AC_ACCOUNT                                                                                                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID = 'IT_PROG';
+
+FIRST_NAME          SALARY JOB_ID                                                                                                                                                                                                                                                                           
+--------------- ---------- ----------                                                                                                                                                                                                                                                                       
+Alexander             9000 IT_PROG                                                                                                                                                                                                                                                                          
+Bruce                 6000 IT_PROG                                                                                                                                                                                                                                                                          
+Diana                 4200 IT_PROG                                                                                                                                                                                                                                                                          
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID = "IT_PROG";
+SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID = "IT_PROG"
+                                                                  *
+ERROR at line 1:
+ORA-00904: "IT_PROG": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID = 'IT_PROg';
+
+no rows selected
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID = 'IT-PROG';
+
+no rows selected
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID = 'IT PROG';
+
+no rows selected
+
+SQL> SELECT FIRST_NAME , SALARY , JOB_ID FROM EMPLOYEES WHERE JOB_ID = 'ITPROG';
+
+no rows selected
+
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-DEC-95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > "31-DEC-95";
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > "31-DEC-95"
+                                                               *
+ERROR at line 1:
+ORA-00904: "31-DEC-95": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > 31-DEC-95;
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > 31-DEC-95
+                                                                  *
+ERROR at line 1:
+ORA-00904: "DEC": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31/DEC/95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31/DEC|95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31/DEC&95';
+Enter value for 95: ^
+old   1: SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31/DEC&95'
+new   1: SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31/DEC^'
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31/DEC^'
+                                                               *
+ERROR at line 1:
+ORA-01840: input value not long enough for date format 
+
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31/DEC95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31DEC95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31DECEMBER95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31DEcembER95';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31DEcembER1995';
+
+FIRST_NAME      HIRE_DATE                                                                                                                                                                                                                                                                                   
+--------------- ---------                                                                                                                                                                                                                                                                                   
+Diana           07-FEB-99                                                                                                                                                                                                                                                                                   
+Kevin           16-NOV-99                                                                                                                                                                                                                                                                                   
+Curtis          29-JAN-97                                                                                                                                                                                                                                                                                   
+Randall         15-MAR-98                                                                                                                                                                                                                                                                                   
+Peter           09-JUL-98                                                                                                                                                                                                                                                                                   
+Eleni           29-JAN-00                                                                                                                                                                                                                                                                                   
+Ellen           11-MAY-96                                                                                                                                                                                                                                                                                   
+Jonathon        24-MAR-98                                                                                                                                                                                                                                                                                   
+Kimerely        24-MAY-99                                                                                                                                                                                                                                                                                   
+Michael         17-FEB-96                                                                                                                                                                                                                                                                                   
+Pat             17-AUG-97                                                                                                                                                                                                                                                                                   
+
+11 rows selected.
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-12-1995';
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > '31-12-1995'
+                                                               *
+ERROR at line 1:
+ORA-01843: not a valid month 
+
+
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > 'DEC-31-1995';
+SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE > 'DEC-31-1995'
+                                                               *
+ERROR at line 1:
+ORA-01858: a non-numeric character was found where a numeric was expected 
+
+
+SQL> REM DISPLAY THOSE WHOSE SALARY IS IN THE RANGE OF 6000 AND 11000 AND WHOSE HIREYEAR IS IN THE RANGE OF 93 TO 98 (DON'T USE BETWEEN)
+SQL> 
+SQL> SELECT *
+  2  FROM EMPLOYEES
+  3  WHERE SALARY >= 6000 AND SALARY <= 11000  AND HIRE_DATE >= '1JAN93' AND '31DEC98';
+WHERE SALARY >= 6000 AND SALARY <= 11000  AND HIRE_DATE >= '1JAN93' AND '31DEC98'
+                                                                                *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT *
+  2  FROM EMPLOYEES
+  3  WHERE SALARY >= 6000 AND SALARY <= 11000  AND HIRE_DATE >= '1JAN93' AND HIRE_DATE <= '31DEC98';
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                         
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                                                                                                                         
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                                                                                                                         
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                                                                                                                         
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                                                                                                                         
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                                                                                                                         
+
+SQL> REM DISPLAY ONLY THOSE LAST_NAME WHOSE FIRST ALPHABET IS IN THE RANGE OF 'S' TO 'Z'
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME >= 'S' ORDER BY 1;
+
+LAST_NAME                                                                                                                                                                                                                                                                                                   
+---------------                                                                                                                                                                                                                                                                                             
+Taylor                                                                                                                                                                                                                                                                                                      
+Vargas                                                                                                                                                                                                                                                                                                      
+Whalen                                                                                                                                                                                                                                                                                                      
+Zlotkey                                                                                                                                                                                                                                                                                                     
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME 'S' AND 'Zzz' ORDER BY 1;
+SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME 'S' AND 'Zzz' ORDER BY 1
+                                                *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME BETWEEN 'S' AND 'Zzz' ORDER BY 1;
+
+LAST_NAME                                                                                                                                                                                                                                                                                                   
+---------------                                                                                                                                                                                                                                                                                             
+Taylor                                                                                                                                                                                                                                                                                                      
+Vargas                                                                                                                                                                                                                                                                                                      
+Whalen                                                                                                                                                                                                                                                                                                      
+Zlotkey                                                                                                                                                                                                                                                                                                     
+
+SQL> REM DISPLAY THOSE WHOSE LAST_NAME SPELLING HAS TWO SUCCESSIVE LOWER CASE A OR FIRST_NAME HAS ATLEAST TWO LOWER CASE E (SUCCESSIVE OR SCATTERED)
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '%ll%' OR FIRST_NAME LIKE '%e%e%';
+
+LAST_NAME                                                                                                                                                                                                                                                                                                   
+---------------                                                                                                                                                                                                                                                                                             
+King                                                                                                                                                                                                                                                                                                        
+Kochhar                                                                                                                                                                                                                                                                                                     
+Hunold                                                                                                                                                                                                                                                                                                      
+Vargas                                                                                                                                                                                                                                                                                                      
+Grant                                                                                                                                                                                                                                                                                                       
+Whalen                                                                                                                                                                                                                                                                                                      
+Higgins                                                                                                                                                                                                                                                                                                     
+
+7 rows selected.
+
+SQL> SELECT LAST_NAME , FIRST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '%ll%' OR FIRST_NAME LIKE '%e%e%';
+
+LAST_NAME       FIRST_NAME                                                                                                                                                                                                                                                                                  
+--------------- ---------------                                                                                                                                                                                                                                                                             
+King            Steven                                                                                                                                                                                                                                                                                      
+Kochhar         Neena                                                                                                                                                                                                                                                                                       
+Hunold          Alexander                                                                                                                                                                                                                                                                                   
+Vargas          Peter                                                                                                                                                                                                                                                                                       
+Grant           Kimerely                                                                                                                                                                                                                                                                                    
+Whalen          Jennifer                                                                                                                                                                                                                                                                                    
+Higgins         Shelley                                                                                                                                                                                                                                                                                     
+
+7 rows selected.
+
+SQL> SELECT LAST_NAME , FIRST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '%aa%' OR FIRST_NAME LIKE '%e%e%';
+
+LAST_NAME       FIRST_NAME                                                                                                                                                                                                                                                                                  
+--------------- ---------------                                                                                                                                                                                                                                                                             
+King            Steven                                                                                                                                                                                                                                                                                      
+Kochhar         Neena                                                                                                                                                                                                                                                                                       
+De Haan         Lex                                                                                                                                                                                                                                                                                         
+Hunold          Alexander                                                                                                                                                                                                                                                                                   
+Vargas          Peter                                                                                                                                                                                                                                                                                       
+Grant           Kimerely                                                                                                                                                                                                                                                                                    
+Whalen          Jennifer                                                                                                                                                                                                                                                                                    
+Higgins         Shelley                                                                                                                                                                                                                                                                                     
+
+8 rows selected.
+
+SQL> 14 DISPLAY EMPLOYEE_ID , MANAGER_ID FOR THOSE WHO DOESN'T REPORT TO 100. SORT RESULT ON MANAGER_ID DESCENDING. DISPLAY ONLY FIRST 7 OR MORE ROWS.
+SQL> 
+SQL> SELECT EMPLOYEE_ID , MANAGER_ID FROM EMPLOYEES WHERE MANAGER_ID!=100 ORDER BY 2 DESC FETCH FIRST 7 ROWS WITH TIES;
+
+EMPLOYEE_ID MANAGER_ID                                                                                                                                                                                                                                                                                      
+----------- ----------                                                                                                                                                                                                                                                                                      
+        206        205                                                                                                                                                                                                                                                                                      
+        202        201                                                                                                                                                                                                                                                                                      
+        174        149                                                                                                                                                                                                                                                                                      
+        178        149                                                                                                                                                                                                                                                                                      
+        176        149                                                                                                                                                                                                                                                                                      
+        141        124                                                                                                                                                                                                                                                                                      
+        144        124                                                                                                                                                                                                                                                                                      
+        143        124                                                                                                                                                                                                                                                                                      
+        142        124                                                                                                                                                                                                                                                                                      
+
+9 rows selected.
+
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE WHO REPORTS TO MANAGER 100 , 124 OR 149. (USING LOGICAL OPERATORS)
+SQL> 
+SQL> REM 2 DISPLAY ALL OTHER THAN THOSE WHO GETS SALARY IN THE RANGE OF 6000 AND 11000. (DON'T USE SPECIAL OPERATOR)
+SQL> 
+SQL> REM 3 DISPLAY DEPARTMENT_ID , MANAGER_ID AND FIRST_NAME COLUMNS. SORT IT ON FIRST TWO COLUMNS. DISPLAY FIRST 6 OR MORE ROWS.
+SQL> 
+SQL> REM 4 DISPLAY ROWS BETWEEN 4 AND 16. (USING FORMULA AND FUNCTION BOTH. DON'T USE 'ONLY' AND 'ROWS' KEY WORDS)
+SQL> 
+SQL> REM 5 DISPLAY THOSE JOB_ID WHICH CONTAINS _ AND ENDS WITH 'EP'
+SQL> 
+SQL> REM 6 DISPLAY THOSE EMPLOYEES WHO REPORTS TO 100 OR 149, WHO GETS SALARY OUT SIDE RANGE 5000 AND 12000.
+SQL> 
+SQL> REM 7 DISPLAY THOSE FIRST_NAME WHICH HAS 6 OR MORE CHARACTERS AND LAST_NAME UPTO 5 CHARACTERS.
+SQL> 
+SQL> REM 8 DISPLAY THOSE WHOSE HIRE_DATE IS BEFORE 10th.
+SQL> 
+SQL> REM 9 DISPLAY THOSE WHOSE HIRE_DATE IS IN JAN , MAR , MAY BUT NOT IN AUG OR APR.
+SQL> 
+SQL> REM 10 DISPLALY THOSE WHO WERE HIRED IN 3rd QUARTER(USING SPECIAL OPERATOR) AND REPORTS TO MANAGERS EXCEPT 100 , 124 AND 149 (DON'T USE SPECIAL OPERATOR)
+SQL> 
+SQL> SPOOL OFF

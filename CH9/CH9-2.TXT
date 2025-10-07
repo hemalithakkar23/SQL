@@ -1,0 +1,893 @@
+SQL> 
+SQL> REM DML STATEMENTS : INSERT UPDATE DELETE                  MERGE
+SQL> 
+SQL> REM INSERT : TO ADD NEW ROW(S) TO THE EXISTING TABLE.
+SQL> 
+SQL> REM UPDATE : TO UPDATE/MODIFY/EDIT/CHANGE EXISTING ROW VALUES/DATA.
+SQL> 
+SQL> REM DELETE: TO DELETE/REMOVE EXISTING ROWS OF THE TABLE,.
+SQL> 
+SQL> 
+SQL> REM INSERT : TO ADD NEW ROW(S) TO THE EXISTING TABLE.
+SQL> 
+SQL> REM INSERT HAS TWO SYNTAXES : 1 INSERT ... VALUES ... 2 INSERT ... sub query
+SQL> 
+SQL> REM INSERT ... VALUES ...  : IT CAN INSERT SINGLE ROW PER EXECUTION.
+SQL> 
+SQL> REM INSERT INTO tablename (column list) VALUE (value list);
+SQL> 
+SQL> REM column list IS REQUIRED IF WE WANT TO SUPLY VALUS FOR SELECTED COLUMNS OR WE WANT TO CHANGE THE ORDER OF VALUES.
+SQL> 
+SQL> DROP TABLE EMP;
+
+Table dropped.
+
+SQL> CREATE TABLE EMP AS SELECT EMPLOYEE_ID , FIRST_NAME ,HIRE_DATE FROM EMPLOYEES WHERE 1 = 2;
+
+Table created.
+
+SQL> DESC EMP
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPLOYEE_ID                                                                                                       NOT NULL NUMBER(6)
+ FIRST_NAME                                                                                                                 VARCHAR2(15)
+ HIRE_DATE                                                                                                         NOT NULL DATE
+
+SQL> SELECT * FROM EMP
+  2  ;
+
+no rows selected
+
+SQL> DESC EMPLOYEES
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPLOYEE_ID                                                                                                       NOT NULL NUMBER(6)
+ FIRST_NAME                                                                                                                 VARCHAR2(15)
+ LAST_NAME                                                                                                         NOT NULL VARCHAR2(15)
+ EMAIL                                                                                                                      VARCHAR2(10)
+ PHONE_NUMBER                                                                                                               VARCHAR2(20)
+ HIRE_DATE                                                                                                         NOT NULL DATE
+ JOB_ID                                                                                                            NOT NULL VARCHAR2(10)
+ SALARY                                                                                                                     NUMBER(8,2)
+ COMMISSION_PCT                                                                                                             NUMBER(2,2)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME ,HIRE_DATE FROM EMPLOYEES WHERE 1 = 2;
+
+no rows selected
+
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME ,HIRE_DATE FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      HIRE_DATE                                                                                                                                                                   
+----------- --------------- ---------                                                                                                                                                                   
+        100 Steven          17-JUL-87                                                                                                                                                                   
+        101 Neena           21-SEP-89                                                                                                                                                                   
+        102 Lex             13-JAN-93                                                                                                                                                                   
+        103 Alexander       03-JAN-90                                                                                                                                                                   
+        104 Bruce           21-MAY-91                                                                                                                                                                   
+        107 Diana           07-FEB-99                                                                                                                                                                   
+        124 Kevin           16-NOV-99                                                                                                                                                                   
+        141 Trenna          17-OCT-95                                                                                                                                                                   
+        142 Curtis          29-JAN-97                                                                                                                                                                   
+        143 Randall         15-MAR-98                                                                                                                                                                   
+        144 Peter           09-JUL-98                                                                                                                                                                   
+        149 Eleni           29-JAN-00                                                                                                                                                                   
+        174 Ellen           11-MAY-96                                                                                                                                                                   
+        176 Jonathon        24-MAR-98                                                                                                                                                                   
+        178 Kimerely        24-MAY-99                                                                                                                                                                   
+        200 Jennifer        17-SEP-87                                                                                                                                                                   
+        201 Michael         17-FEB-96                                                                                                                                                                   
+        202 Pat             17-AUG-97                                                                                                                                                                   
+        205 Shelley         07-JUN-94                                                                                                                                                                   
+        206 William         07-JUN-94                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME ,HIRE_DATE FROM EMPLOYEES WHERE SALARY > 10000;
+
+EMPLOYEE_ID FIRST_NAME      HIRE_DATE                                                                                                                                                                   
+----------- --------------- ---------                                                                                                                                                                   
+        100 Steven          17-JUL-87                                                                                                                                                                   
+        101 Neena           21-SEP-89                                                                                                                                                                   
+        102 Lex             13-JAN-93                                                                                                                                                                   
+        149 Eleni           29-JAN-00                                                                                                                                                                   
+        174 Ellen           11-MAY-96                                                                                                                                                                   
+        201 Michael         17-FEB-96                                                                                                                                                                   
+        205 Shelley         07-JUN-94                                                                                                                                                                   
+
+7 rows selected.
+
+SQL> DESC EMP
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EMPLOYEE_ID                                                                                                       NOT NULL NUMBER(6)
+ FIRST_NAME                                                                                                                 VARCHAR2(15)
+ HIRE_DATE                                                                                                         NOT NULL DATE
+
+SQL> REM INSERT INTO tablename (column list) VALUE (value list);
+SQL> 
+SQL> INSERT INTO EMP VALUES (1111,'GANESH','4APR04');
+
+1 row created.
+
+SQL> INSERT INTO EMP VALUES (2222,'RIDDHI','5MAY05');
+
+1 row created.
+
+SQL> SELECT * FROM EMP;
+
+EMPLOYEE_ID FIRST_NAME      HIRE_DATE                                                                                                                                                                   
+----------- --------------- ---------                                                                                                                                                                   
+       1111 GANESH          04-APR-04                                                                                                                                                                   
+       2222 RIDDHI          05-MAY-05                                                                                                                                                                   
+
+SQL> INSERT INTO EMP VALUES (3333,NULL,'6JUN06');
+
+1 row created.
+
+SQL> INSERT INTO EMP VALUES (3333,'','6JUN06');
+
+1 row created.
+
+SQL> INSERT INTO EMP (EMPLOYEE_ID,HIRE_DATE) VALUES (5555,SYSDATE);
+
+1 row created.
+
+SQL> INSERT INTO EMP (HIRE_DATE,FIRST_NAME,EMPLOYEE_ID) VALUES (SYSDATE-7,'SIDDHI',1234);
+
+1 row created.
+
+SQL> SELECT * FROM EMP;
+
+EMPLOYEE_ID FIRST_NAME      HIRE_DATE                                                                                                                                                                   
+----------- --------------- ---------                                                                                                                                                                   
+       1111 GANESH          04-APR-04                                                                                                                                                                   
+       2222 RIDDHI          05-MAY-05                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       5555                 02-JUN-25                                                                                                                                                                   
+       1234 SIDDHI          26-MAY-25                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> INSERT INTO EMP VALUES (SYSDATE-7,'SIDDHI',1234);
+INSERT INTO EMP VALUES (SYSDATE-7,'SIDDHI',1234)
+                               *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE 
+
+
+SQL> REM VALUES : LITERAL , NULL , '' , DEFAULT , FORMULA , FUNCTION , FORMULA+FUNCTION , PSEUDOCOLUMN , SUBSTITUITION VARIABLE , SCALAR SUB QUERY
+SQL> 
+SQL> INSERT INTO EMP VALUES (1000+222,UPPER('&NM'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100));
+Enter value for nm: LAkshMI
+old   1: INSERT INTO EMP VALUES (1000+222,UPPER('&NM'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100))
+new   1: INSERT INTO EMP VALUES (1000+222,UPPER('LAkshMI'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100))
+
+1 row created.
+
+SQL> SELECT * FROM EMP;
+
+EMPLOYEE_ID FIRST_NAME      HIRE_DATE                                                                                                                                                                   
+----------- --------------- ---------                                                                                                                                                                   
+       1111 GANESH          04-APR-04                                                                                                                                                                   
+       2222 RIDDHI          05-MAY-05                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       5555                 02-JUN-25                                                                                                                                                                   
+       1234 SIDDHI          26-MAY-25                                                                                                                                                                   
+       1222 LAKSHMI         17-JUL-87                                                                                                                                                                   
+
+7 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+
+SQL> INSERT INTO EMP VALUES (1000+222,UPPER('&NM'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100));
+Enter value for nm: HI HELLO
+old   1: INSERT INTO EMP VALUES (1000+222,UPPER('&NM'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100))
+new   1: INSERT INTO EMP VALUES (1000+222,UPPER('HI HELLO'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100))
+
+1 row created.
+
+SQL> /
+Enter value for nm: BYE GOOD BYE
+old   1: INSERT INTO EMP VALUES (1000+222,UPPER('&NM'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100))
+new   1: INSERT INTO EMP VALUES (1000+222,UPPER('BYE GOOD BYE'),(SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100))
+
+1 row created.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE EMPLOYEE_ID=100;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+
+SQL> SELECT * FROM EMP;
+
+EMPLOYEE_ID FIRST_NAME      HIRE_DATE                                                                                                                                                                   
+----------- --------------- ---------                                                                                                                                                                   
+       1111 GANESH          04-APR-04                                                                                                                                                                   
+       2222 RIDDHI          05-MAY-05                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       5555                 02-JUN-25                                                                                                                                                                   
+       1234 SIDDHI          26-MAY-25                                                                                                                                                                   
+       1222 LAKSHMI         17-JUL-87                                                                                                                                                                   
+       1222 HI HELLO        17-JUL-87                                                                                                                                                                   
+       1222 BYE GOOD BYE    17-JUL-87                                                                                                                                                                   
+
+9 rows selected.
+
+SQL> REM VALUES : LITERAL , NULL , '' , DEFAULT , FORMULA , FUNCTION , FORMULA+FUNCTION , PSEUDOCOLUMN , SUBSTITUITION VARIABLE , SCALAR SUB QUERY
+SQL> 
+SQL> INSERT INTO EMP VALUES (1245,DEFAULT,SYSDATE-10);
+
+1 row created.
+
+SQL> SELECT * FROM EMP;
+
+EMPLOYEE_ID FIRST_NAME      HIRE_DATE                                                                                                                                                                   
+----------- --------------- ---------                                                                                                                                                                   
+       1111 GANESH          04-APR-04                                                                                                                                                                   
+       2222 RIDDHI          05-MAY-05                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       3333                 06-JUN-06                                                                                                                                                                   
+       5555                 02-JUN-25                                                                                                                                                                   
+       1234 SIDDHI          26-MAY-25                                                                                                                                                                   
+       1222 LAKSHMI         17-JUL-87                                                                                                                                                                   
+       1222 HI HELLO        17-JUL-87                                                                                                                                                                   
+       1222 BYE GOOD BYE    17-JUL-87                                                                                                                                                                   
+       1245                 23-MAY-25                                                                                                                                                                   
+
+10 rows selected.
+
+SQL> REM CREATE TABLE D1 AS SELECT * FROM DEPARTMENTS WHERE 1 = 2;
+SQL> 
+SQL> REM 1 INSERT A ROW USING LITERAL VALUES
+SQL> 
+SQL> REM 2 INSERT A ROW, PROVIDE VALUE FOR ONLY DEPARTMENT_NAME AND MANAGER_ID
+SQL> 
+SQL> REM 3 INSERT A ROW USING SUSTITUTION VARIABLE
+SQL> 
+SQL> REM 4 INSERT A ROW USING FORMULA
+SQL> 
+SQL> REM 5 INSERT A ROW USING FUNCTION
+SQL> 
+SQL> REM INSERT A ROW USING NULL / ''
+SQL> 
+SQL> REM 7 INSERT A ROW USING DEFAULT
+SQL> 
+SQL> REM 8 INSERT A ROW USING SUB QUERY
+SQL> 
+SQL> REM 9 INSERT A ROW USING SUBSTITUTION VARIABLE , FORMULA , FUNCTION
+SQL> 
+SQL> REM 10 INSERT A ROW USING NULL , DEFAULT AND SUB QUERY
+SQL> 
+SQL> REM DROP TABLE D1;
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> DROP TABLE D1;
+DROP TABLE D1
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> CREATE TABLE D1 AS SELECT * FROM DEPARTMENTS WHERE 1 = 2;
+
+Table created.
+
+SQL> REM 1 INSERT A ROW USING LITERAL VALUES
+SQL> 
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+ DEPARTMENT_NAME                                                                                                   NOT NULL VARCHAR2(30)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ LOCATION_ID                                                                                                                NUMBER(4)
+
+SQL> INSERT INTO D1 VALUES (10,'ACC',100,1500);
+
+1 row created.
+
+SQL> REM 2 INSERT A ROW, PROVIDE VALUE FOR ONLY DEPARTMENT_NAME AND MANAGER_ID
+SQL> 
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , MANAGER_ID) VALUES ('RES',105);
+
+1 row created.
+
+SQL> REM 3 INSERT A ROW USING SUSTITUTION VARIABLE
+SQL> 
+SQL> INSERT INTO D1 VALUES (&DID,'&DNM',&MID,&DID);
+Enter value for did: 30
+Enter value for dnm: HR
+Enter value for mid: 102
+Enter value for did: 1100
+old   1: INSERT INTO D1 VALUES (&DID,'&DNM',&MID,&DID)
+new   1: INSERT INTO D1 VALUES (30,'HR',102,1100)
+
+1 row created.
+
+SQL> REM 4 INSERT A ROW USING FORMULA
+SQL> 
+SQL> INSERT INTO D1 VALUES (10+30,'HI',100+4,1599+1);
+
+1 row created.
+
+SQL> REM 5 INSERT A ROW USING FUNCTION
+SQL> 
+SQL> INSERT INTO D1 VALUES (34,INITCAP('marKETING'),120,1400);
+
+1 row created.
+
+SQL> REM 6 INSERT A ROW USING NULL / ''
+SQL> 
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+ DEPARTMENT_NAME                                                                                                   NOT NULL VARCHAR2(30)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ LOCATION_ID                                                                                                                NUMBER(4)
+
+SQL> INSERT INTO D1 VALUES (NULL,'HELLO',NULL,'');
+
+1 row created.
+
+SQL> REM 7 INSERT A ROW USING DEFAULT
+SQL> 
+SQL> INSERT INTO D1 VALUES (DEFAULT,'ASDF',NULL,'');
+
+1 row created.
+
+SQL> REM 9 INSERT A ROW USING SUBSTITUTION VARIABLE , FORMULA , FUNCTION
+SQL> 
+SQL> INSERT INTO D1 VALUES (&EID,'SDFSADSF',100+5,POWER(40,2));
+Enter value for eid: 108
+old   1: INSERT INTO D1 VALUES (&EID,'SDFSADSF',100+5,POWER(40,2))
+new   1: INSERT INTO D1 VALUES (108,'SDFSADSF',100+5,POWER(40,2))
+
+1 row created.
+
+SQL> REM 10 INSERT A ROW USING NULL , DEFAULT AND SUB QUERY
+SQL> 
+SQL> INSERT INTO D1 VALUES (NULL,'SDDFAS',DEFAULT,(SELECT LOCATION_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME = 'IT'));
+
+1 row created.
+
+SQL> REM 8 INSERT A ROW USING SUB QUERY
+SQL> 
+SQL> INSERT INTO D1 VALUES (103,(SELECT DEPARTMENT_NAME FROM DEPARTMENTS WHERE DEPARTMENT_ID = 90),122,1234);
+
+1 row created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   100        1500                                                                                                                                     
+              RES                                   105                                                                                                                                                 
+           30 HR                                    102        1100                                                                                                                                     
+           40 HI                                    104        1600                                                                                                                                     
+           34 Marketing                             120        1400                                                                                                                                     
+              HELLO                                                                                                                                                                                     
+              ASDF                                                                                                                                                                                      
+          108 SDFSADSF                              105        1600                                                                                                                                     
+              SDDFAS                                           1400                                                                                                                                     
+          103 Executive                             122        1234                                                                                                                                     
+
+10 rows selected.
+
+SQL> REM INSERT WITH sub query :
+SQL> 
+SQL> TRUNCATE TABLE D1;
+
+Table truncated.
+
+SQL> SELECT * FROM D1;
+
+no rows selected
+
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+ DEPARTMENT_NAME                                                                                                   NOT NULL VARCHAR2(30)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ LOCATION_ID                                                                                                                NUMBER(4)
+
+SQL> DESC DEPARTMENTS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPARTMENT_ID                                                                                                     NOT NULL NUMBER(4)
+ DEPARTMENT_NAME                                                                                                   NOT NULL VARCHAR2(30)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ LOCATION_ID                                                                                                                NUMBER(4)
+
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT * FROM D1;
+
+no rows selected
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS;
+
+8 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> ROLL
+Rollback complete.
+SQL> SELECT * FROM D1;
+
+no rows selected
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID = 50;
+
+1 row created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE LOCATION_ID = 1700;
+
+4 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_NAME LIKE '%i%';
+
+6 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+11 rows selected.
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE LOCATION_ID = 7700;
+
+0 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+11 rows selected.
+
+SQL> INSERT INTO D1( DEPARTMENT_ID , DEPARTMENT_NAME) SELECT DEPARTMENT_ID , DEPARTMENT_NAME FROM DEPARTMENTS;
+
+8 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                                                                                                                                                                            
+           20 Marketing                                                                                                                                                                                 
+           50 Shiping                                                                                                                                                                                   
+           60 IT                                                                                                                                                                                        
+           80 Sales                                                                                                                                                                                     
+           90 Executive                                                                                                                                                                                 
+          110 Accounting                                                                                                                                                                                
+          190 Contracting                                                                                                                                                                               
+
+19 rows selected.
+
+SQL> INSERT INTO D1( DEPARTMENT_ID , DEPARTMENT_NAME) SELECT DEPARTMENT_ID , DEPARTMENT_NAME FROM DEPARTMENTS WHERE DEPARTMENT_NAME LIKE '%o%';
+
+3 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                                                                                                                                                                            
+           20 Marketing                                                                                                                                                                                 
+           50 Shiping                                                                                                                                                                                   
+           60 IT                                                                                                                                                                                        
+           80 Sales                                                                                                                                                                                     
+           90 Executive                                                                                                                                                                                 
+          110 Accounting                                                                                                                                                                                
+          190 Contracting                                                                                                                                                                               
+           10 Administration                                                                                                                                                                            
+          110 Accounting                                                                                                                                                                                
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+          190 Contracting                                                                                                                                                                               
+
+22 rows selected.
+
+SQL> INSERT INTO D1( DEPARTMENT_ID , DEPARTMENT_NAME) SELECT DEPARTMENT_ID+1 , UPPER(DEPARTMENT_NAME) FROM DEPARTMENTS;
+
+8 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                                                                                                                                                                            
+           20 Marketing                                                                                                                                                                                 
+           50 Shiping                                                                                                                                                                                   
+           60 IT                                                                                                                                                                                        
+           80 Sales                                                                                                                                                                                     
+           90 Executive                                                                                                                                                                                 
+          110 Accounting                                                                                                                                                                                
+          190 Contracting                                                                                                                                                                               
+           10 Administration                                                                                                                                                                            
+          110 Accounting                                                                                                                                                                                
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+          190 Contracting                                                                                                                                                                               
+           11 ADMINISTRATION                                                                                                                                                                            
+           21 MARKETING                                                                                                                                                                                 
+           51 SHIPING                                                                                                                                                                                   
+           61 IT                                                                                                                                                                                        
+           81 SALES                                                                                                                                                                                     
+           91 EXECUTIVE                                                                                                                                                                                 
+          111 ACCOUNTING                                                                                                                                                                                
+          191 CONTRACTING                                                                                                                                                                               
+
+30 rows selected.
+
+SQL> INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R''&''D');
+Enter value for did: 234
+old   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R''&''D')
+new   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (234,'R''&''D')
+
+1 row created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                                                                                                                                                                            
+           20 Marketing                                                                                                                                                                                 
+           50 Shiping                                                                                                                                                                                   
+           60 IT                                                                                                                                                                                        
+           80 Sales                                                                                                                                                                                     
+           90 Executive                                                                                                                                                                                 
+          110 Accounting                                                                                                                                                                                
+          190 Contracting                                                                                                                                                                               
+           10 Administration                                                                                                                                                                            
+          110 Accounting                                                                                                                                                                                
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+          190 Contracting                                                                                                                                                                               
+           11 ADMINISTRATION                                                                                                                                                                            
+           21 MARKETING                                                                                                                                                                                 
+           51 SHIPING                                                                                                                                                                                   
+           61 IT                                                                                                                                                                                        
+           81 SALES                                                                                                                                                                                     
+           91 EXECUTIVE                                                                                                                                                                                 
+          111 ACCOUNTING                                                                                                                                                                                
+          191 CONTRACTING                                                                                                                                                                               
+          234 R'&'D                                                                                                                                                                                     
+
+31 rows selected.
+
+SQL> INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R'&'D');
+Enter value for did: 23
+old   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R'&'D')
+new   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (23,'R'&'D')
+INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (23,'R'&'D')
+                                                               *
+ERROR at line 1:
+ORA-00917: missing comma 
+
+
+SQL> INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R'||Q'#&#'||'D');
+Enter value for did: 45
+old   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R'||Q'#&#'||'D')
+new   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (45,'R'||Q'#&#'||'D')
+
+1 row created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                                                                                                                                                                            
+           20 Marketing                                                                                                                                                                                 
+           50 Shiping                                                                                                                                                                                   
+           60 IT                                                                                                                                                                                        
+           80 Sales                                                                                                                                                                                     
+           90 Executive                                                                                                                                                                                 
+          110 Accounting                                                                                                                                                                                
+          190 Contracting                                                                                                                                                                               
+           10 Administration                                                                                                                                                                            
+          110 Accounting                                                                                                                                                                                
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+          190 Contracting                                                                                                                                                                               
+           11 ADMINISTRATION                                                                                                                                                                            
+           21 MARKETING                                                                                                                                                                                 
+           51 SHIPING                                                                                                                                                                                   
+           61 IT                                                                                                                                                                                        
+           81 SALES                                                                                                                                                                                     
+           91 EXECUTIVE                                                                                                                                                                                 
+          111 ACCOUNTING                                                                                                                                                                                
+          191 CONTRACTING                                                                                                                                                                               
+          234 R'&'D                                                                                                                                                                                     
+           45 R&D                                                                                                                                                                                       
+
+32 rows selected.
+
+SQL> INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R'||'&'||'D');
+Enter value for did: 1112
+old   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (&DID,'R'||'&'||'D')
+new   1: INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) VALUES (1112,'R'||'&'||'D')
+
+1 row created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           10 Administration                                                                                                                                                                            
+           20 Marketing                                                                                                                                                                                 
+           50 Shiping                                                                                                                                                                                   
+           60 IT                                                                                                                                                                                        
+           80 Sales                                                                                                                                                                                     
+           90 Executive                                                                                                                                                                                 
+          110 Accounting                                                                                                                                                                                
+          190 Contracting                                                                                                                                                                               
+           10 Administration                                                                                                                                                                            
+          110 Accounting                                                                                                                                                                                
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+          190 Contracting                                                                                                                                                                               
+           11 ADMINISTRATION                                                                                                                                                                            
+           21 MARKETING                                                                                                                                                                                 
+           51 SHIPING                                                                                                                                                                                   
+           61 IT                                                                                                                                                                                        
+           81 SALES                                                                                                                                                                                     
+           91 EXECUTIVE                                                                                                                                                                                 
+          111 ACCOUNTING                                                                                                                                                                                
+          191 CONTRACTING                                                                                                                                                                               
+          234 R'&'D                                                                                                                                                                                     
+           45 R&D                                                                                                                                                                                       
+         1112 R&D                                                                                                                                                                                       
+
+33 rows selected.
+
+SQL> REM DROP TABLE D1;
+SQL> 
+SQL> REM CREATE TABLE D1 AS SELECT * FROM DEPARTMENTS WHERE ROWNUM = 0;
+SQL> 
+SQL> REM 1 INSERT A ROW OF DEPARTMENT 80
+SQL> 
+SQL> REM 2 INSERT A ROW OF DEPARTMENT 110 AND 20 (INSERT VALUES ONLY FOR DEPARTMENT_NAME AND MANAGER_ID COLUMNS)
+SQL> 
+SQL> REM 3 INSERT ALL ROWS OF LOCATION_ID 1700
+SQL> 
+SQL> REM 4 DISPLAY DEPARTMENT_ID AND DEPARTMENT_NAME FOR DEPARTMENTS 60 AND 80 (DEPARTMENT_NAME MUST BE STORED IN CAPITAL)
+SQL> 
+SQL> REM 5 INSERT DEPARTMENT_NAME AND LOCATION_ID FOR THOSE ROWS FOR WHICH DEPARTMENT_NAME ENDS WITH 'g'
+SQL> 
+SQL> 
+SQL> CREATE TABLE D1 AS SELECT * FROM DEPARTMENTS WHERE ROWNUM = 0;
+CREATE TABLE D1 AS SELECT * FROM DEPARTMENTS WHERE ROWNUM = 0
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> DROP TABLE D1;
+
+Table dropped.
+
+SQL> CREATE TABLE D1 AS SELECT * FROM DEPARTMENTS WHERE ROWNUM = 0;
+
+Table created.
+
+SQL> REM 1 INSERT A ROW OF DEPARTMENT 80
+SQL> 
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID = 80;
+
+1 row created.
+
+SQL> REM 2 INSERT A ROW OF DEPARTMENT 110 AND 20 (INSERT VALUES ONLY FOR DEPARTMENT_NAME AND MANAGER_ID COLUMNS)
+SQL> 
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , MANAGER_ID) SELECT DEPARTMENT_NAME , MANAGER_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID IN (20,110));
+INSERT INTO D1 (DEPARTMENT_NAME , MANAGER_ID) SELECT DEPARTMENT_NAME , MANAGER_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID IN (20,110))
+                                                                                                                                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , MANAGER_ID) (SELECT DEPARTMENT_NAME , MANAGER_ID FROM DEPARTMENTS WHERE DEPARTMENT_ID IN (20,110));
+
+2 rows created.
+
+SQL> REM 3 INSERT ALL ROWS OF LOCATION_ID 1700
+SQL> 
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE LOCATION_ID = 1700;
+
+4 rows created.
+
+SQL> REM 4 DISPLAY DEPARTMENT_ID AND DEPARTMENT_NAME FOR DEPARTMENTS 60 AND 80 (DEPARTMENT_NAME MUST BE STORED IN CAPITAL)
+SQL> 
+SQL> INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) (SELECT DEPARTMENT_ID , UPPER(DEPARTMENT_NAME) FROM DEPARTMENTS WHERE DEPARTMENT_ID IN (60,80));
+
+2 rows created.
+
+SQL> REM 5 INSERT DEPARTMENT_NAME AND LOCATION_ID FOR THOSE ROWS FOR WHICH DEPARTMENT_NAME ENDS WITH 'g'
+SQL> 
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) (SELECT DEPARTMENT_NAME , LOCATION_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME LIKE '%g';
+INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) (SELECT DEPARTMENT_NAME , LOCATION_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME LIKE '%g'
+                                                                                                                                    *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) (SELECT DEPARTMENT_NAME , LOCATION_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME LIKE '%g');
+
+4 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+              Marketing                             201                                                                                                                                                 
+              Accounting                            205                                                                                                                                                 
+           10 Administration                        200        1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           60 IT                                                                                                                                                                                        
+           80 SALES                                                                                                                                                                                     
+              Marketing                                        1800                                                                                                                                     
+              Shiping                                          1500                                                                                                                                     
+              Accounting                                       1700                                                                                                                                     
+              Contracting                                      1700                                                                                                                                     
+
+13 rows selected.
+
+SQL> REM TCL : COMMIT ROLLBACK SAVEPOINT
+SQL> 
+SQL> REM DML : INSERT         UPDATE DELETE
+SQL> 
+SQL> 
+SQL> SPOOL OFF

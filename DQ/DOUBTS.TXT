@@ -1,0 +1,513 @@
+SQL> 
+SQL> 12. DISPLAY -12345.67 VALUE IN SPECIFIED FORMAT : {12:345;67} (DON'T USE ALTER SESSION)
+SP2-0734: unknown command beginning "12. DISPLA..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT TRANSLATE(TO_CHAR(-12345.67,'99G999D99PR','NLS_NUMERIC_CHARACTERS=;:'),'<>','{}') FROM DUAL;
+
+TRANSLATE(TO_CHAR(-12345.67,'99G999D99PR','N                                                                                                                                                            
+--------------------------------------------                                                                                                                                                            
+{12:345;67}                                                                                                                                                                                             
+
+SQL> REM 40. DISPLAY LAST_NAME , HIRE_DATE , TOTAL QUARTERS COMPLETED , EXTRA WEEKS COMPLETED , EXTRA DAYS COMPLETED.
+SQL> 
+SQL> SELECT LAST_NAME , HIRE_DATE , TRUNC(MONTHS_BETWEEN(SYSDATE,HIRE_DATE)/3) TOTAL_QTRS_COMPLETED ,
+  2  TRUNC((SYSDATE - ADD_MONTHS(HIRE_DATE,TRUNC(MONTHS_BETWEEN(SYSDATE,HIRE_DATE)/3)*3))/7) EXTRA_WEEKS_COMPLETED,
+  3  TRUNC(MOD((SYSDATE - ADD_MONTHS(HIRE_DATE,TRUNC(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)/3)*3))/7,1)*7) EXTRA_DAYS FROM EMPLOYEES;
+
+LAST_NAME       HIRE_DATE TOTAL_QTRS_COMPLETED EXTRA_WEEKS_COMPLETED EXTRA_DAYS                                                                                                                         
+--------------- --------- -------------------- --------------------- ----------                                                                                                                         
+King            17-JUL-87                  151                     5          5                                                                                                                         
+Kochhar         21-SEP-89                  142                     9          4                                                                                                                         
+De Haan         13-JAN-93                  129                     6          2                                                                                                                         
+Hunold          03-JAN-90                  141                     7          5                                                                                                                         
+Ernst           21-MAY-91                  136                     0          6                                                                                                                         
+Lorentz         07-FEB-99                  105                     2          6                                                                                                                         
+Mourgos         16-NOV-99                  102                     1          4                                                                                                                         
+Rajs            17-OCT-95                  118                     5          5                                                                                                                         
+Davies          29-JAN-97                  113                     4          0                                                                                                                         
+Matos           15-MAR-98                  108                    10          3                                                                                                                         
+Vargas          09-JUL-98                  107                     6          6                                                                                                                         
+Zlotkey         29-JAN-00                  101                     4          0                                                                                                                         
+Abel            11-MAY-96                  116                     2          2                                                                                                                         
+Taylor          24-MAR-98                  108                     9          1                                                                                                                         
+Grant           24-MAY-99                  104                     0          3                                                                                                                         
+Whalen          17-SEP-87                  150                    10          1                                                                                                                         
+Hartstein       17-FEB-96                  117                     1          3                                                                                                                         
+Fay             17-AUG-97                  111                     1          3                                                                                                                         
+Higgins         07-JUN-94                  123                    11          4                                                                                                                         
+Gietz           07-JUN-94                  123                    11          4                                                                                                                         
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME, HIRE_DATE, TRUNC(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)/3) QUARTERS_COMPLETED, TRUNC((SYSDATE - ADD_MONTHS(HIRE_DATE,TRUNC(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)/3)*3))/7) EXTRA_WEEKS, TRUNC(MOD((SYSDATE - ADD_MONTHS(HIRE_DATE,TRUNC(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)/3)*3))/7,1)*7) EXTRA_DAYS FROM EMPLOYEES;
+
+LAST_NAME       HIRE_DATE QUARTERS_COMPLETED EXTRA_WEEKS EXTRA_DAYS                                                                                                                                     
+--------------- --------- ------------------ ----------- ----------                                                                                                                                     
+King            17-JUL-87                151           5          5                                                                                                                                     
+Kochhar         21-SEP-89                142           9          4                                                                                                                                     
+De Haan         13-JAN-93                129           6          2                                                                                                                                     
+Hunold          03-JAN-90                141           7          5                                                                                                                                     
+Ernst           21-MAY-91                136           0          6                                                                                                                                     
+Lorentz         07-FEB-99                105           2          6                                                                                                                                     
+Mourgos         16-NOV-99                102           1          4                                                                                                                                     
+Rajs            17-OCT-95                118           5          5                                                                                                                                     
+Davies          29-JAN-97                113           4          0                                                                                                                                     
+Matos           15-MAR-98                108          10          3                                                                                                                                     
+Vargas          09-JUL-98                107           6          6                                                                                                                                     
+Zlotkey         29-JAN-00                101           4          0                                                                                                                                     
+Abel            11-MAY-96                116           2          2                                                                                                                                     
+Taylor          24-MAR-98                108           9          1                                                                                                                                     
+Grant           24-MAY-99                104           0          3                                                                                                                                     
+Whalen          17-SEP-87                150          10          1                                                                                                                                     
+Hartstein       17-FEB-96                117           1          3                                                                                                                                     
+Fay             17-AUG-97                111           1          3                                                                                                                                     
+Higgins         07-JUN-94                123          11          4                                                                                                                                     
+Gietz           07-JUN-94                123          11          4                                                                                                                                     
+
+20 rows selected.
+
+SQL> /*
+SQL> 
+SQL> DISPLAY FIRST_NAME , LAST_NAME AND OTHER COLUMN. IT SHOULD DISPLAY EITHER FIRST_NAME OR LAST_NAME WHICH HAS HIGHER COUNT OF VOWELS.
+SQL> DISPLAY FIRST_NAME , LAST_NAME , FIRST VOWEL OF FIRST_NAME , LAST VOWEL OF LAST_NAME , SAME or DIFFERENT BASED OF VOWELS COMPARISON.
+SQL> DISPLAY FIRST_NAME , SALARY , INCREMENTED SALARY. IF EMPLOYEE IS HIRED IN EVEN WEEK OF YEAR 20% OTHERWISE 10%. (dOUBT)
+SQL> 
+SQL> */
+SQL> 
+SQL> 
+SQL> REM DISPLAY FIRST_NAME , LAST_NAME AND OTHER COLUMN. IT SHOULD DISPLAY EITHER FIRST_NAME OR LAST_NAME WHICH HAS HIGHER COUNT OF VOWELS.
+SQL> 
+SQL> SELECT FIRST_NAME , LAST_NAME ,
+  2  CASE WHEN LENGTH(TRANSLATE(UPPER(FIRST_NAME,'QWRTYPSDFGHJKLZXCVBNM'))) > LENGTH(TRANSLATE(UPPER(LAST_NAME,'QWRTYPSDFGHJKLZXCVBNM'))) THEN FIRST_NAME ELSE LAST_NAME END RESULT
+  3  FROM EMPLOYEES;
+CASE WHEN LENGTH(TRANSLATE(UPPER(FIRST_NAME,'QWRTYPSDFGHJKLZXCVBNM'))) > LENGTH(TRANSLATE(UPPER(LAST_NAME,'QWRTYPSDFGHJKLZXCVBNM'))) THEN FIRST_NAME ELSE LAST_NAME END RESULT
+                           *
+ERROR at line 2:
+ORA-00909: invalid number of arguments 
+
+
+SQL> CASE WHEN LENGTH(TRANSLATE(UPPER(FIRST_NAME),'QWRTYPSDFGHJKLZXCVBNM')) > LENGTH(TRANSLATE(UPPER(LAST_NAME),'QWRTYPSDFGHJKLZXCVBNM')) THEN FIRST_NAME ELSE LAST_NAME END RESULT
+SP2-0734: unknown command beginning "CASE WHEN ..." - rest of line ignored.
+SQL> 
+SQL> SELECT FIRST_NAME , LAST_NAME ,
+  2  CASE WHEN LENGTH(TRANSLATE(UPPER(FIRST_NAME),'QWRTYPSDFGHJKLZXCVBNM')) > LENGTH(TRANSLATE(UPPER(LAST_NAME),'QWRTYPSDFGHJKLZXCVBNM')) THEN FIRST_NAME ELSE LAST_NAME END RESULT
+  3  FROM EMPLOYEES;
+CASE WHEN LENGTH(TRANSLATE(UPPER(FIRST_NAME),'QWRTYPSDFGHJKLZXCVBNM')) > LENGTH(TRANSLATE(UPPER(LAST_NAME),'QWRTYPSDFGHJKLZXCVBNM')) THEN FIRST_NAME ELSE LAST_NAME END RESULT
+                 *
+ERROR at line 2:
+ORA-00909: invalid number of arguments 
+
+
+SQL> SELECT FIRST_NAME , LAST_NAME ,
+  2  CASE WHEN LENGTH(TRANSLATE(UPPER(FIRST_NAME),'#QWRTYPSDFGHJKLZXCVBNM','#')) > LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWRTYPSDFGHJKLZXCVBNM','#')) THEN FIRST_NAME ELSE LAST_NAME END RESULT
+  3  FROM EMPLOYEES;
+
+FIRST_NAME      LAST_NAME       RESULT                                                                                                                                                                  
+--------------- --------------- ---------------                                                                                                                                                         
+Steven          King            Steven                                                                                                                                                                  
+Neena           Kochhar         Neena                                                                                                                                                                   
+Lex             De Haan         De Haan                                                                                                                                                                 
+Alexander       Hunold          Alexander                                                                                                                                                               
+Bruce           Ernst           Bruce                                                                                                                                                                   
+Diana           Lorentz         Diana                                                                                                                                                                   
+Kevin           Mourgos         Mourgos                                                                                                                                                                 
+Trenna          Rajs            Trenna                                                                                                                                                                  
+Curtis          Davies          Davies                                                                                                                                                                  
+Randall         Matos           Matos                                                                                                                                                                   
+Peter           Vargas          Vargas                                                                                                                                                                  
+Eleni           Zlotkey         Eleni                                                                                                                                                                   
+Ellen           Abel            Abel                                                                                                                                                                    
+Jonathon        Taylor          Jonathon                                                                                                                                                                
+Kimerely        Grant           Kimerely                                                                                                                                                                
+Jennifer        Whalen          Jennifer                                                                                                                                                                
+Michael         Hartstein       Hartstein                                                                                                                                                               
+Pat             Fay             Fay                                                                                                                                                                     
+Shelley         Higgins         Higgins                                                                                                                                                                 
+William         Gietz           William                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> REM DISPLAY FIRST_NAME , LAST_NAME , FIRST VOWEL OF FIRST_NAME , LAST VOWEL OF LAST_NAME , SAME or DIFFERENT BASED OF VOWELS COMPARISON.
+SQL> 
+SQL> SELECT FIRST_NAME , LAST_NAME , SUBSTR(LTRIM(UPPER(FIRST_NAME),'QWRTYPSDFGHJKLZXCVBNM'),1,1) , SUBSTR(RTRIM(UPPER(LAST_NAME),'QWRTYPSDFGHJKLZXCVBNM'),-1) ,
+  2  NVL2(NULLIF(SUBSTR(LTRIM(UPPER(FIRST_NAME),'QWRTYPSDFGHJKLZXCVBNM'),1,1) , SUBSTR(RTRIM(UPPER(LAST_NAME),'QWRTYPSDFGHJKLZXCVBNM'),-1)) ,'DIFFERENT' , 'SAME') VOWELS
+  3  FROM EMPLOYEES;
+
+FIRST_NAME      LAST_NAME       SUBS SUBS VOWELS                                                                                                                                                        
+--------------- --------------- ---- ---- ---------                                                                                                                                                     
+Steven          King            E    I    DIFFERENT                                                                                                                                                     
+Neena           Kochhar         E    A    DIFFERENT                                                                                                                                                     
+Lex             De Haan         E    A    DIFFERENT                                                                                                                                                     
+Alexander       Hunold          A    O    DIFFERENT                                                                                                                                                     
+Bruce           Ernst           U    E    DIFFERENT                                                                                                                                                     
+Diana           Lorentz         I    E    DIFFERENT                                                                                                                                                     
+Kevin           Mourgos         E    O    DIFFERENT                                                                                                                                                     
+Trenna          Rajs            E    A    DIFFERENT                                                                                                                                                     
+Curtis          Davies          U    E    DIFFERENT                                                                                                                                                     
+Randall         Matos           A    O    DIFFERENT                                                                                                                                                     
+Peter           Vargas          E    A    DIFFERENT                                                                                                                                                     
+Eleni           Zlotkey         E    E    SAME                                                                                                                                                          
+Ellen           Abel            E    E    SAME                                                                                                                                                          
+Jonathon        Taylor          O    O    SAME                                                                                                                                                          
+Kimerely        Grant           I    A    DIFFERENT                                                                                                                                                     
+Jennifer        Whalen          E    E    SAME                                                                                                                                                          
+Michael         Hartstein       I    I    SAME                                                                                                                                                          
+Pat             Fay             A    A    SAME                                                                                                                                                          
+Shelley         Higgins         E    I    DIFFERENT                                                                                                                                                     
+William         Gietz           I    E    DIFFERENT                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM DISPLAY FIRST_NAME , SALARY , INCREMENTED SALARY. IF EMPLOYEE IS HIRED IN EVEN WEEK OF YEAR 20% OTHERWISE 10%. (dOUBT)
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY, TO_CHAR(HIRE_DATE,'WW'), CASE WHEN MOD(TO_CHAR(HIRE_DATE,'WW'),2) = 0 THEN SALARY * 1.2 ELSE SALARY * 1.1 END NEW_SALARY FROM EMPLOYEES;
+
+FIRST_NAME          SALARY TO NEW_SALARY                                                                                                                                                                
+--------------- ---------- -- ----------                                                                                                                                                                
+Steven               24000 29      26400                                                                                                                                                                
+Neena                17000 38      20400                                                                                                                                                                
+Lex                  17000 02      20400                                                                                                                                                                
+Alexander             9000 01       9900                                                                                                                                                                
+Bruce                 6000 21       6600                                                                                                                                                                
+Diana                 4200 06       5040                                                                                                                                                                
+Kevin                 5800 46       6960                                                                                                                                                                
+Trenna                3500 42       4200                                                                                                                                                                
+Curtis                3100 05       3410                                                                                                                                                                
+Randall               2600 11       2860                                                                                                                                                                
+Peter                 2500 28       3000                                                                                                                                                                
+Eleni                10500 05      11550                                                                                                                                                                
+Ellen                11000 19      12100                                                                                                                                                                
+Jonathon              8600 12      10320                                                                                                                                                                
+Kimerely              7000 21       7700                                                                                                                                                                
+Jennifer              4400 38       5280                                                                                                                                                                
+Michael              13000 07      14300                                                                                                                                                                
+Pat                   6000 33       6600                                                                                                                                                                
+Shelley              12000 23      13200                                                                                                                                                                
+William               8300 23       9130                                                                                                                                                                
+
+20 rows selected.
+
+SQL> /*
+SQL> 
+SQL> DISPLAY DEPARTMENT_ID WISE LOWEST MAXIMUM SALARY AND HIGHEST MINIMUM SALARY. (DOUBT)
+SQL> DISPLAY JOB_ID WISE HIGHEST NO. OF EMPLOYEES AND LOWEST NO. OF EMPLOYEES. (DOUBT)
+SQL> 
+SQL> */
+SQL> 
+SQL> REM DISPLAY DEPARTMENT_ID WISE LOWEST MAXIMUM SALARY AND HIGHEST MINIMUM SALARY. (DOUBT)
+SQL> 
+SQL> SELECT MIN(MAX(SALARY)) , MAX(MIN(SALARY)) FROM EMPLOYEES GROUP BY DEPARTMENT_ID;
+
+MIN(MAX(SALARY)) MAX(MIN(SALARY))                                                                                                                                                                       
+---------------- ----------------                                                                                                                                                                       
+            4400            17000                                                                                                                                                                       
+
+SQL> REM DISPLAY JOB_ID WISE HIGHEST NO. OF EMPLOYEES AND LOWEST NO. OF EMPLOYEES. (DOUBT)
+SQL> 
+SQL> SELECT MAX(COUNT(*)) , MIN(COUNT(*)) FROM EMPLOYEES GROUP BY JOB_ID;
+
+MAX(COUNT(*)) MIN(COUNT(*))                                                                                                                                                                             
+------------- -------------                                                                                                                                                                             
+            4             1                                                                                                                                                                             
+
+SQL> REM 49. DISPLAY FIRST_NAME , HIRE_DATE , NO. OF DAYS WORKED IN HIRED QUARTER AND NO. OF DAYS WORKED IN HIRE YEAR.
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE , ADD_MONTHS(TRUNC(HIRE_dATE,'Q'),3) - HIRE_DATE DAYS_WORKED_IN_HQ ,
+  2  ADD_MONTHS(TRUNC(HIRE_dATE,'RRRR'),12) - HIRE_DATE DAYS_WORKED_IN_YEAR
+  3  FROM EMPLOYEES;
+
+FIRST_NAME      HIRE_DATE DAYS_WORKED_IN_HQ DAYS_WORKED_IN_YEAR                                                                                                                                         
+--------------- --------- ----------------- -------------------                                                                                                                                         
+Steven          17-JUL-87                76                 168                                                                                                                                         
+Neena           21-SEP-89                10                 102                                                                                                                                         
+Lex             13-JAN-93                78                 353                                                                                                                                         
+Alexander       03-JAN-90                88                 363                                                                                                                                         
+Bruce           21-MAY-91                41                 225                                                                                                                                         
+Diana           07-FEB-99                53                 328                                                                                                                                         
+Kevin           16-NOV-99                46                  46                                                                                                                                         
+Trenna          17-OCT-95                76                  76                                                                                                                                         
+Curtis          29-JAN-97                62                 337                                                                                                                                         
+Randall         15-MAR-98                17                 292                                                                                                                                         
+Peter           09-JUL-98                84                 176                                                                                                                                         
+Eleni           29-JAN-00                63                 338                                                                                                                                         
+Ellen           11-MAY-96                51                 235                                                                                                                                         
+Jonathon        24-MAR-98                 8                 283                                                                                                                                         
+Kimerely        24-MAY-99                38                 222                                                                                                                                         
+Jennifer        17-SEP-87                14                 106                                                                                                                                         
+Michael         17-FEB-96                44                 319                                                                                                                                         
+Pat             17-AUG-97                45                 137                                                                                                                                         
+Shelley         07-JUN-94                24                 208                                                                                                                                         
+William         07-JUN-94                24                 208                                                                                                                                         
+
+20 rows selected.
+
+SQL> SELECT E.FIRST_NAME EMP_FIRST_NAME, E.SALARY EMP_SALARY, G.GRADE_LEVEL EMP_GRADE_LEVEL, C.FIRST_NAME GRADE_COLL_FIRST_NAME, C.SALARY GRADE_COLL_SALARY, G.GRADE_LEVEL COLL_GRADE_LEVEL FROM EMPLOYEES E JOIN JOB_GRADES G ON E.SALARY BETWEEN G.LOWEST_SAL AND G.HIGHEST_SAL JOIN EMPLOYEES C ON C.SALARY BETWEEN G.LOWEST_SAL AND G.HIGHEST_SAL WHERE E.EMPLOYEE_ID > C.EMPLOYEE_ID ORDER BY 3;
+
+EMP_FIRST_NAME  EMP_SALARY EMP GRADE_COLL_FIRS GRADE_COLL_SALARY COL                                                                                                                                    
+--------------- ---------- --- --------------- ----------------- ---                                                                                                                                    
+Peter                 2500 A   Randall                      2600 A                                                                                                                                      
+Curtis                3100 B   Diana                        4200 B                                                                                                                                      
+Trenna                3500 B   Kevin                        5800 B                                                                                                                                      
+Trenna                3500 B   Diana                        4200 B                                                                                                                                      
+Curtis                3100 B   Trenna                       3500 B                                                                                                                                      
+Jennifer              4400 B   Diana                        4200 B                                                                                                                                      
+Jennifer              4400 B   Kevin                        5800 B                                                                                                                                      
+Jennifer              4400 B   Trenna                       3500 B                                                                                                                                      
+Jennifer              4400 B   Curtis                       3100 B                                                                                                                                      
+Curtis                3100 B   Kevin                        5800 B                                                                                                                                      
+Kevin                 5800 B   Diana                        4200 B                                                                                                                                      
+Jonathon              8600 C   Bruce                        6000 C                                                                                                                                      
+Jonathon              8600 C   Alexander                    9000 C                                                                                                                                      
+Kimerely              7000 C   Alexander                    9000 C                                                                                                                                      
+Kimerely              7000 C   Bruce                        6000 C                                                                                                                                      
+Kimerely              7000 C   Jonathon                     8600 C                                                                                                                                      
+Pat                   6000 C   Alexander                    9000 C                                                                                                                                      
+Pat                   6000 C   Bruce                        6000 C                                                                                                                                      
+Pat                   6000 C   Jonathon                     8600 C                                                                                                                                      
+Pat                   6000 C   Kimerely                     7000 C                                                                                                                                      
+William               8300 C   Alexander                    9000 C                                                                                                                                      
+William               8300 C   Bruce                        6000 C                                                                                                                                      
+William               8300 C   Jonathon                     8600 C                                                                                                                                      
+William               8300 C   Pat                          6000 C                                                                                                                                      
+William               8300 C   Kimerely                     7000 C                                                                                                                                      
+Bruce                 6000 C   Alexander                    9000 C                                                                                                                                      
+Michael              13000 D   Eleni                       10500 D                                                                                                                                      
+Shelley              12000 D   Eleni                       10500 D                                                                                                                                      
+Shelley              12000 D   Ellen                       11000 D                                                                                                                                      
+Shelley              12000 D   Michael                     13000 D                                                                                                                                      
+Ellen                11000 D   Eleni                       10500 D                                                                                                                                      
+Michael              13000 D   Ellen                       11000 D                                                                                                                                      
+Lex                  17000 E   Neena                       17000 E                                                                                                                                      
+Lex                  17000 E   Steven                      24000 E                                                                                                                                      
+Neena                17000 E   Steven                      24000 E                                                                                                                                      
+
+35 rows selected.
+
+SQL> SELECT FIRST_NAME, DEPARTMENT_NAME, CITY, COUNTRY_NAME, REGION_NAME FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPARTMENT_ID) JOIN LOCATIONS USING (LOCATION_ID) JOIN COUNTRIES USING (COUNTRY_ID) JOIN REGIONS USING (REGION_ID);
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME                                                                      
+--------------- ------------------------------ ------------------------------ ---------------------------------------- -------------------------                                                        
+Ellen           Sales                          Oxford                         United Kingdom                           Europe                                                                           
+Eleni           Sales                          Oxford                         United Kingdom                           Europe                                                                           
+Jonathon        Sales                          Oxford                         United Kingdom                           Europe                                                                           
+Michael         Marketing                      Toronto                        Canada                                   Americas                                                                         
+Pat             Marketing                      Toronto                        Canada                                   Americas                                                                         
+Diana           IT                             Southlake                      United States of America                 Americas                                                                         
+Bruce           IT                             Southlake                      United States of America                 Americas                                                                         
+Alexander       IT                             Southlake                      United States of America                 Americas                                                                         
+Kevin           Shiping                        South San Francisco            United States of America                 Americas                                                                         
+Peter           Shiping                        South San Francisco            United States of America                 Americas                                                                         
+Randall         Shiping                        South San Francisco            United States of America                 Americas                                                                         
+Curtis          Shiping                        South San Francisco            United States of America                 Americas                                                                         
+Trenna          Shiping                        South San Francisco            United States of America                 Americas                                                                         
+Jennifer        Administration                 Seattle                        United States of America                 Americas                                                                         
+Lex             Executive                      Seattle                        United States of America                 Americas                                                                         
+Steven          Executive                      Seattle                        United States of America                 Americas                                                                         
+Neena           Executive                      Seattle                        United States of America                 Americas                                                                         
+William         Accounting                     Seattle                        United States of America                 Americas                                                                         
+Shelley         Accounting                     Seattle                        United States of America                 Americas                                                                         
+
+19 rows selected.
+
+SQL> REM DISPLAY FIRST_NAME , DEPARTMENT_NAME , CITY
+SQL> 
+SQL> REM         E            D                 L
+SQL> 
+SQL> REM            INNER          NATURAL
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY
+  2  FROM DEPARTMENTS
+  3  NATURAL JOIN LOCATIONS
+  4  INNER JOIN EMPLOYEES USING (DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                                                                                                                                                     
+--------------- ------------------------------ ------------------------------                                                                                                                           
+Diana           IT                             Southlake                                                                                                                                                
+Bruce           IT                             Southlake                                                                                                                                                
+Alexander       IT                             Southlake                                                                                                                                                
+Kevin           Shiping                        South San Francisco                                                                                                                                      
+Peter           Shiping                        South San Francisco                                                                                                                                      
+Randall         Shiping                        South San Francisco                                                                                                                                      
+Curtis          Shiping                        South San Francisco                                                                                                                                      
+Trenna          Shiping                        South San Francisco                                                                                                                                      
+Jennifer        Administration                 Seattle                                                                                                                                                  
+Lex             Executive                      Seattle                                                                                                                                                  
+Steven          Executive                      Seattle                                                                                                                                                  
+Neena           Executive                      Seattle                                                                                                                                                  
+William         Accounting                     Seattle                                                                                                                                                  
+Shelley         Accounting                     Seattle                                                                                                                                                  
+Michael         Marketing                      Toronto                                                                                                                                                  
+Pat             Marketing                      Toronto                                                                                                                                                  
+Ellen           Sales                          Oxford                                                                                                                                                   
+Eleni           Sales                          Oxford                                                                                                                                                   
+Jonathon        Sales                          Oxford                                                                                                                                                   
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY
+  2  FROM DEPARTMENTS
+  3  INNER JOIN EMPLOYEES USING (DEPARTMENT_ID)
+  4  NATURAL JOIN LOCATIONS;
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                                                                                                                                                     
+--------------- ------------------------------ ------------------------------                                                                                                                           
+Steven          Executive                      Southlake                                                                                                                                                
+Steven          Executive                      South San Francisco                                                                                                                                      
+Steven          Executive                      Seattle                                                                                                                                                  
+Steven          Executive                      Toronto                                                                                                                                                  
+Steven          Executive                      Oxford                                                                                                                                                   
+Neena           Executive                      Southlake                                                                                                                                                
+Neena           Executive                      South San Francisco                                                                                                                                      
+Neena           Executive                      Seattle                                                                                                                                                  
+Neena           Executive                      Toronto                                                                                                                                                  
+Neena           Executive                      Oxford                                                                                                                                                   
+Lex             Executive                      Southlake                                                                                                                                                
+Lex             Executive                      South San Francisco                                                                                                                                      
+Lex             Executive                      Seattle                                                                                                                                                  
+Lex             Executive                      Toronto                                                                                                                                                  
+Lex             Executive                      Oxford                                                                                                                                                   
+Alexander       IT                             Southlake                                                                                                                                                
+Alexander       IT                             South San Francisco                                                                                                                                      
+Alexander       IT                             Seattle                                                                                                                                                  
+Alexander       IT                             Toronto                                                                                                                                                  
+Alexander       IT                             Oxford                                                                                                                                                   
+Bruce           IT                             Southlake                                                                                                                                                
+Bruce           IT                             South San Francisco                                                                                                                                      
+Bruce           IT                             Seattle                                                                                                                                                  
+Bruce           IT                             Toronto                                                                                                                                                  
+Bruce           IT                             Oxford                                                                                                                                                   
+Diana           IT                             Southlake                                                                                                                                                
+Diana           IT                             South San Francisco                                                                                                                                      
+Diana           IT                             Seattle                                                                                                                                                  
+Diana           IT                             Toronto                                                                                                                                                  
+Diana           IT                             Oxford                                                                                                                                                   
+Kevin           Shiping                        Southlake                                                                                                                                                
+Kevin           Shiping                        South San Francisco                                                                                                                                      
+Kevin           Shiping                        Seattle                                                                                                                                                  
+Kevin           Shiping                        Toronto                                                                                                                                                  
+Kevin           Shiping                        Oxford                                                                                                                                                   
+Trenna          Shiping                        Southlake                                                                                                                                                
+Trenna          Shiping                        South San Francisco                                                                                                                                      
+Trenna          Shiping                        Seattle                                                                                                                                                  
+Trenna          Shiping                        Toronto                                                                                                                                                  
+Trenna          Shiping                        Oxford                                                                                                                                                   
+Curtis          Shiping                        Southlake                                                                                                                                                
+Curtis          Shiping                        South San Francisco                                                                                                                                      
+Curtis          Shiping                        Seattle                                                                                                                                                  
+Curtis          Shiping                        Toronto                                                                                                                                                  
+Curtis          Shiping                        Oxford                                                                                                                                                   
+Randall         Shiping                        Southlake                                                                                                                                                
+Randall         Shiping                        South San Francisco                                                                                                                                      
+Randall         Shiping                        Seattle                                                                                                                                                  
+Randall         Shiping                        Toronto                                                                                                                                                  
+Randall         Shiping                        Oxford                                                                                                                                                   
+Peter           Shiping                        Southlake                                                                                                                                                
+Peter           Shiping                        South San Francisco                                                                                                                                      
+Peter           Shiping                        Seattle                                                                                                                                                  
+Peter           Shiping                        Toronto                                                                                                                                                  
+Peter           Shiping                        Oxford                                                                                                                                                   
+Eleni           Sales                          Southlake                                                                                                                                                
+Eleni           Sales                          South San Francisco                                                                                                                                      
+Eleni           Sales                          Seattle                                                                                                                                                  
+Eleni           Sales                          Toronto                                                                                                                                                  
+Eleni           Sales                          Oxford                                                                                                                                                   
+Ellen           Sales                          Southlake                                                                                                                                                
+Ellen           Sales                          South San Francisco                                                                                                                                      
+Ellen           Sales                          Seattle                                                                                                                                                  
+Ellen           Sales                          Toronto                                                                                                                                                  
+Ellen           Sales                          Oxford                                                                                                                                                   
+Jonathon        Sales                          Southlake                                                                                                                                                
+Jonathon        Sales                          South San Francisco                                                                                                                                      
+Jonathon        Sales                          Seattle                                                                                                                                                  
+Jonathon        Sales                          Toronto                                                                                                                                                  
+Jonathon        Sales                          Oxford                                                                                                                                                   
+Jennifer        Administration                 Southlake                                                                                                                                                
+Jennifer        Administration                 South San Francisco                                                                                                                                      
+Jennifer        Administration                 Seattle                                                                                                                                                  
+Jennifer        Administration                 Toronto                                                                                                                                                  
+Jennifer        Administration                 Oxford                                                                                                                                                   
+Michael         Marketing                      Southlake                                                                                                                                                
+Michael         Marketing                      South San Francisco                                                                                                                                      
+Michael         Marketing                      Seattle                                                                                                                                                  
+Michael         Marketing                      Toronto                                                                                                                                                  
+Michael         Marketing                      Oxford                                                                                                                                                   
+Pat             Marketing                      Southlake                                                                                                                                                
+Pat             Marketing                      South San Francisco                                                                                                                                      
+Pat             Marketing                      Seattle                                                                                                                                                  
+Pat             Marketing                      Toronto                                                                                                                                                  
+Pat             Marketing                      Oxford                                                                                                                                                   
+Shelley         Accounting                     Southlake                                                                                                                                                
+Shelley         Accounting                     South San Francisco                                                                                                                                      
+Shelley         Accounting                     Seattle                                                                                                                                                  
+Shelley         Accounting                     Toronto                                                                                                                                                  
+Shelley         Accounting                     Oxford                                                                                                                                                   
+William         Accounting                     Southlake                                                                                                                                                
+William         Accounting                     South San Francisco                                                                                                                                      
+William         Accounting                     Seattle                                                                                                                                                  
+William         Accounting                     Toronto                                                                                                                                                  
+William         Accounting                     Oxford                                                                                                                                                   
+
+95 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , LOCATION_ID
+  2  FROM DEPARTMENTS
+  3  INNER JOIN EMPLOYEES USING (DEPARTMENT_ID)
+  4  NATURAL JOIN LOCATIONS;
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           LOCATION_ID                                                                                                               
+--------------- ------------------------------ ------------------------------ -----------                                                                                                               
+Diana           IT                             Southlake                             1400                                                                                                               
+Bruce           IT                             Southlake                             1400                                                                                                               
+Alexander       IT                             Southlake                             1400                                                                                                               
+Kevin           Shiping                        South San Francisco                   1500                                                                                                               
+Peter           Shiping                        South San Francisco                   1500                                                                                                               
+Randall         Shiping                        South San Francisco                   1500                                                                                                               
+Curtis          Shiping                        South San Francisco                   1500                                                                                                               
+Trenna          Shiping                        South San Francisco                   1500                                                                                                               
+Jennifer        Administration                 Seattle                               1700                                                                                                               
+Lex             Executive                      Seattle                               1700                                                                                                               
+Steven          Executive                      Seattle                               1700                                                                                                               
+Neena           Executive                      Seattle                               1700                                                                                                               
+William         Accounting                     Seattle                               1700                                                                                                               
+Shelley         Accounting                     Seattle                               1700                                                                                                               
+Michael         Marketing                      Toronto                               1800                                                                                                               
+Pat             Marketing                      Toronto                               1800                                                                                                               
+Ellen           Sales                          Oxford                                2500                                                                                                               
+Eleni           Sales                          Oxford                                2500                                                                                                               
+Jonathon        Sales                          Oxford                                2500                                                                                                               
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY || CASE WHEN LOCATION_ID IS NULL THEN NULL END CITY
+  2  FROM DEPARTMENTS
+  3  INNER JOIN EMPLOYEES USING (DEPARTMENT_ID)
+  4  NATURAL JOIN LOCATIONS;
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                                                                                                                                                     
+--------------- ------------------------------ ------------------------------                                                                                                                           
+Diana           IT                             Southlake                                                                                                                                                
+Bruce           IT                             Southlake                                                                                                                                                
+Alexander       IT                             Southlake                                                                                                                                                
+Kevin           Shiping                        South San Francisco                                                                                                                                      
+Peter           Shiping                        South San Francisco                                                                                                                                      
+Randall         Shiping                        South San Francisco                                                                                                                                      
+Curtis          Shiping                        South San Francisco                                                                                                                                      
+Trenna          Shiping                        South San Francisco                                                                                                                                      
+Jennifer        Administration                 Seattle                                                                                                                                                  
+Lex             Executive                      Seattle                                                                                                                                                  
+Steven          Executive                      Seattle                                                                                                                                                  
+Neena           Executive                      Seattle                                                                                                                                                  
+William         Accounting                     Seattle                                                                                                                                                  
+Shelley         Accounting                     Seattle                                                                                                                                                  
+Michael         Marketing                      Toronto                                                                                                                                                  
+Pat             Marketing                      Toronto                                                                                                                                                  
+Ellen           Sales                          Oxford                                                                                                                                                   
+Eleni           Sales                          Oxford                                                                                                                                                   
+Jonathon        Sales                          Oxford                                                                                                                                                   
+
+19 rows selected.
+
+SQL> SPOOL OFF

@@ -1,0 +1,381 @@
+SQL> 
+SQL> REM INSTR : TO SEARCH CHARACTER/WORD POSITION WITHIN WORD/SENTENCE.
+SQL> 
+SQL> SELECT INSTR('NEELKAMAL','L') FROM DUAL;
+
+INSTR('NEELKAMAL','L')                                                                                                                                                                                  
+----------------------                                                                                                                                                                                  
+                     4                                                                                                                                                                                  
+
+SQL> SELECT INSTR('NEELKAMAL','X') FROM DUAL;
+
+INSTR('NEELKAMAL','X')                                                                                                                                                                                  
+----------------------                                                                                                                                                                                  
+                     0                                                                                                                                                                                  
+
+SQL> SELECT INSTR('NEELKAMAL','l') FROM DUAL;
+
+INSTR('NEELKAMAL','L')                                                                                                                                                                                  
+----------------------                                                                                                                                                                                  
+                     0                                                                                                                                                                                  
+
+SQL> SELECT INSTR('NEELKAMAL','L',6) FROM DUAL;
+
+INSTR('NEELKAMAL','L',6)                                                                                                                                                                                
+------------------------                                                                                                                                                                                
+                       9                                                                                                                                                                                
+
+SQL> SELECT INSTR('NEELKAMAL','E',3) FROM DUAL;
+
+INSTR('NEELKAMAL','E',3)                                                                                                                                                                                
+------------------------                                                                                                                                                                                
+                       3                                                                                                                                                                                
+
+SQL> SELECT INSTR('NEELKAMAL','E',5) FROM DUAL;
+
+INSTR('NEELKAMAL','E',5)                                                                                                                                                                                
+------------------------                                                                                                                                                                                
+                       0                                                                                                                                                                                
+
+SQL> SELECT INSTR('NEELKAMAL','A',-1) FROM DUAL;
+
+INSTR('NEELKAMAL','A',-1)                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        8                                                                                                                                                                               
+
+SQL> SELECT INSTR('NEELKAMAL','A',-2) FROM DUAL;
+
+INSTR('NEELKAMAL','A',-2)                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        8                                                                                                                                                                               
+
+SQL> SELECT INSTR('NEELKAMAL','A',-3) FROM DUAL;
+
+INSTR('NEELKAMAL','A',-3)                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        6                                                                                                                                                                               
+
+SQL> SELECT INSTR('NEELKAMAL','A',-5) FROM DUAL;
+
+INSTR('NEELKAMAL','A',-5)                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        0                                                                                                                                                                               
+
+SQL> SELECT INSTR('NEELKAMAL','L',3,2) FROM DUAL;
+
+INSTR('NEELKAMAL','L',3,2)                                                                                                                                                                              
+--------------------------                                                                                                                                                                              
+                         9                                                                                                                                                                              
+
+SQL> SELECT INSTR('NEELKAMAL','L',2,3) FROM DUAL;
+
+INSTR('NEELKAMAL','L',2,3)                                                                                                                                                                              
+--------------------------                                                                                                                                                                              
+                         0                                                                                                                                                                              
+
+SQL> SELECT INSTR('NEELKAMAL','KAMAL') FROM DUAL;
+
+INSTR('NEELKAMAL','KAMAL')                                                                                                                                                                              
+--------------------------                                                                                                                                                                              
+                         5                                                                                                                                                                              
+
+SQL> SELECT INSTR('NEELKAMAL','AMAL') FROM DUAL;
+
+INSTR('NEELKAMAL','AMAL')                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                        6                                                                                                                                                                               
+
+SQL> SELECT INSTR('NEELKAMAL','KAMAL',5) FROM DUAL;
+
+INSTR('NEELKAMAL','KAMAL',5)                                                                                                                                                                            
+----------------------------                                                                                                                                                                            
+                           5                                                                                                                                                                            
+
+SQL> SELECT INSTR('NEELKAMAL','KAMAL',6) FROM DUAL;
+
+INSTR('NEELKAMAL','KAMAL',6)                                                                                                                                                                            
+----------------------------                                                                                                                                                                            
+                           0                                                                                                                                                                            
+
+SQL> SELECT INSTR('NEELKAMAL','KAMAL',-1) FROM DUAL;
+
+INSTR('NEELKAMAL','KAMAL',-1)                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                            5                                                                                                                                                                           
+
+SQL> SELECT INSTR('NEELKAMAL','KAMAL',-3) FROM DUAL;
+
+INSTR('NEELKAMAL','KAMAL',-3)                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                            5                                                                                                                                                                           
+
+SQL> SELECT INSTR('NEELKAMAL','KAMAL',-5) FROM DUAL;
+
+INSTR('NEELKAMAL','KAMAL',-5)                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                            5                                                                                                                                                                           
+
+SQL> SELECT INSTR('NEELKAMAL','KAMAL',-6) FROM DUAL;
+
+INSTR('NEELKAMAL','KAMAL',-6)                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                            0                                                                                                                                                                           
+
+SQL> REM IF STARTING POSITION IS POSITIVE, SEARCHING WILL BE LEFT TO RIGHT
+SQL> 
+SQL> REM IF STARTING POSITION IS NETATIVE, SEARCHING WILL BE RIGHT TO LEFT
+SQL> 
+SQL> REM COUNTING ALWAYS FROM LEFT TO RIGHT
+SQL> 
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 LIKE 2 INSTR
+SQL> 
+SQL> REM 1 DISPLAY THOSE FIRST_NAME WHICH CONTAINS 'e'
+SQL> 
+SQL> REM 2 DISPLAY THOSE WHO WERE HIRED IN JUL MONTH
+SQL> 
+SQL> REM 3 DISPLAY ALL FIRST_NAME WHICH COTAINS ll
+SQL> 
+SQL> REM 4 DISPLAY THOSE PHONE_NUMBER WHICH HAS 3 TIMES . (DOT)
+SQL> 
+SQL> REM 5 DISPLAY THOSE LAST_NAME WHICH CONTAINS ALPHABET a TWO TIMES (SCATTERED OR SUCCESSIVE)
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE FIRST_NAME WHICH CONTAINS 'e'
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '%e%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Peter                                                                                                                                                                                                   
+Eleni                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Kimerely                                                                                                                                                                                                
+Jennifer                                                                                                                                                                                                
+Michael                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+
+14 rows selected.
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE INSTR(FIRST_NAME,'e') >0;
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Peter                                                                                                                                                                                                   
+Eleni                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Kimerely                                                                                                                                                                                                
+Jennifer                                                                                                                                                                                                
+Michael                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+
+14 rows selected.
+
+SQL> REM 2 DISPLAY THOSE WHO WERE HIRED IN JUL MONTH
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%JUL%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE INSTR(HIRE_DATE,'JUL') <> 0;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+
+SQL> REM 3 DISPLAY ALL FIRST_NAME WHICH COTAINS ll
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '%ll%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Randall                                                                                                                                                                                                 
+Ellen                                                                                                                                                                                                   
+Shelley                                                                                                                                                                                                 
+William                                                                                                                                                                                                 
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE INSTR(FIRST_NAME,'ll') >= 1;
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Randall                                                                                                                                                                                                 
+Ellen                                                                                                                                                                                                   
+Shelley                                                                                                                                                                                                 
+William                                                                                                                                                                                                 
+
+SQL> REM 4 DISPLAY THOSE PHONE_NUMBER WHICH HAS 3 TIMES . (DOT)
+SQL> 
+SQL> SELECT PHONE_NUMBER FROM EMPLOYEES WHERE PHONE_NUMBER LIKE '%.%.%.%';
+
+PHONE_NUMBER                                                                                                                                                                                            
+--------------------                                                                                                                                                                                    
+011.44.1344.429018                                                                                                                                                                                      
+011.44.1644.429267                                                                                                                                                                                      
+011.44.1644.429265                                                                                                                                                                                      
+011.44.1644.429263                                                                                                                                                                                      
+
+SQL> SELECT PHONE_NUMBER FROM EMPLOYEES WHERE INSTR(PHONE_NUMBER ,'.',1,3) > 0;
+
+PHONE_NUMBER                                                                                                                                                                                            
+--------------------                                                                                                                                                                                    
+011.44.1344.429018                                                                                                                                                                                      
+011.44.1644.429267                                                                                                                                                                                      
+011.44.1644.429265                                                                                                                                                                                      
+011.44.1644.429263                                                                                                                                                                                      
+
+SQL> REM 5 DISPLAY THOSE LAST_NAME WHICH CONTAINS ALPHABET a TWO TIMES (SCATTERED OR SUCCESSIVE)
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '%a%a%';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+De Haan                                                                                                                                                                                                 
+Vargas                                                                                                                                                                                                  
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE INSTR(LAST_NAME , 'a' , 1 , 2 ) > 0;
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+De Haan                                                                                                                                                                                                 
+Vargas                                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , LAST_NAME , EMAIL FROM EMPLOYEES;
+
+FIRST_NAME      LAST_NAME       EMAIL                                                                                                                                                                   
+--------------- --------------- ----------                                                                                                                                                              
+Steven          King            SKING                                                                                                                                                                   
+Neena           Kochhar         NKOCHHAR                                                                                                                                                                
+Lex             De Haan         LDEHAAN                                                                                                                                                                 
+Alexander       Hunold          AHUNOLD                                                                                                                                                                 
+Bruce           Ernst           BERNST                                                                                                                                                                  
+Diana           Lorentz         DLORENTZ                                                                                                                                                                
+Kevin           Mourgos         KMOURGOS                                                                                                                                                                
+Trenna          Rajs            TRAJS                                                                                                                                                                   
+Curtis          Davies          CDAVIES                                                                                                                                                                 
+Randall         Matos           RMATOS                                                                                                                                                                  
+Peter           Vargas          PVARGAS                                                                                                                                                                 
+Eleni           Zlotkey         EZLOTKEY                                                                                                                                                                
+Ellen           Abel                                                                                                                                                                                    
+Jonathon        Taylor          JTAYLOR                                                                                                                                                                 
+Kimerely        Grant           KGRANT                                                                                                                                                                  
+Jennifer        Whalen          JWHALEN                                                                                                                                                                 
+Michael         Hartstein       MHARTSTE                                                                                                                                                                
+Pat             Fay             PFAY                                                                                                                                                                    
+Shelley         Higgins         SHIGGINS                                                                                                                                                                
+William         Gietz           WGIETZ                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT EMAIL , SUBSTR(FIRST_NAME,1,1)||SUBSTR(REPLACE(UPPER(LAST_NAME),' '),1,7) NEW_EMAIL FROM EMPLOYEES;
+
+EMAIL      NEW_EMAIL                                                                                                                                                                                    
+---------- --------------------------------                                                                                                                                                             
+SKING      SKING                                                                                                                                                                                        
+NKOCHHAR   NKOCHHAR                                                                                                                                                                                     
+LDEHAAN    LDEHAAN                                                                                                                                                                                      
+AHUNOLD    AHUNOLD                                                                                                                                                                                      
+BERNST     BERNST                                                                                                                                                                                       
+DLORENTZ   DLORENTZ                                                                                                                                                                                     
+KMOURGOS   KMOURGOS                                                                                                                                                                                     
+TRAJS      TRAJS                                                                                                                                                                                        
+CDAVIES    CDAVIES                                                                                                                                                                                      
+RMATOS     RMATOS                                                                                                                                                                                       
+PVARGAS    PVARGAS                                                                                                                                                                                      
+EZLOTKEY   EZLOTKEY                                                                                                                                                                                     
+           EABEL                                                                                                                                                                                        
+JTAYLOR    JTAYLOR                                                                                                                                                                                      
+KGRANT     KGRANT                                                                                                                                                                                       
+JWHALEN    JWHALEN                                                                                                                                                                                      
+MHARTSTE   MHARTSTE                                                                                                                                                                                     
+PFAY       PFAY                                                                                                                                                                                         
+SHIGGINS   SHIGGINS                                                                                                                                                                                     
+WGIETZ     WGIETZ                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE FIRST_NAME WHICH HAS e ON 3rd POSITION
+SQL> 
+SQL> REM 2 DISPLAY THOSE LAST_NAME WHICH HAS a ON 3rd LAST POSITION
+SQL> 
+SQL> REM 3 DISPLAY THOSE LAST_NAME WHICH HAS N ON LAST POSITION
+SQL> 
+SQL> REM 4 DISPLAY THOSE HIRE_DATE WHICH COMES BEFORE 10th
+SQL> 
+SQL> REM 1 LIKE 2 INSTR ( IN 'WHERE' CLAUSE )
+SQL> 
+SQL> REM 3 DISPLAY THOSE EMAIL WHICH HAS N ON LAST POSITION
+SQL> 
+SQL> SPOOL OFF

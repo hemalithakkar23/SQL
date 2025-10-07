@@ -1,0 +1,533 @@
+SQL> 
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM DISPLAY THSOE WHO GET HIGHER SALARY THAN AVERAGE SALARY PAID TO DEPARTMENT 80
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY , DEPARTMENT_ID
+  2  FROM EMPLOYEES
+  3  WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 80);
+
+FIRST_NAME          SALARY DEPARTMENT_ID                                                                                                                                                                
+--------------- ---------- -------------                                                                                                                                                                
+Steven               24000            90                                                                                                                                                                
+Neena                17000            90                                                                                                                                                                
+Lex                  17000            90                                                                                                                                                                
+Eleni                10500            80                                                                                                                                                                
+Ellen                11000            80                                                                                                                                                                
+Michael              13000            20                                                                                                                                                                
+Shelley              12000           110                                                                                                                                                                
+
+7 rows selected.
+
+SQL> SELECT AVG(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 80;
+
+AVG(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+ 10033.3333                                                                                                                                                                                             
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM DISPLAY THOSE EMPLOYEES WHO REPORTS TO MANAGER 100 AND GETS HIGHER SALARY THAN AVERAGE SALARY PAID TO DEPARTMENT 110.
+SQL> 
+SQL> SELECT FIRST_NAME , MANAGER_ID , DEPARTMENT_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE MANAGER_ID = 100 AND SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 110);
+
+FIRST_NAME      MANAGER_ID DEPARTMENT_ID     SALARY                                                                                                                                                     
+--------------- ---------- ------------- ----------                                                                                                                                                     
+Neena                  100            90      17000                                                                                                                                                     
+Lex                    100            90      17000                                                                                                                                                     
+Eleni                  100            80      10500                                                                                                                                                     
+Michael                100            20      13000                                                                                                                                                     
+
+SQL> REM DISPLAY THOSE WHO WERE HIRED BEFORE YEAR 94 AND GETS HIGHER SALARY THAN AVERAGE SALARY PAID BY COMPANY.
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_dATE , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE HIRE_DATE < '1JAN93' AND SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME      HIRE_DATE     SALARY                                                                                                                                                                    
+--------------- --------- ----------                                                                                                                                                                    
+Steven          17-JUL-87      24000                                                                                                                                                                    
+Neena           21-SEP-89      17000                                                                                                                                                                    
+Alexander       03-JAN-90       9000                                                                                                                                                                    
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE WHO REPORTS TO MANAGER 149 AND GETS HIGHE SALARY THAN AVERAGE SALARY PAID BY COMPANY.
+SQL> 
+SQL> REM 2 DISPLAY THOSE WHO GETS LOWER SALARY THAN AVERAGE SALARY PAID TO DEPARTMENT 60
+SQL> 
+SQL> REM 3 DISPLAY THOSE WHO GETS WHO WORKS IN DEPARTMENT 20 AND GETS HIGHER SALARY THAN AVEAGE SALARY PAID TO THOSE WHO WERE HIRED IN YEAR 99.
+SQL> 
+SQL> REM 4 DISPLAY THOSE WHO WERE HIRED IN ODD QUARTER AND GETS HIGHER SALARY THAN AVERAGE SALARY PAID TO THOSE WHO WERE HIRED IN EVEN QUARTERS.
+SQL> 
+SQL> REM 5 DISPLAY THOSE WHOSE FIRST_NAME SPELLING HAS EVEN LENGTH AND GETS LOWER SALARY THAN AVERAGE SALARY PAID TO OTHERS.
+SQL> 
+SQL> SELECT FIRST_NAME, MANAGER_ID, SALARY FROM EMPLOYEES WHERE MANAGER_ID = 149 AND SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME      MANAGER_ID     SALARY                                                                                                                                                                   
+--------------- ---------- ----------                                                                                                                                                                   
+Ellen                  149      11000                                                                                                                                                                   
+
+SQL> SELECT FIRST_NAME,  SALARY FROM EMPLOYEES WHERE SALARY < (SELECT AVG(SALARY) FROM EMPLOYEES WHERE DEPARTMENT_ID = 60);
+
+FIRST_NAME          SALARY                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Bruce                 6000                                                                                                                                                                              
+Diana                 4200                                                                                                                                                                              
+Kevin                 5800                                                                                                                                                                              
+Trenna                3500                                                                                                                                                                              
+Curtis                3100                                                                                                                                                                              
+Randall               2600                                                                                                                                                                              
+Peter                 2500                                                                                                                                                                              
+Jennifer              4400                                                                                                                                                                              
+Pat                   6000                                                                                                                                                                              
+
+9 rows selected.
+
+SQL> SELECT FIRST_NAME, DEPARTMENT_ID, SALARY FROM EMPLOYEES WHERE DEPARTMENT_ID = 20 AND SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'RRRR') = 1999);
+
+FIRST_NAME      DEPARTMENT_ID     SALARY                                                                                                                                                                
+--------------- ------------- ----------                                                                                                                                                                
+Michael                    20      13000                                                                                                                                                                
+Pat                        20       6000                                                                                                                                                                
+
+SQL> SELECT FIRST_NAME, TO_NUMBER(TO_CHAR(HIRE_DATE,'Q')) QUARTER FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'Q') IN (1,3) AND SALARY > (SELECT AVG(SALARY) FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'Q') IN (2,4));
+
+FIRST_NAME         QUARTER                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Steven                   3                                                                                                                                                                              
+Neena                    3                                                                                                                                                                              
+Lex                      1                                                                                                                                                                              
+Alexander                1                                                                                                                                                                              
+Eleni                    1                                                                                                                                                                              
+Jonathon                 1                                                                                                                                                                              
+Michael                  1                                                                                                                                                                              
+
+7 rows selected.
+
+SQL> SELECT FIRST_NAME, LENGTH(FIRST_NAME) FNAME_LEN, SALARY FROM EMPLOYEES WHERE MOD(LENGTH(FIRST_NAME),2) = 0 AND SALARY < (SELECT AVG(SALARY) FROM EMPLOYEES WHERE MOD(LENGTH(FIRST_NAME),2) != 0);
+
+FIRST_NAME       FNAME_LEN     SALARY                                                                                                                                                                   
+--------------- ---------- ----------                                                                                                                                                                   
+Trenna                   6       3500                                                                                                                                                                   
+Curtis                   6       3100                                                                                                                                                                   
+Jonathon                 8       8600                                                                                                                                                                   
+Kimerely                 8       7000                                                                                                                                                                   
+Jennifer                 8       4400                                                                                                                                                                   
+
+SQL> SELECT FIRST_NAME, LENGTH(FIRST_NAME) FNAME_LEN, SALARY FROM EMPLOYEES WHERE MOD(LENGTH(FIRST_NAME),2) = 0 AND SALARY < (SELECT AVG(SALARY) FROM EMPLOYEES);
+
+FIRST_NAME       FNAME_LEN     SALARY                                                                                                                                                                   
+--------------- ---------- ----------                                                                                                                                                                   
+Trenna                   6       3500                                                                                                                                                                   
+Curtis                   6       3100                                                                                                                                                                   
+Jonathon                 8       8600                                                                                                                                                                   
+Kimerely                 8       7000                                                                                                                                                                   
+Jennifer                 8       4400                                                                                                                                                                   
+
+SQL> 
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM DISPLAY THOSE WHO GET LOWEST SALARY IN THEIR DEPARTMENT
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY IN (SELECT MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_ID     SALARY                                                                                                                                                                
+--------------- ------------- ----------                                                                                                                                                                
+Neena                      90      17000                                                                                                                                                                
+Lex                        90      17000                                                                                                                                                                
+Bruce                      60       6000                                                                                                                                                                
+Diana                      60       4200                                                                                                                                                                
+Peter                      50       2500                                                                                                                                                                
+Jonathon                   80       8600                                                                                                                                                                
+Kimerely                            7000                                                                                                                                                                
+Jennifer                   10       4400                                                                                                                                                                
+Pat                        20       6000                                                                                                                                                                
+William                   110       8300                                                                                                                                                                
+
+10 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (DEPARTMENT_ID, SALARY) IN (SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_ID     SALARY                                                                                                                                                                
+--------------- ------------- ----------                                                                                                                                                                
+Neena                      90      17000                                                                                                                                                                
+Lex                        90      17000                                                                                                                                                                
+Pat                        20       6000                                                                                                                                                                
+William                   110       8300                                                                                                                                                                
+Peter                      50       2500                                                                                                                                                                
+Jonathon                   80       8600                                                                                                                                                                
+Diana                      60       4200                                                                                                                                                                
+Jennifer                   10       4400                                                                                                                                                                
+
+8 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(DEPARTMENT_ID,0), SALARY) IN (SELECT NVL(DEPARTMENT_ID,0) , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_ID     SALARY                                                                                                                                                                
+--------------- ------------- ----------                                                                                                                                                                
+Kimerely                            7000                                                                                                                                                                
+Neena                      90      17000                                                                                                                                                                
+Lex                        90      17000                                                                                                                                                                
+Pat                        20       6000                                                                                                                                                                
+William                   110       8300                                                                                                                                                                
+Peter                      50       2500                                                                                                                                                                
+Jonathon                   80       8600                                                                                                                                                                
+Diana                      60       4200                                                                                                                                                                
+Jennifer                   10       4400                                                                                                                                                                
+
+9 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY DEPARTMENT_ID ORDER BY 1;
+
+DEPARTMENT_ID MIN(SALARY)                                                                                                                                                                               
+------------- -----------                                                                                                                                                                               
+           10        4400                                                                                                                                                                               
+           20        6000                                                                                                                                                                               
+           50        2500                                                                                                                                                                               
+           60        4200                                                                                                                                                                               
+           80        8600                                                                                                                                                                               
+           90       17000                                                                                                                                                                               
+          110        8300                                                                                                                                                                               
+                     7000                                                                                                                                                                               
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_ID , SALARY , FIRST_NAME FROM EMPLOYEES ORDER BY 1,2;
+
+DEPARTMENT_ID     SALARY FIRST_NAME                                                                                                                                                                     
+------------- ---------- ---------------                                                                                                                                                                
+           10       4400 Jennifer                                                                                                                                                                       
+           20       6000 Pat                                                                                                                                                                            
+           20      13000 Michael                                                                                                                                                                        
+           50       2500 Peter                                                                                                                                                                          
+           50       2600 Randall                                                                                                                                                                        
+           50       3100 Curtis                                                                                                                                                                         
+           50       3500 Trenna                                                                                                                                                                         
+           50       5800 Kevin                                                                                                                                                                          
+           60       4200 Diana                                                                                                                                                                          
+           60       6000 Bruce                                                                                                                                                                          
+           60       9000 Alexander                                                                                                                                                                      
+           80       8600 Jonathon                                                                                                                                                                       
+           80      10500 Eleni                                                                                                                                                                          
+           80      11000 Ellen                                                                                                                                                                          
+           90      17000 Lex                                                                                                                                                                            
+           90      17000 Neena                                                                                                                                                                          
+           90      24000 Steven                                                                                                                                                                         
+          110       8300 William                                                                                                                                                                        
+          110      12000 Shelley                                                                                                                                                                        
+                    7000 Kimerely                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE WHO GET HIGHEST SALARY FOR THEIR JOB_ID
+SQL> 
+SQL> REM 2 DISPLAY THOSE WHO WERE HIRED LAST FOR THEIR DEPARTMENT_ID
+SQL> 
+SQL> REM 3 DISPLAY THOSE WHO GET LOWEST OR HIGHEST SALARY FOR THEIR MANAGER_ID
+SQL> 
+SQL> REM 4 DISPALY ALL OTHER THAN THOSE WHO GET LOWEST SALARY FOR THEIR HIRE YEAR
+SQL> 
+SQL> REM 5 DISPLAY ALL OTHER THAN THOSE WHO WERE HIRED FIRST OR LAST FOR THEIR HIRE QUARTER
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(JOB_ID,0),SALARY) IN (SELECT NVL(JOB_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY JOB_ID);
+
+FIRST_NAME      JOB_ID         SALARY                                                                                                                                                                   
+--------------- ---------- ----------                                                                                                                                                                   
+Diana           IT_PROG          4200                                                                                                                                                                   
+Shelley         AC_MGR          12000                                                                                                                                                                   
+William         AC_ACCOUNT       8300                                                                                                                                                                   
+Kevin           ST_MAN           5800                                                                                                                                                                   
+Jennifer        AD_ASST          4400                                                                                                                                                                   
+Neena           AD_VP           17000                                                                                                                                                                   
+Lex             AD_VP           17000                                                                                                                                                                   
+Eleni           SA_MAN          10500                                                                                                                                                                   
+Michael         MK_MAN          13000                                                                                                                                                                   
+Steven          AD_PRES         24000                                                                                                                                                                   
+Kimerely        SA_REP           7000                                                                                                                                                                   
+Pat             MK_REP           6000                                                                                                                                                                   
+Peter           ST_CLERK         2500                                                                                                                                                                   
+
+13 rows selected.
+
+SQL> REM 2 DISPLAY THOSE WHO WERE HIRED LAST FOR THEIR DEPARTMENT_ID
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID , HIRE_DATE
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(DEPARTMENT_ID,0) , HIRE_DATE) IN (SELECT NVL(DEPARTMENT_ID ,0), MAX(HIRE_DATE) FROM EMPLOYEES GROUP BY DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_ID HIRE_DATE                                                                                                                                                                 
+--------------- ------------- ---------                                                                                                                                                                 
+Kimerely                      24-MAY-99                                                                                                                                                                 
+Lex                        90 13-JAN-93                                                                                                                                                                 
+Pat                        20 17-AUG-97                                                                                                                                                                 
+Shelley                   110 07-JUN-94                                                                                                                                                                 
+William                   110 07-JUN-94                                                                                                                                                                 
+Kevin                      50 16-NOV-99                                                                                                                                                                 
+Eleni                      80 29-JAN-00                                                                                                                                                                 
+Diana                      60 07-FEB-99                                                                                                                                                                 
+Jennifer                   10 17-SEP-87                                                                                                                                                                 
+
+9 rows selected.
+
+SQL> REM 3 DISPLAY THOSE WHO GET LOWEST OR HIGHEST SALARY FOR THEIR MANAGER_ID
+SQL> 
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(MANAGER_ID,0),SALARY) IN (SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)
+  4  OR    (NVL(MANAGER_ID,0),SALARY) IN (SELECT NVL(MANAGER_ID,0),MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID);
+
+FIRST_NAME      MANAGER_ID     SALARY                                                                                                                                                                   
+--------------- ---------- ----------                                                                                                                                                                   
+Steven                          24000                                                                                                                                                                   
+Neena                  100      17000                                                                                                                                                                   
+Lex                    100      17000                                                                                                                                                                   
+Alexander              102       9000                                                                                                                                                                   
+Bruce                  103       6000                                                                                                                                                                   
+Diana                  103       4200                                                                                                                                                                   
+Kevin                  100       5800                                                                                                                                                                   
+Trenna                 124       3500                                                                                                                                                                   
+Peter                  124       2500                                                                                                                                                                   
+Ellen                  149      11000                                                                                                                                                                   
+Kimerely               149       7000                                                                                                                                                                   
+Jennifer               101       4400                                                                                                                                                                   
+Pat                    201       6000                                                                                                                                                                   
+Shelley                101      12000                                                                                                                                                                   
+William                205       8300                                                                                                                                                                   
+
+15 rows selected.
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(MANAGER_ID,0),SALARY) IN ((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID),
+  4                                       (SELECT NVL(MANAGER_ID,0),MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID));
+WHERE (NVL(MANAGER_ID,0),SALARY) IN ((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID),
+                                                                                                              *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(MANAGER_ID,0),SALARY) IN (((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID),
+  4                                       (SELECT NVL(MANAGER_ID,0),MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)));
+WHERE (NVL(MANAGER_ID,0),SALARY) IN (((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID),
+                                       *
+ERROR at line 3:
+ORA-00913: too many values 
+
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(MANAGER_ID,0),SALARY) IN (((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)),
+  4                                       ((SELECT NVL(MANAGER_ID,0),MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)));
+WHERE (NVL(MANAGER_ID,0),SALARY) IN (((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)),
+                                                                                                                *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (NVL(MANAGER_ID,0),SALARY) IN ((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)),
+  4                                       ((SELECT NVL(MANAGER_ID,0),MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID));
+WHERE (NVL(MANAGER_ID,0),SALARY) IN ((SELECT NVL(MANAGER_ID,0),MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)),
+                                                                                                               *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> REM 4 DISPALY ALL OTHER THAN THOSE WHO GET LOWEST SALARY FOR THEIR HIRE YEAR
+SQL> 
+SQL> SELECT TO_NUMBER(TO_CHAR(HIRE_DATE,'RRRR')) HIRE_YEAR, FIRST_NAME, SALARY FROM EMPLOYEES WHERE (TO_CHAR(HIRE_DATE,'RRRR'),SALARY) = ANY(SELECT TO_CHAR(HIRE_DATE,'RRRR'), MIN(SALARY) FROM EMPLOYEES GROUP BY TO_CHAR(HIRE_DATE,'RRRR'));
+
+ HIRE_YEAR FIRST_NAME          SALARY                                                                                                                                                                   
+---------- --------------- ----------                                                                                                                                                                   
+      1991 Bruce                 6000                                                                                                                                                                   
+      1997 Curtis                3100                                                                                                                                                                   
+      1995 Trenna                3500                                                                                                                                                                   
+      1998 Peter                 2500                                                                                                                                                                   
+      1996 Ellen                11000                                                                                                                                                                   
+      1990 Alexander             9000                                                                                                                                                                   
+      1993 Lex                  17000                                                                                                                                                                   
+      1989 Neena                17000                                                                                                                                                                   
+      1999 Diana                 4200                                                                                                                                                                   
+      1987 Jennifer              4400                                                                                                                                                                   
+      1994 William               8300                                                                                                                                                                   
+      2000 Eleni                10500                                                                                                                                                                   
+
+12 rows selected.
+
+SQL> SELECT FIRST_NAME , TO_CHAR(HIRE_DATE,'Q') , HIRE_DATE
+  2  FROM EMPLOYEES
+  3  WHERE (TO_CHAR(HIRE_DATE,'Q'),HIRE_DATE) NOT IN (SELECT TO_CHAR(HIRE_DATE,'Q'), MIN(HIRE_DATE) FROM EMPLOYEES GROUP BY TO_CHAR(HIRE_DATE,'Q'))
+  4  AND   (TO_CHAR(HIRE_DATE,'Q'),HIRE_DATE) NOT IN (SELECT TO_CHAR(HIRE_DATE,'Q'), MAX(HIRE_DATE) FROM EMPLOYEES GROUP BY TO_CHAR(HIRE_DATE,'Q'))
+  5  ORDER BY 2;
+
+FIRST_NAME      T HIRE_DATE                                                                                                                                                                             
+--------------- - ---------                                                                                                                                                                             
+Randall         1 15-MAR-98                                                                                                                                                                             
+Diana           1 07-FEB-99                                                                                                                                                                             
+Jonathon        1 24-MAR-98                                                                                                                                                                             
+Michael         1 17-FEB-96                                                                                                                                                                             
+Curtis          1 29-JAN-97                                                                                                                                                                             
+Lex             1 13-JAN-93                                                                                                                                                                             
+Ellen           2 11-MAY-96                                                                                                                                                                             
+William         2 07-JUN-94                                                                                                                                                                             
+Shelley         2 07-JUN-94                                                                                                                                                                             
+Pat             3 17-AUG-97                                                                                                                                                                             
+Jennifer        3 17-SEP-87                                                                                                                                                                             
+Neena           3 21-SEP-89                                                                                                                                                                             
+
+12 rows selected.
+
+SQL> SELECT TO_CHAR(HIRE_DATE,'Q') , COUNT(*) FROM EMPLOYEES GROUP BY TO_CHAR(HIRE_DATE,'Q');
+
+T   COUNT(*)                                                                                                                                                                                            
+- ----------                                                                                                                                                                                            
+1          8                                                                                                                                                                                            
+3          5                                                                                                                                                                                            
+2          5                                                                                                                                                                                            
+4          2                                                                                                                                                                                            
+
+SQL> SPOOL OFF

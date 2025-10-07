@@ -1,0 +1,73 @@
+1> SELECT LAST_NAME||HIRE_DATE||SALARY FROM EMPLOYEES;
+
+2>A> SELECT CONCAT(LAST_NAME , CONCAT(HIRE_DATE,SALARY)) FROM EMPLOYEES;
+2>B> SELECT CONCAT(CONCAT(LAST_NAME,HIRE_DATE),SALARY) FROM EMPLOYEES;
+
+3>A> SELECT CONCAT( LAST_NAME || HIRE_DATE , SALARY) FROM EMPLOYEES;
+3>B> SELECT CONCAT( LAST_NAME , HIRE_DATE || SALARY) FROM EMPLOYEES;
+
+4>A> SELECT LAST_NAME || CONCAT(HIRE_DATE , SALARY) FROM EMPLOYEES;
+4>B> SELECT (CONCAT(LAST_NAME,HIRE_DATE))||SALARY FROM EMPLOYEES;
+
+
+1>  SELECT  '---' || HIRE_DATE || '+++' FROM EMPLOYEES;
+2>  SELECT  CONCAT('---',CONCAT(HIRE_DATE,'+++')) FROM EMPLOYEES;
+3> SELECT '---'||CONCAT(HIRE_DATE,'+++') FROM EMPLOYEES;
+4> SELECT LPAD(RPAD(HIRE_DATE,12,'+++'),15,'---') FROM EMPLOYEES;
+5>  SELECT LPAD(lPAD('+++',12,'HIRE_DATE'),15,'---') FROM EMPLOYEES;
+6> SELECT RPAD(HIRE_DATE,14,'+') FROM EMPLOYEES;
+
+
+
+1> SELECT SUBSTR(HIRE_DATE ,1,2) FROM EMPLOYEES;
+2> SELECT SUBSTR(HIRE_DATE ,-2,2) FROM EMPLOYEES;
+3> SELECT SUBSTR(HIRE_DATE ,4,3) FROM EMPLOYEES;
+4> SELECT SUBSTR(HIRE_DATE ,1,2)  || SUBSTR(HIRE_DATE,-2,2) FROM EMPLOYEES;
+5> SELECT SUBSTR(HIRE_DATE ,1,2)  ||'^'|| SUBSTR(HIRE_DATE ,4,3)||'~'|| SUBSTR(HIRE_DATE ,-2,2) FROM EMPLOYEES;
+
+ SELECT UPPER(SUBSTR(FIRST_NAME ,1,3))||LOWER(SUBSTR(LAST_NAME ,-3,3)) FROM EMPLOYEES;
+
+
+
+1> select instr(first_name , 'e') from employees;
+ select first_name from employees where first_name like('%e%');
+select first_name from employees where instr(first_name,'e');
+
+2> select instr(hire_date , 'JUL',4) from employees;
+ select first_name,HIRE_DATE from employees where instr(HIRE_DATE,'JUL');
+select first_name,HIRE_DATE from employees where HIRE_DATE LIKE('%JUL%');
+
+3> select first_name from employees where first_name like('%ll%');
+select first_name from employees where instr(first_name,'ll');
+
+4> select phone_number from employees where instr(phone_number,'.',3);
+select phone_number from employees where phone_number like('%.%.%');
+
+5> select last_name from employees where instr(last_name,'a',2);
+select last_name from employees where last_name like('%a%a%');
+
+1>  select first_name from employees where instr(first_name,'e',3) <> 0;
+    select first_name from employees where first_name like('__e%');
+
+2>select last_name from employees where instr(last_name,'a',-3) <> 0;
+    select last_name from employees where last_name like('%a__');
+
+3>  select email from employees where email like('%N');
+ select email from employees where instr(email,'N',-1) <> 0;
+
+4> select hire_date from employees where hire_date > like('10%');
+
+
+SQL> REM 1 DISPLAY THOSE FIRST_NAME WHICH HAS e ON 3rd POSITION
+SQL> 
+SQL> REM 2 DISPLAY THOSE LAST_NAME WHICH HAS a ON 3rd LAST POSITION
+SQL> 
+SQL> REM 3 DISPLAY THOSE LAST_NAME WHICH HAS N ON LAST POSITION
+SQL> 
+SQL> REM 4 DISPLAY THOSE HIRE_DATE WHICH COMES BEFORE 10th
+SQL> 
+SQL> REM 1 LIKE 2 INSTR ( IN 'WHERE' CLAUSE )
+SQL> 
+SQL> 
+SQL> REM 3 DISPLAY THOSE EMAIL WHICH HAS N ON LAST POSITION
+

@@ -1,0 +1,118 @@
+SQL> 
+SQL> 
+SQL> REM NOTEPAD++ : INSTALL , UPDATE OFF
+SQL> 
+SQL> 
+SQL> 
+SQL> REM RDBMS : Relational DataBase Management System
+SQL> 
+SQL> REM ORACLE CORPORATION , US
+SQL> 
+SQL> REM 1 43% OF WHOLE UNIVERSE CLIENT ARE USING ORACLE FOR THEIR DATA
+SQL> 
+SQL> REM 2 FORBES/FORTUNE 500 COMPANIES OF WORLD : MORE THAN 90% COMPANIES USE ORACLE FOR THEIR DATA
+SQL> 
+SQL> REM 3 CHAIRMAN : LERRY ELISON : HE IS IN THE TOP RICHEST PERSON OF THE WORLD FOR MANY YEARS
+SQL> 
+SQL> REM 4 E R CODD : IDEAL RDBMS PRODUCT : 12 RULES : MAXIMUM 10 RULES ORACLE HAS IMPLEMENTED
+SQL> 
+SQL> 
+SQL> REM RDBMS : SQL : Structured Query Language
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE                   JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                   
+----------- --------------- --------------- ---------- -------------------- --------------------------- ---------- ---------- -------------- ---------- -------------                                   
+        100 Steven          King            SKING      515.123.4567         17-JULY     -1987 FRIDAY    AD_PRES         24000                                      90                                   
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEPTEMBER-1989 THURSDAY  AD_VP           17000                       100            90                                   
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JANUARY  -1993 WEDNESDAY AD_VP           17000                       100            90                                   
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JANUARY  -1990 WEDNESDAY IT_PROG          9000                       102            60                                   
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY      -1991 TUESDAY   IT_PROG          6000                       103            60                                   
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEBRUARY -1999 SUNDAY    IT_PROG          4200                       103            60                                   
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOVEMBER -1999 TUESDAY   ST_MAN           5800                       100            50                                   
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCTOBER  -1995 TUESDAY   ST_CLERK         3500                       124            50                                   
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JANUARY  -1997 WEDNESDAY ST_CLERK         3100                       124            50                                   
+        143 Randall         Matos           RMATOS     650.121.2874         15-MARCH    -1998 SUNDAY    ST_CLERK         2600                       124            50                                   
+        144 Peter           Vargas                     650.121.2004         09-JULY     -1998 THURSDAY  ST_CLERK         2500                       124            50                                   
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JANUARY  -2000 SATURDAY  SA_MAN          10500             .2        100            80                                   
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY      -1996 SATURDAY  SA_REP          11000             .3        149            80                                   
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MARCH    -1998 TUESDAY   SA_REP           8600             .3        149            80                                   
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY      -1999 MONDAY    SA_REP           7000            .15        149                                                 
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEPTEMBER-1987 THURSDAY  AD_ASST          4400                       101            10                                   
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEBRUARY -1996 SATURDAY  MK_MAN          13000                       100            20                                   
+        202 Pat             Fay             PFAY       603.123.6666         17-AUGUST   -1997 SUNDAY    MK_REP           6000                       201            20                                   
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUNE     -1994 TUESDAY   AC_MGR          12000                       101           110                                   
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUNE     -1994 TUESDAY   AC_ACCOUNT       8300                       205           110                                   
+
+20 rows selected.
+
+SQL> 
+SQL> SELECT * FROM EMPLOYEES WHERE SALARY > 10000;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE                   JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                   
+----------- --------------- --------------- ---------- -------------------- --------------------------- ---------- ---------- -------------- ---------- -------------                                   
+        100 Steven          King            SKING      515.123.4567         17-JULY     -1987 FRIDAY    AD_PRES         24000                                      90                                   
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEPTEMBER-1989 THURSDAY  AD_VP           17000                       100            90                                   
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JANUARY  -1993 WEDNESDAY AD_VP           17000                       100            90                                   
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JANUARY  -2000 SATURDAY  SA_MAN          10500             .2        100            80                                   
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY      -1996 SATURDAY  SA_REP          11000             .3        149            80                                   
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEBRUARY -1996 SATURDAY  MK_MAN          13000                       100            20                                   
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUNE     -1994 TUESDAY   AC_MGR          12000                       101           110                                   
+
+7 rows selected.
+
+SQL> REM CHAPTER 1 TO 8 : SELECT ...
+SQL> 
+SQL> REM SELECT/CHOOSE/CHOICE/DISPLAY/LIST
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM EMPLOYES;
+SELECT * FROM EMPLOYES
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT FROM * EMPLOYEES;
+SELECT FROM * EMPLOYEES
+       *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT*FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE                   JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                   
+----------- --------------- --------------- ---------- -------------------- --------------------------- ---------- ---------- -------------- ---------- -------------                                   
+        100 Steven          King            SKING      515.123.4567         17-JULY     -1987 FRIDAY    AD_PRES         24000                                      90                                   
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEPTEMBER-1989 THURSDAY  AD_VP           17000                       100            90                                   
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JANUARY  -1993 WEDNESDAY AD_VP           17000                       100            90                                   
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JANUARY  -1990 WEDNESDAY IT_PROG          9000                       102            60                                   
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY      -1991 TUESDAY   IT_PROG          6000                       103            60                                   
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEBRUARY -1999 SUNDAY    IT_PROG          4200                       103            60                                   
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOVEMBER -1999 TUESDAY   ST_MAN           5800                       100            50                                   
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCTOBER  -1995 TUESDAY   ST_CLERK         3500                       124            50                                   
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JANUARY  -1997 WEDNESDAY ST_CLERK         3100                       124            50                                   
+        143 Randall         Matos           RMATOS     650.121.2874         15-MARCH    -1998 SUNDAY    ST_CLERK         2600                       124            50                                   
+        144 Peter           Vargas                     650.121.2004         09-JULY     -1998 THURSDAY  ST_CLERK         2500                       124            50                                   
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JANUARY  -2000 SATURDAY  SA_MAN          10500             .2        100            80                                   
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY      -1996 SATURDAY  SA_REP          11000             .3        149            80                                   
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MARCH    -1998 TUESDAY   SA_REP           8600             .3        149            80                                   
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY      -1999 MONDAY    SA_REP           7000            .15        149                                                 
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEPTEMBER-1987 THURSDAY  AD_ASST          4400                       101            10                                   
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEBRUARY -1996 SATURDAY  MK_MAN          13000                       100            20                                   
+        202 Pat             Fay             PFAY       603.123.6666         17-AUGUST   -1997 SUNDAY    MK_REP           6000                       201            20                                   
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUNE     -1994 TUESDAY   AC_MGR          12000                       101           110                                   
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUNE     -1994 TUESDAY   AC_ACCOUNT       8300                       205           110                                   
+
+20 rows selected.
+
+SQL> SELECT*FROMEMPLOYEES;
+SELECT*FROMEMPLOYEES
+       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SPOOL OFF

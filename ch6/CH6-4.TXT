@@ -1,0 +1,772 @@
+SQL> 
+SQL> REM DISPLAY FIRST_NAME , CITY , REGION_NAME (USE 'USING' CLAUSE)
+SQL> 
+SQL> SELECT FIRST_NAME , CITY , REGION_NAME
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   USING (LOCATION_ID)
+  5  JOIN COUNTRIES   USING (COUNTRY_ID)
+  6  JOIN REGIONS     USING (REGION_ID);
+
+FIRST_NAME      CITY                           REGION_NAME                                                                                                                                              
+--------------- ------------------------------ -------------------------                                                                                                                                
+Ellen           Oxford                         Europe                                                                                                                                                   
+Eleni           Oxford                         Europe                                                                                                                                                   
+Jonathon        Oxford                         Europe                                                                                                                                                   
+Michael         Toronto                        Americas                                                                                                                                                 
+Pat             Toronto                        Americas                                                                                                                                                 
+Diana           Southlake                      Americas                                                                                                                                                 
+Bruce           Southlake                      Americas                                                                                                                                                 
+Alexander       Southlake                      Americas                                                                                                                                                 
+Kevin           South San Francisco            Americas                                                                                                                                                 
+Peter           South San Francisco            Americas                                                                                                                                                 
+Randall         South San Francisco            Americas                                                                                                                                                 
+Curtis          South San Francisco            Americas                                                                                                                                                 
+Trenna          South San Francisco            Americas                                                                                                                                                 
+Jennifer        Seattle                        Americas                                                                                                                                                 
+Lex             Seattle                        Americas                                                                                                                                                 
+Steven          Seattle                        Americas                                                                                                                                                 
+Neena           Seattle                        Americas                                                                                                                                                 
+William         Seattle                        Americas                                                                                                                                                 
+Shelley         Seattle                        Americas                                                                                                                                                 
+
+19 rows selected.
+
+SQL> /*
+SQL> 
+SQL> JOBS
+SQL> 
+SQL>  ^
+SQL>  |
+SQL> 
+SQL> EMPLOYEES --> DEPARTMENTS --> LOCATIONS--> COUNTRIES --> REGIONS
+SQL> 
+SQL>  |
+SQL>  v
+SQL> 
+SQL> JOB_GRADES
+SQL> 
+SQL> */
+SQL> 
+SQL> 
+SQL> SELECT * FROM JOBS;
+
+JOB_ID     JOB_TITLE                           MIN_SALARY MAX_SALARY                                                                                                                                    
+---------- ----------------------------------- ---------- ----------                                                                                                                                    
+AD_PRES    President                                20000      40000                                                                                                                                    
+AD_VP      Administration Vice President            15000      30000                                                                                                                                    
+AD_ASST    Administration Assistant                  3000       6000                                                                                                                                    
+AC_MGR     Accounting Manager                        8200      16000                                                                                                                                    
+AC_ACCOUNT Public Accountant                         4200       9000                                                                                                                                    
+SA_MAN     Sales Manager                            10000      20000                                                                                                                                    
+SA_REP     Sales Representative                      6000      12000                                                                                                                                    
+ST_MAN     Stock Manager                             5500       8500                                                                                                                                    
+ST_CLERK   Stock Clerk                               2000       5000                                                                                                                                    
+IT_PROG    Programmer                                4000      10000                                                                                                                                    
+MK_MAN     Marketing Manager                         9000      15000                                                                                                                                    
+MK_REP     Marketing Representative                  4000       9000                                                                                                                                    
+
+12 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , JOB_ID , JOB_TITLE
+  2  FROM EMPLOYEES
+  3  JOIN JOBS USING (JOB_ID);
+
+FIRST_NAME      JOB_ID     JOB_TITLE                                                                                                                                                                    
+--------------- ---------- -----------------------------------                                                                                                                                          
+William         AC_ACCOUNT Public Accountant                                                                                                                                                            
+Shelley         AC_MGR     Accounting Manager                                                                                                                                                           
+Jennifer        AD_ASST    Administration Assistant                                                                                                                                                     
+Steven          AD_PRES    President                                                                                                                                                                    
+Lex             AD_VP      Administration Vice President                                                                                                                                                
+Neena           AD_VP      Administration Vice President                                                                                                                                                
+Alexander       IT_PROG    Programmer                                                                                                                                                                   
+Bruce           IT_PROG    Programmer                                                                                                                                                                   
+Diana           IT_PROG    Programmer                                                                                                                                                                   
+Michael         MK_MAN     Marketing Manager                                                                                                                                                            
+Pat             MK_REP     Marketing Representative                                                                                                                                                     
+Eleni           SA_MAN     Sales Manager                                                                                                                                                                
+Ellen           SA_REP     Sales Representative                                                                                                                                                         
+Kimerely        SA_REP     Sales Representative                                                                                                                                                         
+Jonathon        SA_REP     Sales Representative                                                                                                                                                         
+Randall         ST_CLERK   Stock Clerk                                                                                                                                                                  
+Curtis          ST_CLERK   Stock Clerk                                                                                                                                                                  
+Trenna          ST_CLERK   Stock Clerk                                                                                                                                                                  
+Peter           ST_CLERK   Stock Clerk                                                                                                                                                                  
+Kevin           ST_MAN     Stock Manager                                                                                                                                                                
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , JOB_ID , JOB_TITLE
+  2  FROM EMPLOYEES E
+  3  JOIN JOBS J ON E.JOB_ID = J.JOB_ID;
+SELECT FIRST_NAME , JOB_ID , JOB_TITLE
+                    *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> SELECT FIRST_NAME , E.JOB_ID , JOB_TITLE
+  2  FROM EMPLOYEES E
+  3  JOIN JOBS J ON E.JOB_ID = J.JOB_ID;
+
+FIRST_NAME      JOB_ID     JOB_TITLE                                                                                                                                                                    
+--------------- ---------- -----------------------------------                                                                                                                                          
+William         AC_ACCOUNT Public Accountant                                                                                                                                                            
+Shelley         AC_MGR     Accounting Manager                                                                                                                                                           
+Jennifer        AD_ASST    Administration Assistant                                                                                                                                                     
+Steven          AD_PRES    President                                                                                                                                                                    
+Lex             AD_VP      Administration Vice President                                                                                                                                                
+Neena           AD_VP      Administration Vice President                                                                                                                                                
+Alexander       IT_PROG    Programmer                                                                                                                                                                   
+Bruce           IT_PROG    Programmer                                                                                                                                                                   
+Diana           IT_PROG    Programmer                                                                                                                                                                   
+Michael         MK_MAN     Marketing Manager                                                                                                                                                            
+Pat             MK_REP     Marketing Representative                                                                                                                                                     
+Eleni           SA_MAN     Sales Manager                                                                                                                                                                
+Ellen           SA_REP     Sales Representative                                                                                                                                                         
+Kimerely        SA_REP     Sales Representative                                                                                                                                                         
+Jonathon        SA_REP     Sales Representative                                                                                                                                                         
+Randall         ST_CLERK   Stock Clerk                                                                                                                                                                  
+Curtis          ST_CLERK   Stock Clerk                                                                                                                                                                  
+Trenna          ST_CLERK   Stock Clerk                                                                                                                                                                  
+Peter           ST_CLERK   Stock Clerk                                                                                                                                                                  
+Kevin           ST_MAN     Stock Manager                                                                                                                                                                
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES;
+
+FIRST_NAME          SALARY                                                                                                                                                                              
+--------------- ----------                                                                                                                                                                              
+Steven               24000                                                                                                                                                                              
+Neena                17000                                                                                                                                                                              
+Lex                  17000                                                                                                                                                                              
+Alexander             9000                                                                                                                                                                              
+Bruce                 6000                                                                                                                                                                              
+Diana                 4200                                                                                                                                                                              
+Kevin                 5800                                                                                                                                                                              
+Trenna                3500                                                                                                                                                                              
+Curtis                3100                                                                                                                                                                              
+Randall               2600                                                                                                                                                                              
+Peter                 2500                                                                                                                                                                              
+Eleni                10500                                                                                                                                                                              
+Ellen                11000                                                                                                                                                                              
+Jonathon              8600                                                                                                                                                                              
+Kimerely              7000                                                                                                                                                                              
+Jennifer              4400                                                                                                                                                                              
+Michael              13000                                                                                                                                                                              
+Pat                   6000                                                                                                                                                                              
+Shelley              12000                                                                                                                                                                              
+William               8300                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT * FROM JOB_GRADES;
+
+GRA LOWEST_SAL HIGHEST_SAL                                                                                                                                                                              
+--- ---------- -----------                                                                                                                                                                              
+A         1000        2999                                                                                                                                                                              
+B         3000        5999                                                                                                                                                                              
+C         6000        9999                                                                                                                                                                              
+D        10000       14999                                                                                                                                                                              
+E        15000       24999                                                                                                                                                                              
+F        25000       40000                                                                                                                                                                              
+
+6 rows selected.
+
+SQL> SELECT FIRST_NAME , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME          SALARY GRA                                                                                                                                                                          
+--------------- ---------- ---                                                                                                                                                                          
+Peter                 2500 A                                                                                                                                                                            
+Randall               2600 A                                                                                                                                                                            
+Curtis                3100 B                                                                                                                                                                            
+Trenna                3500 B                                                                                                                                                                            
+Diana                 4200 B                                                                                                                                                                            
+Jennifer              4400 B                                                                                                                                                                            
+Kevin                 5800 B                                                                                                                                                                            
+Bruce                 6000 C                                                                                                                                                                            
+Pat                   6000 C                                                                                                                                                                            
+Kimerely              7000 C                                                                                                                                                                            
+William               8300 C                                                                                                                                                                            
+Jonathon              8600 C                                                                                                                                                                            
+Alexander             9000 C                                                                                                                                                                            
+Eleni                10500 D                                                                                                                                                                            
+Ellen                11000 D                                                                                                                                                                            
+Shelley              12000 D                                                                                                                                                                            
+Michael              13000 D                                                                                                                                                                            
+Neena                17000 E                                                                                                                                                                            
+Lex                  17000 E                                                                                                                                                                            
+Steven               24000 E                                                                                                                                                                            
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , LOWEST_SAL , SALARY , HIGHEST_SAL , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      LOWEST_SAL     SALARY HIGHEST_SAL GRA                                                                                                                                                   
+--------------- ---------- ---------- ----------- ---                                                                                                                                                   
+Peter                 1000       2500        2999 A                                                                                                                                                     
+Randall               1000       2600        2999 A                                                                                                                                                     
+Curtis                3000       3100        5999 B                                                                                                                                                     
+Trenna                3000       3500        5999 B                                                                                                                                                     
+Diana                 3000       4200        5999 B                                                                                                                                                     
+Jennifer              3000       4400        5999 B                                                                                                                                                     
+Kevin                 3000       5800        5999 B                                                                                                                                                     
+Bruce                 6000       6000        9999 C                                                                                                                                                     
+Pat                   6000       6000        9999 C                                                                                                                                                     
+Kimerely              6000       7000        9999 C                                                                                                                                                     
+William               6000       8300        9999 C                                                                                                                                                     
+Jonathon              6000       8600        9999 C                                                                                                                                                     
+Alexander             6000       9000        9999 C                                                                                                                                                     
+Eleni                10000      10500       14999 D                                                                                                                                                     
+Ellen                10000      11000       14999 D                                                                                                                                                     
+Shelley              10000      12000       14999 D                                                                                                                                                     
+Michael              10000      13000       14999 D                                                                                                                                                     
+Neena                15000      17000       24999 E                                                                                                                                                     
+Lex                  15000      17000       24999 E                                                                                                                                                     
+Steven               15000      24000       24999 E                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM FIRST_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+SQL> 
+SQL> SELECT FIRST_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  JOIN JOBS USING (JOB_ID)
+  4  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      JOB_ID     JOB_TITLE                               SALARY GRA                                                                                                                           
+--------------- ---------- ----------------------------------- ---------- ---                                                                                                                           
+Steven          AD_PRES    President                                24000 E                                                                                                                             
+Neena           AD_VP      Administration Vice President            17000 E                                                                                                                             
+Lex             AD_VP      Administration Vice President            17000 E                                                                                                                             
+Michael         MK_MAN     Marketing Manager                        13000 D                                                                                                                             
+Shelley         AC_MGR     Accounting Manager                       12000 D                                                                                                                             
+Ellen           SA_REP     Sales Representative                     11000 D                                                                                                                             
+Eleni           SA_MAN     Sales Manager                            10500 D                                                                                                                             
+Alexander       IT_PROG    Programmer                                9000 C                                                                                                                             
+Jonathon        SA_REP     Sales Representative                      8600 C                                                                                                                             
+William         AC_ACCOUNT Public Accountant                         8300 C                                                                                                                             
+Kimerely        SA_REP     Sales Representative                      7000 C                                                                                                                             
+Bruce           IT_PROG    Programmer                                6000 C                                                                                                                             
+Pat             MK_REP     Marketing Representative                  6000 C                                                                                                                             
+Kevin           ST_MAN     Stock Manager                             5800 B                                                                                                                             
+Jennifer        AD_ASST    Administration Assistant                  4400 B                                                                                                                             
+Diana           IT_PROG    Programmer                                4200 B                                                                                                                             
+Trenna          ST_CLERK   Stock Clerk                               3500 B                                                                                                                             
+Curtis          ST_CLERK   Stock Clerk                               3100 B                                                                                                                             
+Randall         ST_CLERK   Stock Clerk                               2600 A                                                                                                                             
+Peter           ST_CLERK   Stock Clerk                               2500 A                                                                                                                             
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , E.JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES E
+  3  JOIN JOBS      J ON E.JOB_ID = J.JOB_ID
+  4  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      JOB_ID     JOB_TITLE                               SALARY GRA                                                                                                                           
+--------------- ---------- ----------------------------------- ---------- ---                                                                                                                           
+Steven          AD_PRES    President                                24000 E                                                                                                                             
+Neena           AD_VP      Administration Vice President            17000 E                                                                                                                             
+Lex             AD_VP      Administration Vice President            17000 E                                                                                                                             
+Michael         MK_MAN     Marketing Manager                        13000 D                                                                                                                             
+Shelley         AC_MGR     Accounting Manager                       12000 D                                                                                                                             
+Ellen           SA_REP     Sales Representative                     11000 D                                                                                                                             
+Eleni           SA_MAN     Sales Manager                            10500 D                                                                                                                             
+Alexander       IT_PROG    Programmer                                9000 C                                                                                                                             
+Jonathon        SA_REP     Sales Representative                      8600 C                                                                                                                             
+William         AC_ACCOUNT Public Accountant                         8300 C                                                                                                                             
+Kimerely        SA_REP     Sales Representative                      7000 C                                                                                                                             
+Bruce           IT_PROG    Programmer                                6000 C                                                                                                                             
+Pat             MK_REP     Marketing Representative                  6000 C                                                                                                                             
+Kevin           ST_MAN     Stock Manager                             5800 B                                                                                                                             
+Jennifer        AD_ASST    Administration Assistant                  4400 B                                                                                                                             
+Diana           IT_PROG    Programmer                                4200 B                                                                                                                             
+Trenna          ST_CLERK   Stock Clerk                               3500 B                                                                                                                             
+Curtis          ST_CLERK   Stock Clerk                               3100 B                                                                                                                             
+Randall         ST_CLERK   Stock Clerk                               2600 A                                                                                                                             
+Peter           ST_CLERK   Stock Clerk                               2500 A                                                                                                                             
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  NATURAL JOIN JOBS
+  4  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      JOB_ID     JOB_TITLE                               SALARY GRA                                                                                                                           
+--------------- ---------- ----------------------------------- ---------- ---                                                                                                                           
+Steven          AD_PRES    President                                24000 E                                                                                                                             
+Neena           AD_VP      Administration Vice President            17000 E                                                                                                                             
+Lex             AD_VP      Administration Vice President            17000 E                                                                                                                             
+Michael         MK_MAN     Marketing Manager                        13000 D                                                                                                                             
+Shelley         AC_MGR     Accounting Manager                       12000 D                                                                                                                             
+Ellen           SA_REP     Sales Representative                     11000 D                                                                                                                             
+Eleni           SA_MAN     Sales Manager                            10500 D                                                                                                                             
+Alexander       IT_PROG    Programmer                                9000 C                                                                                                                             
+Jonathon        SA_REP     Sales Representative                      8600 C                                                                                                                             
+William         AC_ACCOUNT Public Accountant                         8300 C                                                                                                                             
+Kimerely        SA_REP     Sales Representative                      7000 C                                                                                                                             
+Bruce           IT_PROG    Programmer                                6000 C                                                                                                                             
+Pat             MK_REP     Marketing Representative                  6000 C                                                                                                                             
+Kevin           ST_MAN     Stock Manager                             5800 B                                                                                                                             
+Jennifer        AD_ASST    Administration Assistant                  4400 B                                                                                                                             
+Diana           IT_PROG    Programmer                                4200 B                                                                                                                             
+Trenna          ST_CLERK   Stock Clerk                               3500 B                                                                                                                             
+Curtis          ST_CLERK   Stock Clerk                               3100 B                                                                                                                             
+Randall         ST_CLERK   Stock Clerk                               2600 A                                                                                                                             
+Peter           ST_CLERK   Stock Clerk                               2500 A                                                                                                                             
+
+20 rows selected.
+
+SQL> REM FIRST_NAME DEPARTMENT_NAME CITY COUNTRY_NAME REGION_NAME JOB_ID JOB_TITLE SALARY GRADE_LEVEL
+SQL> 
+SQL> REM 1 NJ + USING + ON 2 NJ + ON 3 USING + ON
+SQL> 
+SQL> 
+SQL> REM 1 NJ + USING + ON
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  NATURAL JOIN JOBS
+  4  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  5  JOIN LOCATIONS   USING (LOCATION_ID)
+  6  JOIN COUNTRIES   USING (COUNTRY_ID)
+  7  JOIN REGIONS     USING (REGION_ID)
+  8  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_ID     JOB_TITLE                                   
+--------------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ---------- -----------------------------------         
+    SALARY GRA                                                                                                                                                                                          
+---------- ---                                                                                                                                                                                          
+Steven          Executive                      Seattle                        United States of America                 Americas                  AD_PRES    President                                   
+     24000 E                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Neena           Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President               
+     17000 E                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Lex             Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President               
+     17000 E                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Michael         Marketing                      Toronto                        Canada                                   Americas                  MK_MAN     Marketing Manager                           
+     13000 D                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Shelley         Accounting                     Seattle                        United States of America                 Americas                  AC_MGR     Accounting Manager                          
+     12000 D                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Ellen           Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                        
+     11000 D                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Eleni           Sales                          Oxford                         United Kingdom                           Europe                    SA_MAN     Sales Manager                               
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_ID     JOB_TITLE                                   
+--------------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ---------- -----------------------------------         
+    SALARY GRA                                                                                                                                                                                          
+---------- ---                                                                                                                                                                                          
+     10500 D                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Alexander       IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                  
+      9000 C                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Jonathon        Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                        
+      8600 C                                                                                                                                                                                            
+                                                                                                                                                                                                        
+William         Accounting                     Seattle                        United States of America                 Americas                  AC_ACCOUNT Public Accountant                           
+      8300 C                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Pat             Marketing                      Toronto                        Canada                                   Americas                  MK_REP     Marketing Representative                    
+      6000 C                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Bruce           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                  
+      6000 C                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Kevin           Shiping                        South San Francisco            United States of America                 Americas                  ST_MAN     Stock Manager                               
+      5800 B                                                                                                                                                                                            
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_ID     JOB_TITLE                                   
+--------------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ---------- -----------------------------------         
+    SALARY GRA                                                                                                                                                                                          
+---------- ---                                                                                                                                                                                          
+                                                                                                                                                                                                        
+Jennifer        Administration                 Seattle                        United States of America                 Americas                  AD_ASST    Administration Assistant                    
+      4400 B                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Diana           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                  
+      4200 B                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Trenna          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                                 
+      3500 B                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Curtis          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                                 
+      3100 B                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Randall         Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                                 
+      2600 A                                                                                                                                                                                            
+                                                                                                                                                                                                        
+Peter           Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                                 
+      2500 A                                                                                                                                                                                            
+                                                                                                                                                                                                        
+
+19 rows selected.
+
+SQL> SET LINES 300
+SQL> 
+SQL> R
+  1  SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  NATURAL JOIN JOBS
+  4  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  5  JOIN LOCATIONS   USING (LOCATION_ID)
+  6  JOIN COUNTRIES   USING (COUNTRY_ID)
+  7  JOIN REGIONS     USING (REGION_ID)
+  8* JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_ID     JOB_TITLE                               SALARY GRA                                                                                              
+--------------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ---------- ----------------------------------- ---------- ---                                                                                              
+Steven          Executive                      Seattle                        United States of America                 Americas                  AD_PRES    President                                24000 E                                                                                                
+Neena           Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Lex             Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Michael         Marketing                      Toronto                        Canada                                   Americas                  MK_MAN     Marketing Manager                        13000 D                                                                                                
+Shelley         Accounting                     Seattle                        United States of America                 Americas                  AC_MGR     Accounting Manager                       12000 D                                                                                                
+Ellen           Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                     11000 D                                                                                                
+Eleni           Sales                          Oxford                         United Kingdom                           Europe                    SA_MAN     Sales Manager                            10500 D                                                                                                
+Alexander       IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                9000 C                                                                                                
+Jonathon        Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                      8600 C                                                                                                
+William         Accounting                     Seattle                        United States of America                 Americas                  AC_ACCOUNT Public Accountant                         8300 C                                                                                                
+Pat             Marketing                      Toronto                        Canada                                   Americas                  MK_REP     Marketing Representative                  6000 C                                                                                                
+Bruce           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                6000 C                                                                                                
+Kevin           Shiping                        South San Francisco            United States of America                 Americas                  ST_MAN     Stock Manager                             5800 B                                                                                                
+Jennifer        Administration                 Seattle                        United States of America                 Americas                  AD_ASST    Administration Assistant                  4400 B                                                                                                
+Diana           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                4200 B                                                                                                
+Trenna          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3500 B                                                                                                
+Curtis          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3100 B                                                                                                
+Randall         Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2600 A                                                                                                
+Peter           Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2500 A                                                                                                
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM DEPARTMENTS
+  3  NATURAL JOIN LOCATIONS
+  4  NATURAL JOIN COUNTRIES
+  5  NATURAL JOIN REGIONS
+  6  JOIN    EMPLOYEE USING (DEPARTMENT_ID)
+  7  JOIN    JOBS     USING (JOB_ID)
+  8  JOIN    JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL
+  9  
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM DEPARTMENTS
+  3  NATURAL JOIN LOCATIONS
+  4  NATURAL JOIN COUNTRIES
+  5  NATURAL JOIN REGIONS
+  6  JOIN    EMPLOYEES USING (DEPARTMENT_ID)
+  7  JOIN    JOBS     USING (JOB_ID)
+  8  JOIN    JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_ID     JOB_TITLE                               SALARY GRA                                                                                              
+--------------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ---------- ----------------------------------- ---------- ---                                                                                              
+Steven          Executive                      Seattle                        United States of America                 Americas                  AD_PRES    President                                24000 E                                                                                                
+Neena           Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Lex             Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Michael         Marketing                      Toronto                        Canada                                   Americas                  MK_MAN     Marketing Manager                        13000 D                                                                                                
+Shelley         Accounting                     Seattle                        United States of America                 Americas                  AC_MGR     Accounting Manager                       12000 D                                                                                                
+Ellen           Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                     11000 D                                                                                                
+Eleni           Sales                          Oxford                         United Kingdom                           Europe                    SA_MAN     Sales Manager                            10500 D                                                                                                
+Alexander       IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                9000 C                                                                                                
+Jonathon        Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                      8600 C                                                                                                
+William         Accounting                     Seattle                        United States of America                 Americas                  AC_ACCOUNT Public Accountant                         8300 C                                                                                                
+Pat             Marketing                      Toronto                        Canada                                   Americas                  MK_REP     Marketing Representative                  6000 C                                                                                                
+Bruce           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                6000 C                                                                                                
+Kevin           Shiping                        South San Francisco            United States of America                 Americas                  ST_MAN     Stock Manager                             5800 B                                                                                                
+Jennifer        Administration                 Seattle                        United States of America                 Americas                  AD_ASST    Administration Assistant                  4400 B                                                                                                
+Diana           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                4200 B                                                                                                
+Trenna          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3500 B                                                                                                
+Curtis          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3100 B                                                                                                
+Randall         Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2600 A                                                                                                
+Peter           Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2500 A                                                                                                
+
+19 rows selected.
+
+SQL> REM 2 NJ + ON
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM DEPARTMENTS
+  3  NATURAL JOIN LOCATIONS
+  4  NATURAL JOIN COUNTRIES
+  5  NATURAL JOIN REGIONS
+  6  JOIN    EMPLOYEES E ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  7  JOIN    JOBS      J ON E.JOB_ID = J.JOB_ID
+  8  JOIN    JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+JOIN    EMPLOYEES E ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+                                         *
+ERROR at line 6:
+ORA-00904: "D"."DEPARTMENT_ID": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM DEPARTMENTS D
+  3  NATURAL JOIN LOCATIONS
+  4  NATURAL JOIN COUNTRIES
+  5  NATURAL JOIN REGIONS
+  6  JOIN    EMPLOYEES E ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  7  JOIN    JOBS      J ON E.JOB_ID = J.JOB_ID
+  8  JOIN    JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+                                                                          *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , E.JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM DEPARTMENTS D
+  3  NATURAL JOIN LOCATIONS
+  4  NATURAL JOIN COUNTRIES
+  5  NATURAL JOIN REGIONS
+  6  JOIN    EMPLOYEES E ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  7  JOIN    JOBS      J ON E.JOB_ID = J.JOB_ID
+  8  JOIN    JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_ID     JOB_TITLE                               SALARY GRA                                                                                              
+--------------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ---------- ----------------------------------- ---------- ---                                                                                              
+Steven          Executive                      Seattle                        United States of America                 Americas                  AD_PRES    President                                24000 E                                                                                                
+Neena           Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Lex             Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Michael         Marketing                      Toronto                        Canada                                   Americas                  MK_MAN     Marketing Manager                        13000 D                                                                                                
+Shelley         Accounting                     Seattle                        United States of America                 Americas                  AC_MGR     Accounting Manager                       12000 D                                                                                                
+Ellen           Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                     11000 D                                                                                                
+Eleni           Sales                          Oxford                         United Kingdom                           Europe                    SA_MAN     Sales Manager                            10500 D                                                                                                
+Alexander       IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                9000 C                                                                                                
+Jonathon        Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                      8600 C                                                                                                
+William         Accounting                     Seattle                        United States of America                 Americas                  AC_ACCOUNT Public Accountant                         8300 C                                                                                                
+Pat             Marketing                      Toronto                        Canada                                   Americas                  MK_REP     Marketing Representative                  6000 C                                                                                                
+Bruce           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                6000 C                                                                                                
+Kevin           Shiping                        South San Francisco            United States of America                 Americas                  ST_MAN     Stock Manager                             5800 B                                                                                                
+Jennifer        Administration                 Seattle                        United States of America                 Americas                  AD_ASST    Administration Assistant                  4400 B                                                                                                
+Diana           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                4200 B                                                                                                
+Trenna          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3500 B                                                                                                
+Curtis          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3100 B                                                                                                
+Randall         Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2600 A                                                                                                
+Peter           Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2500 A                                                                                                
+
+19 rows selected.
+
+SQL> REM 3 USING + ON
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , COUNTRY_NAME , REGION_NAME , JOB_ID , JOB_TITLE , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  JOIN LOCATIONS   USING (LOCATION_ID)
+  5  JOIN COUNTRIES   USING (COUNTRY_ID)
+  6  JOIN REGIONS     USING (REGION_ID)
+  7  JOIN JOBS        USING (JOB_ID)
+  8  JOIN JOB_GRADES  ON    SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME      DEPARTMENT_NAME                CITY                           COUNTRY_NAME                             REGION_NAME               JOB_ID     JOB_TITLE                               SALARY GRA                                                                                              
+--------------- ------------------------------ ------------------------------ ---------------------------------------- ------------------------- ---------- ----------------------------------- ---------- ---                                                                                              
+Steven          Executive                      Seattle                        United States of America                 Americas                  AD_PRES    President                                24000 E                                                                                                
+Neena           Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Lex             Executive                      Seattle                        United States of America                 Americas                  AD_VP      Administration Vice President            17000 E                                                                                                
+Michael         Marketing                      Toronto                        Canada                                   Americas                  MK_MAN     Marketing Manager                        13000 D                                                                                                
+Shelley         Accounting                     Seattle                        United States of America                 Americas                  AC_MGR     Accounting Manager                       12000 D                                                                                                
+Ellen           Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                     11000 D                                                                                                
+Eleni           Sales                          Oxford                         United Kingdom                           Europe                    SA_MAN     Sales Manager                            10500 D                                                                                                
+Alexander       IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                9000 C                                                                                                
+Jonathon        Sales                          Oxford                         United Kingdom                           Europe                    SA_REP     Sales Representative                      8600 C                                                                                                
+William         Accounting                     Seattle                        United States of America                 Americas                  AC_ACCOUNT Public Accountant                         8300 C                                                                                                
+Pat             Marketing                      Toronto                        Canada                                   Americas                  MK_REP     Marketing Representative                  6000 C                                                                                                
+Bruce           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                6000 C                                                                                                
+Kevin           Shiping                        South San Francisco            United States of America                 Americas                  ST_MAN     Stock Manager                             5800 B                                                                                                
+Jennifer        Administration                 Seattle                        United States of America                 Americas                  AD_ASST    Administration Assistant                  4400 B                                                                                                
+Diana           IT                             Southlake                      United States of America                 Americas                  IT_PROG    Programmer                                4200 B                                                                                                
+Trenna          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3500 B                                                                                                
+Curtis          Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               3100 B                                                                                                
+Randall         Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2600 A                                                                                                
+Peter           Shiping                        South San Francisco            United States of America                 Americas                  ST_CLERK   Stock Clerk                               2500 A                                                                                                
+
+19 rows selected.
+
+SQL> REM E D L C R
+SQL> 
+SQL> 
+SQL> REM 1 LEFT TO RIGHT : E D L C R
+SQL> 
+SQL> REM 2 RIGHT TO LEFT : R C L D E
+SQL> 
+SQL> REM 3 RANDOM 1      : D E L C R
+SQL> 
+SQL> REM 4 RANDOM 2      : D L E C R
+SQL> 
+SQL> REM 5 RANDOM 3      : L D E C R
+SQL> 
+SQL> REM 6 RANDOM 4      : L D C E R
+SQL> 
+SQL> REM 7 RANDOM 4      : L D C R E
+SQL> 
+SQL> REM 8 RANDOM 6      : L C R D R
+SQL> 
+SQL> REM 9 RANDOM 7      : L C D E R
+SQL> 
+SQL> REM 10 RANDOM 8      : L C D R E
+SQL> 
+SQL> REM D L C R
+SQL> 
+SQL> REM DEPARTMENT_NAME , REGION_NAME
+SQL> 
+SQL> REM 1 LEFT TO RIGHT 2 RIGHT TO LEFT 3 LOCATIONS ... 4 COUNTRIES ...
+SQL> 
+SQL> REM 1 USING         2 ON            3 USING + ON    4 USING + ON
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT DEPARTMENT_NAME , REGION_NAME
+  2  FROM DEPARTMENTS
+  3  JOIN LOCATIONS USING (LOCATION_ID)
+  4  JOIN COUNTRIES USING (COUNTRY_ID)
+  5  JOIN REGIONS   USING (REGION_ID);
+
+DEPARTMENT_NAME                REGION_NAME                                                                                                                                                                                                                                                                  
+------------------------------ -------------------------                                                                                                                                                                                                                                                    
+Administration                 Americas                                                                                                                                                                                                                                                                     
+Marketing                      Americas                                                                                                                                                                                                                                                                     
+Shiping                        Americas                                                                                                                                                                                                                                                                     
+IT                             Americas                                                                                                                                                                                                                                                                     
+Sales                          Europe                                                                                                                                                                                                                                                                       
+Executive                      Americas                                                                                                                                                                                                                                                                     
+Accounting                     Americas                                                                                                                                                                                                                                                                     
+Contracting                    Americas                                                                                                                                                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT DEPARTMENT_NAME , REGION_NAME
+  2  FROM REGIONS R
+  3  JOIN COUNTRIES C ON C.REGION_ID = R.REGION_ID
+  4  JOIN LOCATIONS L ON L.COUNTRY_ID = C.COUNTRY_ID
+  5  JOIN DEPARTMENTS D ON C.DEPARTMENT_ID = D.DEPARTMENT_ID;
+JOIN DEPARTMENTS D ON C.DEPARTMENT_ID = D.DEPARTMENT_ID
+                      *
+ERROR at line 5:
+ORA-00904: "C"."DEPARTMENT_ID": invalid identifier 
+
+
+SQL> SELECT DEPARTMENT_NAME , REGION_NAME
+  2  FROM REGIONS R
+  3  JOIN COUNTRIES C ON C.REGION_ID = R.REGION_ID
+  4  JOIN LOCATIONS L ON L.COUNTRY_ID = C.COUNTRY_ID
+  5  JOIN DEPARTMENTS D ON L.DEPARTMENT_ID = D.DEPARTMENT_ID;
+JOIN DEPARTMENTS D ON L.DEPARTMENT_ID = D.DEPARTMENT_ID
+                      *
+ERROR at line 5:
+ORA-00904: "L"."DEPARTMENT_ID": invalid identifier 
+
+
+SQL> SELECT DEPARTMENT_NAME , REGION_NAME
+  2  FROM REGIONS R
+  3  JOIN COUNTRIES C ON C.REGION_ID = R.REGION_ID
+  4  JOIN LOCATIONS L ON L.COUNTRY_ID = C.COUNTRY_ID
+  5  JOIN DEPARTMENTS D ON L.LOCATION_ID = D.LOCATION_ID;
+
+DEPARTMENT_NAME                REGION_NAME                                                                                                                                                                                                                                                                  
+------------------------------ -------------------------                                                                                                                                                                                                                                                    
+Administration                 Americas                                                                                                                                                                                                                                                                     
+Marketing                      Americas                                                                                                                                                                                                                                                                     
+Shiping                        Americas                                                                                                                                                                                                                                                                     
+IT                             Americas                                                                                                                                                                                                                                                                     
+Sales                          Europe                                                                                                                                                                                                                                                                       
+Executive                      Americas                                                                                                                                                                                                                                                                     
+Accounting                     Americas                                                                                                                                                                                                                                                                     
+Contracting                    Americas                                                                                                                                                                                                                                                                     
+
+8 rows selected.
+
+SQL> REM SELECT DEPARTMENT_NAME , REGION_NAME
+SQL> FROM REGIONS R
+SP2-0734: unknown command beginning "FROM REGIO..." - rest of line ignored.
+SQL> JOIN COUNTRIES C ON C.REGION_ID = R.REGION_ID
+SP2-0734: unknown command beginning "JOIN COUNT..." - rest of line ignored.
+SQL> JOIN LOCATIONS L ON L.COUNTRY_ID = C.COUNTRY_ID
+SP2-0734: unknown command beginning "JOIN LOCAT..." - rest of line ignored.
+SQL> JOIN DEPARTMENTS D ON L.DEPARTMENT_ID = D.DEPARTMENT_ID;
+SP2-0734: unknown command beginning "JOIN DEPAR..." - rest of line ignored.
+SP2-0044: For a list of known commands enter HELP
+and to leave enter EXIT.
+SQL> 
+SQL> 
+SQL> REM LOCATIONS : RANDOM : USING + ON
+SQL> 
+SQL> REM SELECT DEPARTMENT_NAME , REGION_NAME
+SQL> 
+SQL> SELECT DEPARTMENT_NAME , REGION_NAME
+  2  FROM LOCATIONS
+  3  JOIN COUNTRIES USING (COUNTRY_ID)
+  4  JOIN REGIONS   USING (REGION_ID)
+  5  JOIN DEPARTMENTS D ON LOCATIONS.LOCATION_ID = D.LOCATION_ID;
+
+DEPARTMENT_NAME                REGION_NAME                                                                                                                                                                                                                                                                  
+------------------------------ -------------------------                                                                                                                                                                                                                                                    
+Administration                 Americas                                                                                                                                                                                                                                                                     
+Marketing                      Americas                                                                                                                                                                                                                                                                     
+Shiping                        Americas                                                                                                                                                                                                                                                                     
+IT                             Americas                                                                                                                                                                                                                                                                     
+Sales                          Europe                                                                                                                                                                                                                                                                       
+Executive                      Americas                                                                                                                                                                                                                                                                     
+Accounting                     Americas                                                                                                                                                                                                                                                                     
+Contracting                    Americas                                                                                                                                                                                                                                                                     
+
+8 rows selected.
+
+SQL> REM COUNTRIES : RANDOM : USING + ON
+SQL> 
+SQL> SELECT DEPARTMENT_NAME , REGION_NAME
+  2  FROM COUNTRIES C
+  3  JOIN LOCATIONS L ON C.COUNTRY_ID = L.COUNTRY_ID
+  4  JOIN DEPARTMENTS D ON L.LOCATION_ID = D.LOCATION_ID
+  5  JOIN REGIONS USING (REGION_ID);
+
+DEPARTMENT_NAME                REGION_NAME                                                                                                                                                                                                                                                                  
+------------------------------ -------------------------                                                                                                                                                                                                                                                    
+Administration                 Americas                                                                                                                                                                                                                                                                     
+Marketing                      Americas                                                                                                                                                                                                                                                                     
+Shiping                        Americas                                                                                                                                                                                                                                                                     
+IT                             Americas                                                                                                                                                                                                                                                                     
+Sales                          Europe                                                                                                                                                                                                                                                                       
+Executive                      Americas                                                                                                                                                                                                                                                                     
+Accounting                     Americas                                                                                                                                                                                                                                                                     
+Contracting                    Americas                                                                                                                                                                                                                                                                     
+
+8 rows selected.
+
+SQL> SPOOL OFF

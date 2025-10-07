@@ -1,0 +1,480 @@
+SQL> 
+SQL> REM TYPES OF SINGLE ROW FUNCTIONS : 1 CHARACTER 2 NUMBER 3 DATE 4 CONVERSION 5 GENERAL
+SQL> 
+SQL> REM CHAPTER 3 : 1 CHARACTER 2 NUMBER 3 DATE
+SQL> 
+SQL> REM CHAPTER 4 : 4 CONVERSION 5 GENERAL
+SQL> 
+SQL> REM GENERAL FUNCTIONS :
+SQL> 
+SQL> REM TYPES OF GENERAL FUNCTIONS : 1 NULL RELATED FUNCTIONS 2 CONDITIONAL FUNCTION
+SQL> 
+SQL> REM LIST OF NULL RELATED FUNCTIONS : 1 NVL 2 NVL2 3 NULLIF 4 COALESCE
+SQL> 
+SQL> REM NVL : NULL VALUE LOCATOR
+SQL> 
+SQL> REM NVL : IS USED TO REPLACE NULL VALUE WITH OTHER VALUE.
+SQL> 
+SQL> REM IT TAKES/ACCEPTS EXACTLY TWO ARGUMENTS.
+SQL> 
+SQL> REM IT WILL CHECK FOR FIRST ARGUMENT VALUE, IF IT IS NULL, IT WILL BE REPLACED WITH SECOND ARGUMENT.
+SQL> 
+SQL> REM IF FIRST ARGUMENT IS NON-NULL, IT WILL BE USED AS IT IS.
+SQL> 
+SQL> REM IF DATA TYPE OF FIRST ARGUMENT IS CHARACTER, DATA TYPE OF SECOND ARGUMENT MAY BE ANY I.E. CHARACTER , NUMBER , DATE ...
+SQL> 
+SQL> REM IF DATA TYPE OF FIRST ARGUMENT IS NON-CHARACTER, DATA TYPES OF BOTH ARGUMENTS MUST BE SAME.
+SQL> 
+SQL> REM COMPANY DECLARES .18 COMMISSION FOR THOSE WHO DO NOT GET COMMISSION.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL ( COMMISSION_PCT , .18 ) FROM EMPLOYEES;
+
+COMMISSION_PCT NVL(COMMISSION_PCT,.18)                                                                                                                                                                  
+-------------- -----------------------                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+            .2                      .2                                                                                                                                                                  
+            .3                      .3                                                                                                                                                                  
+            .3                      .3                                                                                                                                                                  
+           .15                     .15                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+                                   .18                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> REM DISPLAY 0 OF COMMISSION_PCT IS NULL
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL(COMMISSION_PCT , 0) FROM EMPLOYEES;
+
+COMMISSION_PCT NVL(COMMISSION_PCT,0)                                                                                                                                                                    
+-------------- ---------------------                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+            .2                    .2                                                                                                                                                                    
+            .3                    .3                                                                                                                                                                    
+            .3                    .3                                                                                                                                                                    
+           .15                   .15                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+                                   0                                                                                                                                                                    
+
+20 rows selected.
+
+SQL> REM DISPLAY ZERO IF COMMISSION_PCT IS NULL
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL(COMMISSION_PCT , ZERO) FROM EMPLOYEES;
+SELECT COMMISSION_PCT , NVL(COMMISSION_PCT , ZERO) FROM EMPLOYEES
+                                             *
+ERROR at line 1:
+ORA-00904: "ZERO": invalid identifier 
+
+
+SQL> SELECT COMMISSION_PCT , NVL(COMMISSION_PCT , 'ZERO') FROM EMPLOYEES;
+SELECT COMMISSION_PCT , NVL(COMMISSION_PCT , 'ZERO') FROM EMPLOYEES
+                                             *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT COMMISSION_PCT , NVL(TO_CHAR(COMMISSION_PCT) , 'ZERO') FROM EMPLOYEES;
+
+COMMISSION_PCT NVL(TO_CHAR(COMMISSION_PCT),'ZERO')                                                                                                                                                      
+-------------- ----------------------------------------                                                                                                                                                 
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+            .2 .2                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+           .15 .15                                                                                                                                                                                      
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT COMMISSION_PCT , NVL(TO_CHAR(COMMISSION_PCT) , 0) FROM EMPLOYEES;
+
+COMMISSION_PCT NVL(TO_CHAR(COMMISSION_PCT),0)                                                                                                                                                           
+-------------- ----------------------------------------                                                                                                                                                 
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+            .2 .2                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+           .15 .15                                                                                                                                                                                      
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT COMMISSION_PCT , NVL(TO_CHAR(COMMISSION_PCT) , SYSDATE) FROM EMPLOYEES;
+
+COMMISSION_PCT NVL(TO_CHAR(COMMISSION_PCT),SYSDATE)                                                                                                                                                     
+-------------- ----------------------------------------                                                                                                                                                 
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+            .2 .2                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+           .15 .15                                                                                                                                                                                      
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+               12-DEC-24                                                                                                                                                                                
+
+20 rows selected.
+
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY NA IF COMMISSION_PCT IS STILL NOT FIXED.
+SQL> 
+SQL> REM 2 COMPANY DECIDES TO PAY .125 COMMISION TO THOSE WHO DO NOT GET COMMISSION.
+SQL> 
+SQL> REM 3 COMPANY DECIDES TO FIX THE COMMISSION AFTER ONE WEEK. SO DISPLAY DATE IF COMMISSION_PCT IS STILL NOT FIXED.
+SQL> 
+SQL> REM 4 COMPANY DECIDES TO PAY DOUBLE COMMISSION TO THOSE WHO GETS COMMISSION AND .14 TO OTHERS.
+SQL> 
+SQL> REM 5 DISPLAY BOSS IF EMPLOYEE DO NOT REPORT TO ANYBODY, OTHERWISE DISPLAY MANAGER_ID.
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY NA IF COMMISSION_PCT IS STILL NOT FIXED.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL(TO_CHAR(COMMISSION_PCT),'NA') FROM EMPLOYEES;
+
+COMMISSION_PCT NVL(TO_CHAR(COMMISSION_PCT),'NA')                                                                                                                                                        
+-------------- ----------------------------------------                                                                                                                                                 
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+            .2 .2                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+           .15 .15                                                                                                                                                                                      
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+               NA                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> REM 2 COMPANY DECIDES TO PAY .125 COMMISION TO THOSE WHO DO NOT GET COMMISSION.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL(COMMISSION_PCT , .125) NEW_COMM_PCT FROM EMPLOYEES;
+
+COMMISSION_PCT NEW_COMM_PCT                                                                                                                                                                             
+-------------- ------------                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+            .2           .2                                                                                                                                                                             
+            .3           .3                                                                                                                                                                             
+            .3           .3                                                                                                                                                                             
+           .15          .15                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+                       .125                                                                                                                                                                             
+
+20 rows selected.
+
+SQL> REM 3 COMPANY DECIDES TO FIX THE COMMISSION AFTER ONE WEEK. SO DISPLAY DATE IF COMMISSION_PCT IS STILL NOT FIXED.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL(TO_CHAR(COMMISSION_PCT) , SYSDATE + 7) FROM EMPLOYEES;
+
+COMMISSION_PCT NVL(TO_CHAR(COMMISSION_PCT),SYSDATE+7)                                                                                                                                                   
+-------------- ----------------------------------------                                                                                                                                                 
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+            .2 .2                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+            .3 .3                                                                                                                                                                                       
+           .15 .15                                                                                                                                                                                      
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+               19-DEC-24                                                                                                                                                                                
+
+20 rows selected.
+
+SQL> REM 4 COMPANY DECIDES TO PAY DOUBLE COMMISSION TO THOSE WHO GETS COMMISSION AND .14 TO OTHERS.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL(COMMISSION_PCT * 2, .14) NEW_COMM_PCT FROM EMPLOYEES;
+
+COMMISSION_PCT NEW_COMM_PCT                                                                                                                                                                             
+-------------- ------------                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+            .2           .4                                                                                                                                                                             
+            .3           .6                                                                                                                                                                             
+            .3           .6                                                                                                                                                                             
+           .15           .3                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+                        .14                                                                                                                                                                             
+
+20 rows selected.
+
+SQL> REM 5 DISPLAY BOSS IF EMPLOYEE DO NOT REPORT TO ANYBODY, OTHERWISE DISPLAY MANAGER_ID.
+SQL> 
+SQL> SELECT MANAGER_ID , NVL(TO_CHAR(MANAGER_ID),'BOSS') FROM EMPLOYEES;
+
+MANAGER_ID NVL(TO_CHAR(MANAGER_ID),'BOSS')                                                                                                                                                              
+---------- ----------------------------------------                                                                                                                                                     
+           BOSS                                                                                                                                                                                         
+       100 100                                                                                                                                                                                          
+       100 100                                                                                                                                                                                          
+       102 102                                                                                                                                                                                          
+       103 103                                                                                                                                                                                          
+       103 103                                                                                                                                                                                          
+       100 100                                                                                                                                                                                          
+       124 124                                                                                                                                                                                          
+       124 124                                                                                                                                                                                          
+       124 124                                                                                                                                                                                          
+       124 124                                                                                                                                                                                          
+       100 100                                                                                                                                                                                          
+       149 149                                                                                                                                                                                          
+       149 149                                                                                                                                                                                          
+       149 149                                                                                                                                                                                          
+       101 101                                                                                                                                                                                          
+       100 100                                                                                                                                                                                          
+       201 201                                                                                                                                                                                          
+       101 101                                                                                                                                                                                          
+       205 205                                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> REM NVL2 : IT IS USED TO REPLACE NULL AS WELL AS NON-NULL VALUE.
+SQL> 
+SQL> REM NVL2 TAKES/ACCEPTS EXACTLY 3 ARGUMENTS.
+SQL> 
+SQL> REM IT WILL CHECK FIRST ARGUMENT, IF IT IS NULL IT WILL BE REPLACED WITH THIRD ARGUMENT.
+SQL> 
+SQL> REM IT WILL CHECK FIRST ARGUMENT, IF IT IS NON-NULL IT WILL BE REPLACED WITH SECOND ARGUMENT.
+SQL> 
+SQL> REM IF DATA TYPE OF SECOND ARGUMENT IS CHARCTER, DATA TYPE OF THIRD ARGUMENT MAY BE ANY. I.E. CHARACTER , NUMBER , DATE ...
+SQL> 
+SQL> REM IF DATA TYPE OF SECOND ARGUMENT IS NON-CHARACTER, DATA TYPES OF SECOND AND THIRD ARGUMENTS MUST MATCH.
+SQL> 
+SQL> 
+SQL> REM DISPLAY .24 FOR THOSE WHO GETS COMMISSION AND .18 FOR OTHERS.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL2 ( COMMISSION_PCT , .24 , .18) NEW_COMM_PCT FROM EMPLOYEES;
+
+COMMISSION_PCT NEW_COMM_PCT                                                                                                                                                                             
+-------------- ------------                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+            .2          .24                                                                                                                                                                             
+            .3          .24                                                                                                                                                                             
+            .3          .24                                                                                                                                                                             
+           .15          .24                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                             
+                        .18                                                                                                                                                                               
+                        .18                                                                                                                                                                             
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY YES OF EMPLOYEE GETS COMMISSION AND NO FOR OTHERS.
+SQL> 
+SQL> REM 2 DISPLAY DOUBLE COMMISSION FOR THSOE WHO GETS COMMISSION AND ZERO FOR OTHERS.
+SQL> 
+SQL> REM 3 DISPLAY YES FOR THOSE WHO GETS COMMISSION AND 0 FOR OTHERS.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY YES OF EMPLOYEE GETS COMMISSION AND NO FOR OTHERS.
+SQL> 
+SQL> SELECT  COMMISSION_PCT , NVL2(COMMISSION_PCT ,'YES','NO') FROM EMPLOYEES;
+
+COMMISSION_PCT NVL                                                                                                                                                                                      
+-------------- ---                                                                                                                                                                                      
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+            .2 YES                                                                                                                                                                                      
+            .3 YES                                                                                                                                                                                      
+            .3 YES                                                                                                                                                                                      
+           .15 YES                                                                                                                                                                                      
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+               NO                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> REM 2 DISPLAY DOUBLE COMMISSION FOR THSOE WHO GETS COMMISSION AND ZERO FOR OTHERS.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL2(COMMISSION_PCT , TO_CHAR(COMMISSION_PCT * 2) , 'ZERO') FROM EMPLOYEES;
+
+COMMISSION_PCT NVL2(COMMISSION_PCT,TO_CHAR(COMMISSION_P                                                                                                                                                 
+-------------- ----------------------------------------                                                                                                                                                 
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                           
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+            .2 .4                                                                                                                                                                                       
+            .3 .6                                                                                                                                                                                       
+            .3 .6                                                                                                                                                                                       
+           .15 .3                                                                                                                                                                                       
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+               ZERO                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM 3 DISPLAY YES FOR THOSE WHO GETS COMMISSION AND 0 FOR OTHERS.
+SQL> 
+SQL> SELECT COMMISSION_PCT , NVL2 ( COMMISSION_PCT , 'YES' , 0) FROM EMPLOYEES;
+
+COMMISSION_PCT NVL                                                                                                                                                                                      
+-------------- ---                                                                                                                                                                                      
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+            .2 YES                                                                                                                                                                                      
+            .3 YES                                                                                                                                                                                      
+            .3 YES                                                                                                                                                                                      
+           .15 YES                                                                                                                                                                                      
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+               0                                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SPOOL OFF

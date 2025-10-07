@@ -1,0 +1,777 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM 3 USING WILD CARD AND OTHER CHARACTERS FOR COMPARISON :
+SQL> 
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH START WITH S
+SQL> 
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH ENDS WITH n
+SQL> 
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH CONTAINS e
+SQL> 
+SQL> 
+SQL> 
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH START WITH S
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE 'S%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Shelley                                                                                                                                                                                                 
+
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH ENDS WITH n
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '%n';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Kevin                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Jonathon                                                                                                                                                                                                
+
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH CONTAINS e
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '%e%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Peter                                                                                                                                                                                                   
+Eleni                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Kimerely                                                                                                                                                                                                
+Jennifer                                                                                                                                                                                                
+Michael                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+
+14 rows selected.
+
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH CONTAINS e ON SECOND POSITION
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '_e%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Kevin                                                                                                                                                                                                   
+Peter                                                                                                                                                                                                   
+Jennifer                                                                                                                                                                                                
+
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH CONTAINS e ON SECOND LAST POSITION
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '%e_';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Lex                                                                                                                                                                                                     
+Alexander                                                                                                                                                                                               
+Peter                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Jennifer                                                                                                                                                                                                
+Michael                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+
+8 rows selected.
+
+SQL> REM DISPLAY THOSE FIRST_NAME WHICH CONTAINS e ON SECOND POSITION AND SECOND LAST POSITION
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '_e%e_';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Peter                                                                                                                                                                                                   
+Jennifer                                                                                                                                                                                                
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE LAST_NAME WHICH CONTAINS o ON SECOND LAST POSITION.
+SQL> 
+SQL> REM 2 DISPLAY THOSE FIRST_NAME WHICH CONTAINS ll
+SQL> 
+SQL> REM 3 DISPLAY THOSE FIRST_NAME WHICH CONTAINS TWO TIMES e (BACK TO BACK OR SCATTERED)
+SQL> 
+SQL> REM 4 DISPLAY THOSE PHONE_NUMBER WHICH CONTAINS 3 TIMES . (DOT)
+SQL> 
+SQL> REM 5 DISPLAY ALL LAST_NAME EXCEPT THOSE WHICH CONTAINS a
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE LAST_NAME WHICH CONTAINS o ON SECOND LAST POSITION.
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '%o_';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+Mourgos                                                                                                                                                                                                 
+Matos                                                                                                                                                                                                   
+Taylor                                                                                                                                                                                                  
+
+SQL> REM 2 DISPLAY THOSE FIRST_NAME WHICH CONTAINS ll
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '%ll%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Randall                                                                                                                                                                                                 
+Ellen                                                                                                                                                                                                   
+Shelley                                                                                                                                                                                                 
+William                                                                                                                                                                                                 
+
+SQL> REM 3 DISPLAY THOSE FIRST_NAME WHICH CONTAINS TWO TIMES e (BACK TO BACK OR SCATTERED)
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '%e%e%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Peter                                                                                                                                                                                                   
+Kimerely                                                                                                                                                                                                
+Jennifer                                                                                                                                                                                                
+Shelley                                                                                                                                                                                                 
+
+7 rows selected.
+
+SQL> REM 4 DISPLAY THOSE PHONE_NUMBER WHICH CONTAINS 3 TIMES . (DOT)
+SQL> 
+SQL> SELECT PHONE_NUMBER FROM EMPLOYEES WHERE PHONE_NUMBER LIKE '%.%.%.%';
+
+PHONE_NUMBER                                                                                                                                                                                            
+--------------------                                                                                                                                                                                    
+011.44.1344.429018                                                                                                                                                                                      
+011.44.1644.429267                                                                                                                                                                                      
+011.44.1644.429265                                                                                                                                                                                      
+011.44.1644.429263                                                                                                                                                                                      
+
+SQL> REM 5 DISPLAY ALL LAST_NAME EXCEPT THOSE WHICH CONTAINS a
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME NOT LIKE '%a%';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+King                                                                                                                                                                                                    
+Hunold                                                                                                                                                                                                  
+Ernst                                                                                                                                                                                                   
+Lorentz                                                                                                                                                                                                 
+Mourgos                                                                                                                                                                                                 
+Zlotkey                                                                                                                                                                                                 
+Abel                                                                                                                                                                                                    
+Higgins                                                                                                                                                                                                 
+Gietz                                                                                                                                                                                                   
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> REM JUN , JAN OR NOV
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%N%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+7 rows selected.
+
+SQL> REM JUN , JAN
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%J_N%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+6 rows selected.
+
+SQL> REM JUN , JUL
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%JU%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE HIRE_DATE WHICH HAS : FEB , SEP
+SQL> 
+SQL> REM 2 DISPLAY THOSE HIRE_DATE WHICH HAS : JUN , JUL , AUG
+SQL> 
+SQL> REM 3 DISPLAY THOSE HIRE_DATE WHICH HAS : MAR , MAY
+SQL> 
+SQL> REM 4 DISPLAY THOSE HIRE_DATE WHICH HAS : OCT , NOV
+SQL> 
+SQL> REM 5 DISPLAY THOSE HIRE_DATE WHICH HAS : JAN , MAR OR MAY BUT NOT APR AND AUG
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE HIRE_DATE WHICH HAS : FEB , SEP , DEC
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%E%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+
+SQL> REM 2 DISPLAY THOSE HIRE_DATE WHICH HAS : JUN , JUL , AUG
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%U%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+SQL> REM 3 DISPLAY THOSE HIRE_DATE WHICH HAS : MAR , MAY
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%MA%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+SQL> REM 4 DISPLAY THOSE HIRE_DATE WHICH HAS : OCT , NOV
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%O%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+
+SQL> REM 5 DISPLAY THOSE HIRE_DATE WHICH HAS : JAN , MAR OR MAY BUT NOT APR AND AUG
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '____A____';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '____A%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%A____';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '__-_A%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%A_-__';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%-_A%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%A_-%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%-_A_-%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+
+9 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE HIRE_DATE WHICH COMES BEFORE 10th DATE. (ANY MONTH AND YEAR WILL DO)
+SQL> 
+SQL> REM 2 DISPLAY THOSE HIRE_DATE WHICH FALLS IN 90s (YEARS BETWEEN 90 AND 99)
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE HIRE_DATE WHICH COMES BEFORE 10th DATE. (ANY MONTH AND YEAR WILL DO)
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '0%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+SQL> REM 2 DISPLAY THOSE HIRE_DATE WHICH FALLS IN 90s (YEARS BETWEEN 90 AND 99)
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '%9_';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+16 rows selected.
+
+SQL> REM _ , % : WILD CARD
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL;
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT%^PATEL                                                                                                                                                                                             
+AMIT% PATEL                                                                                                                                                                                             
+AMIT PATEL                                                                                                                                                                                              
+AMIT_PATEL                                                                                                                                                                                              
+AMIT%PATEL                                                                                                                                                                                              
+AMIT_ PATEL                                                                                                                                                                                             
+AMIT_%PATEL                                                                                                                                                                                             
+AMIT%_PATEL                                                                                                                                                                                             
+AMIT  PATEL                                                                                                                                                                                             
+TAPAN PATEL                                                                                                                                                                                             
+PARMAR TARAK                                                                                                                                                                                            
+AMIT^PATEL                                                                                                                                                                                              
+
+12 rows selected.
+
+SQL> REM DISPLAY THOSE NAMES WHICH CONTAIN T_P
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T_P%';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT PATEL                                                                                                                                                                                              
+AMIT_PATEL                                                                                                                                                                                              
+AMIT%PATEL                                                                                                                                                                                              
+TAPAN PATEL                                                                                                                                                                                             
+AMIT^PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T\_P%' ESCAPE '\';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T/_P%' ESCAPE '/';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T&_P%' ESCAPE '&';
+Enter value for _p: 
+old   1: SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T&_P%' ESCAPE '&'
+new   1: SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T%' ESCAPE '&'
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT%^PATEL                                                                                                                                                                                             
+AMIT% PATEL                                                                                                                                                                                             
+AMIT PATEL                                                                                                                                                                                              
+AMIT_PATEL                                                                                                                                                                                              
+AMIT%PATEL                                                                                                                                                                                              
+AMIT_ PATEL                                                                                                                                                                                             
+AMIT_%PATEL                                                                                                                                                                                             
+AMIT%_PATEL                                                                                                                                                                                             
+AMIT  PATEL                                                                                                                                                                                             
+TAPAN PATEL                                                                                                                                                                                             
+PARMAR TARAK                                                                                                                                                                                            
+AMIT^PATEL                                                                                                                                                                                              
+
+12 rows selected.
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T'_P%' ESCAPE ''';
+SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T'_P%' ESCAPE '''
+                                             *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T''_P%' ESCAPE '''';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T__P%' ESCAPE '_';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T%_P%' ESCAPE '%';
+SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T%_P%' ESCAPE '%'
+                                         *
+ERROR at line 1:
+ORA-01424: missing or illegal character following the escape character 
+
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T _P%' ESCAPE ' ';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> REM WE CAN'T USE & AND % AS ESCAPE CHARACTER.
+SQL> 
+SQL> REM IF WE WANT TO USE ' WE MUST USE IT TWICE.
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T5_P%' ESCAPE '5';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T5AP%' ESCAPE 'A';
+SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T5AP%' ESCAPE 'A'
+                                         *
+ERROR at line 1:
+ORA-01424: missing or illegal character following the escape character 
+
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%TA_P%' ESCAPE 'A';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%TA_P%' ESCAPE 'T';
+SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%TA_P%' ESCAPE 'T'
+                                         *
+ERROR at line 1:
+ORA-01424: missing or illegal character following the escape character 
+
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%TT_P%' ESCAPE 'T';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT PATEL                                                                                                                                                                                              
+AMIT_PATEL                                                                                                                                                                                              
+AMIT%PATEL                                                                                                                                                                                              
+TAPAN PATEL                                                                                                                                                                                             
+AMIT^PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%TP_P%' ESCAPE 'P';
+
+no rows selected
+
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%Tp_P%' ESCAPE 'p';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_PATEL                                                                                                                                                                                              
+
+SQL> SELECT * FROM MPSLIKETBL;
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT%^PATEL                                                                                                                                                                                             
+AMIT% PATEL                                                                                                                                                                                             
+AMIT PATEL                                                                                                                                                                                              
+AMIT_PATEL                                                                                                                                                                                              
+AMIT%PATEL                                                                                                                                                                                              
+AMIT_ PATEL                                                                                                                                                                                             
+AMIT_%PATEL                                                                                                                                                                                             
+AMIT%_PATEL                                                                                                                                                                                             
+AMIT  PATEL                                                                                                                                                                                             
+TAPAN PATEL                                                                                                                                                                                             
+PARMAR TARAK                                                                                                                                                                                            
+AMIT^PATEL                                                                                                                                                                                              
+
+12 rows selected.
+
+SQL> REM 1 DISPLAY THOSE NAMES WHICH CONTAINS T%P
+SQL> 
+SQL> REM 2 DISPLAY THOSE NAMES WHICH CONTAINS T%_P
+SQL> 
+SQL> REM 3 DISPLAY THOSE NAMES WHICH CONTAINS T_%P
+SQL> 
+SQL> REM 4 DISPLAY THOSE NAMES WHICH CONTAINS T^P
+SQL> 
+SQL> REM 5 DISPLAY THOSE NAMES WHICH CONTAINS T%^P
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE NAMES WHICH CONTAINS T%P
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T^%P%' ESCAPE '^';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT%PATEL                                                                                                                                                                                              
+
+SQL> REM 2 DISPLAY THOSE NAMES WHICH CONTAINS T%_P
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T4%4_P%' ESCAPE '4';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT%_PATEL                                                                                                                                                                                             
+
+SQL> REM 3 DISPLAY THOSE NAMES WHICH CONTAINS T_%P
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%TQ_Q%P%' ESCAPE 'Q';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT_%PATEL                                                                                                                                                                                             
+
+SQL> REM 4 DISPLAY THOSE NAMES WHICH CONTAINS T^P
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T^P%';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT^PATEL                                                                                                                                                                                              
+
+SQL> REM 5 DISPLAY THOSE NAMES WHICH CONTAINS T%^P
+SQL> 
+SQL> SELECT * FROM MPSLIKETBL WHERE NAME LIKE '%T''%^P%' ESCAPE '''';
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT%^PATEL                                                                                                                                                                                             
+
+SQL> SPOOL OFF

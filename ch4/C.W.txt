@@ -1,0 +1,99 @@
+NVL
+1> SELECT FIRST_NAME,COMMISSION_PCT FROM EMPLOYEES WHERE NVL(COMMISSION_PCT,0)=0;
+2> SELECT FIRST_NAME,COMMISSION_PCT , NVL(COMMISSION_PCT,.125) NC FROM EMPLOYEES;
+3> SELECT CURRENT_DATE+7,COMMISSION_PCT , NVL(COMMISSION_PCT,0) NC FROM EMPLOYEES;
+4> SELECT FIRST_NAME,COMMISSION_PCT , NVL(NVL(COMMISSION_PCT,0)*2 , .14) NC FROM EMPLOYEES;
+5> 
+
+
+NVL2
+1>  SELECT FIRST_NAME,NVL2((TO_CHAR(COMMISSION_PCT)),'YES','NO')  FROM EMPLOYEES;
+2>  SELECT FIRST_NAME,COMMISSION_PCT , NVL2(COMMISSION_PCT,COMMISSION_PCT*2,0) NC FROM EMPLOYEES;
+3>  SELECT FIRST_NAME,NVL2((TO_CHAR(COMMISSION_PCT)),'YES','0')  FROM EMPLOYEES;
+
+
+
+
+nullif:-
+ 1>select nvl2(nullif(employee_id ,manager_id),'different','same') from employees;
+2>  select substr(phone_number,1,1), substr(phone_number,-1,1) , nvl2(nullif(substr(phone_number,1,1), substr(phone_number,-1,1)),'not same','identical') from employees;
+
+
+decode:-
+
+select manager_id , salary ,
+  2  decode(manager_id , 100 ,salary+1000
+  3                    ,124, salary+1500
+  4                    ,149,salary-500,salary-250) new_salary
+  5  from employees;
+
+
+
+SQL> select job_id , salary ,
+  2  decode(job_id,'it_prog',salary*1.2
+  3               ,'st_clerk',salary*1.125
+  4               ,'sa_rep',salary-salary*0.75,salary-salary*0.1) new_salary
+  5  from employees;
+
+ SELECT HIRE_DATE, SALARY, SUBSTR(TRUNC(HIRE_DATE,'Q'),4,3),
+  2  DECODE(SUBSTR(TRUNC(HIRE_DATE,'Q'),4,3),'JUL',SALARY*1.3
+  3                                         ,'JAN',SALARY*1.1
+  4                                          ,'APR',SALARY*1.2,SALARY*1.4)NS
+  5  FROM EMPLOYEES
+  6  ORDER BY 3;
+
+
+
+
+SQL> REM 1 COMPANY ANNOUNCES INCREMENT DECREMENT BASED ON JOB_ID : IT_PROG -> +20%  , ST_CLERK -> -10% , SA_REP +1500 , REMAINING -750
+SQL> 
+SQL> REM 2 COMPANY ANNOUNCES INCREMENT DECREMENT BASED ON DEPARTMENT_ID , MANAGER_ID : 90 100 +40% ,    60 103 +30% ,    80 149 -20%   , REMAINING +10%
+SQL> 
+SQL> REM 3 COMPANY ANNOUNCES INCREMENT DECREMENT BASED ON MANAGER_ID : 100 -> +12.5% , 124 -7.5%% , 149 +750 , REMAINING - 250
+SQL> 
+SQL> REM 4 COMPANY ANNOUNCES INCREMENT DECREMENT BASED ON HIRE YEAR : 97 +20% , 99 -10% , 94 +17.5% , REMAINING -22.5%
+SQL> 
+SQL> REM 5 COMPANY ANNOUNCES INCREMENT DECREMENT BASED ON HIRE QUARTER : 1 +40% , 2 -20% , 3 -27.5% , REMAINING +12.5%
+
+
+
+
+ 1>SELECT FIRST_NAME ,TO_CHAR(HIRE_DATE,'RR'),
+  2  CASE TO_CHAR(HIRE_DATE,'RR') WHEN '92'THEN SALARY*1.4
+  3                               WHEN BETWEEN ('96' AND '98') THEN SALARY*1.2 ELSE SALARY*1.1 END NEW_SALARY
+  4  FROM EMPLOYEES;
+
+2> SELECT DEPARTMENT_ID,SALARY,
+   CASE  WHEN DEPARTMENT_ID  IN (10,110) THEN SALARY+1000
+   WHEN DEPARTMENT_ID  IN (20,60,90) THEN SALARY+1500 ELSE SALARY*2000 END NEW_SALARY
+    FROM EMPLOYEES;
+
+3>  SELECT SUBSTR(HIRE_DATE,4,3) ,SALARY
+  2  ,CASE WHEN SUBSTR(HIRE_DATE,4,3) = 'JAN' AND SUBSTR(HIRE_DATE,4,3) = 'JUL' AND SUBSTR(HIRE_DATE,4,3) = 'JUN' THEN SALARY*1.1
+  3   WHEN  SUBSTR(HIRE_DATE,4,3) = 'MAR' AND SUBSTR(HIRE_DATE,4,3) = 'MAY' THEN SALARY*1.2
+  4  WHEN SUBSTR(HIRE_DATE,4,3) = 'OCT'  AND SUBSTR(HIRE_DATE,4,3) = 'NOV' THEN SALARY*1.3 ELSE SALARY*1.4 END NEW_SALARY
+  5  FROM EMPLOYEES;
+
+
+alter seccion:-
+1>  select first_name , salary from employees where salary > 12000;
+2>  select first_name , salary from employees where salary > 12000.00;
+3> select first_name , salary from employees where salary > to_number('12,000' , '99,000');
+4> select first_name , salary from employees where salary > to_number('12,000.00' , '99,000.00');
+5> select first_name , salary from employees where salary > +12000;
+6>  alter session set NLS_NUMERIC_CHARACTERS = '^~';
+select first_name , salary from employees where salary > to_number('12^000~00' , '99^000~00');
+7> select first_name , salary from employees where salary > to_number('$12000' , '$99000');
+8> select first_name , salary from employees where salary > to_number('12000$' , '99999$');
+9> alter session set NLS_CURRENCY = 'Rs';
+ select first_name , salary from employees where salary > to_number('Rs12000' , 'Rs99999');
+10> alter session set NLS_CURRENCY = '¥';
+ select first_name , salary from employees where salary > to_number('¥12000' , '¥99000');
+11> alter session set NLS_NUMERIC_CHARACTERS = '|=';
+ alter session set NLS_CURRENCY = '¥';
+ select first_name , salary from employees where salary > to_number('¥12|000=00' , '¥99|000=00');
+12> select first_name , salary from employees where salary > to_number('12000+' , '99999+');
+
+
+
+

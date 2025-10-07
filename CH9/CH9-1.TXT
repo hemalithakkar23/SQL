@@ -1,0 +1,535 @@
+SQL> 
+SQL> REM TCL , DML , FLASHBACK TO TIMESTAMP , ALTER TABLE , VERSIONS QUERY , TRUNCATE TABLE , DROP TABLE , PURGE TABLE , SHOW RECYCLEBIN ,
+SQL> 
+SQL> REM FLASHBACK TABLE TO BEFORE DROP
+SQL> 
+SQL> REM CONCEPTS : 1 READ CONSISTANCY   2 CONCURRENCY   3 ROW LOCKING    4 DEAD LOCK SITUATION
+SQL> 
+SQL> 
+SQL> REM SQL SUB LANGUAGES : 1 DRL/DQL 2 DML 3 TCL 4 DDL 5 DCL
+SQL> 
+SQL> REM DRL/DQL : DATA RETRIEVAL/QUERY LANGUAGE : SELECT
+SQL> 
+SQL> REM DML : DATA MANIPULATION LANGUAGE : INSERT UPDATE DELETE         MERGE
+SQL> 
+SQL> REM TCL : TRANSACTION CONTROL LANGUAGE : COMMIT ROLLBACK SAVEPOINT
+SQL> 
+SQL> REM DDL : CREATE DROP TRUNCATE ALTER FLASHBACK PURGE                RENAME COMMENT
+SQL> 
+SQL> 
+SQL> 
+SQL> REM DDL : DATA DEFINITION LANGUAGE : CREATE DROP TRUNCATE ALTER FLASHBACK PURGE                RENAME COMMENT
+SQL> 
+SQL> 
+SQL> 
+SQL> REM DCL : DATA CONTROL LANGUAGE : GRANT , REVOKE
+SQL> 
+SQL> 
+SQL> 
+SQL> REM DML : DATA MANIPULATION LANGUAGE : INSERT UPDATE DELETE         MERGE
+SQL> 
+SQL> REM INSERT : TO ADD NEW ROW(S) INTO THE TABLE
+SQL> 
+SQL> REM UPDATE : TO MODIFY/EDIT/CHANGE/UPDATE EXISTING ROW/DATA/VALUE
+SQL> 
+SQL> REM DELETE : TO REMOVE/DELETE EXISTING ROWS
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM TCL : TRANSACTION CONTROL LANGUAGE : COMMIT ROLLBACK SAVEPOINT
+SQL> 
+SQL> 
+SQL> REM TRANSACTION : BUNCH/GROUP OF DML STATEMENT EXECUTED WITHIN SESSION.
+SQL> 
+SQL> REM SESSION : THE TIME PERIOD BETWEEN LOG-IN AND LOG-OUT IS CALLED SESSION.
+SQL> 
+SQL> 
+SQL> REM 8 LOGIN , 12 LOGOUT : 8 TO 12 SESSION
+SQL> 
+SQL> 
+SQL> REM 9 FIRST DML STATEMENT EXECUTION IS PERFORMED : TRANSACTION STARTS HERE
+SQL> 
+SQL> REM 10.30 : COMMIT/ROLLBACK : TRANSACTION ENDS HERE
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 11 DML STATEMENT : TRANSACTION STARTS HERE
+SQL> 
+SQL> REM 11.45 COMMIT/ROLLBACK : TRANSACTION ENDS HERE
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM ANY CHANGES DONE USING DML STATEMENTS ARE ONLY DONE/PERFORMED IN MEMORY, NOT IN TABLE.
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 ALL CHANGES SAVE TO TABLE : COMMIT;
+SQL> 
+SQL> REM 2 ALL CHANGES REMOVED FROM RAM/MEMORY : ROLLBACK;
+SQL> 
+SQL> REM 3 PARTIAL UNDO AND PARTIAL SAVE : ROLLBACK TO SAVEPOINT + COMMIT
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> DROP TABLE R1;
+
+Table dropped.
+
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS WHERE 1 = 2;
+
+Table created.
+
+SQL> DESC REGIONS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> DESC R1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> REM BELOW STATEMENT WILL START NEW TRANSACTION OF OUR SESSION
+SQL> 
+SQL> INSERT INTO R1 VALUES (1,'ASIA');
+
+1 row created.
+
+SQL> REM MEMORY/RAM = 1 ROW , TABLE = 0
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+
+SQL> INSERT INTO R1 VALUES (2,'AMERICA');
+
+1 row created.
+
+SQL> REM MEMORY/RAM = 2 ROW , TABLE = 0
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> REM TRANSACTION : IT MAY BE SINGLE DML STATEMENT ON SINGLE TABLE , MULTIPLE DML STATEMENTS ON SINGLE TABLE OR SINGLE DML STATEMENT ON MULTIPLE TABLE , MULTIPLE DML STATEMENT ON MULTIPLE TABLES.
+SQL> 
+SQL> 
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> REM MEMORY/RAM = 0 ROW , TABLE = 0
+SQL> 
+SQL> REM BELOW STATEMENT WILL START NEW TRANSACTION OF OUR SESSION
+SQL> 
+SQL> INSERT INTO R1 VALUES (1,'ASIA');
+
+1 row created.
+
+SQL> REM MEMORY/RAM = 1 ROW , TABLE = 0
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+
+SQL> INSERT INTO R1 VALUES (2,'AMERICA');
+
+1 row created.
+
+SQL> REM MEMORY/RAM = 2 ROW , TABLE = 0
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+
+SQL> REM MEMORY/RAM = 0 ROW , TABLE = 2
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+
+SQL> REM SAVEPOINT : IT IS USED TO BREAK TRANSACTION INTO PARTS.
+SQL> 
+SQL> REM BELOW STATEMENT WILL START NEW TRANSACTION
+SQL> 
+SQL> INSERT INTO R1 VALUES (3,'AFRICA');
+
+1 row created.
+
+SQL> REM MEMORY/RAM = 1 ROW , TABLE = 2
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+         3 AFRICA                                                                                                                                                                                       
+
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> INSERT INTO R1 VALUES (4,'ANTARCTICA');
+
+1 row created.
+
+SQL> REM 1 TO SAVE BOTH CHANGES TO TABLE : COMMIT
+SQL> 
+SQL> REM 2 TO UNDO BOTH CHANGES FROM MEMORY : ROLLBACK
+SQL> 
+SQL> REM 3 TO UNDO ALL CHANGES PERFORMED AFTER SAVEPOINT : ROLLBACK TO A; + TO SAVE REMAINING CHANGES TO TABLE : COMMIT;
+SQL> 
+SQL> ROLLBACK TO A;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+         3 AFRICA                                                                                                                                                                                       
+
+SQL> REM MEMORY/RAM = 1 ROW , TABLE = 2
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> REM MEMORY/RAM = 0 ROW , TABLE = 3
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+         3 AFRICA                                                                                                                                                                                       
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+         3 AFRICA                                                                                                                                                                                       
+
+SQL> ROLLBACK TO A;
+ROLLBACK TO A
+*
+ERROR at line 1:
+ORA-01086: savepoint 'A' never established in this session or is invalid 
+
+
+SQL> REM COMMIT HAS SINGLE SYNTAX : TO SAVE ALL OPEN STATE CHANGES OF CURRENT TRANSACTION INTO TABLE.
+SQL> 
+SQL> REM ROLLBACK TWO SYNTAXES : 1 ROLLBACK; : WILL UNDO ALL CHANGES OF CURRENT TRANSACTION
+SQL> 
+SQL> REM 2 ROLLBACK TO savepointname; : WILL UNDO ALL CHANGES PERFORMED AFTER SAID SAVEPOINT.
+SQL> 
+SQL> REM 4 INSERT : SAVEPOINT A
+SQL> 
+SQL> REM 3 INSERT : SAVEPOINT B
+SQL> 
+SQL> REM 2 INSERT
+SQL> 
+SQL> 
+SQL> REM 1 ROLLBACK : IT WILL UNDO ALL 9 CHANGES
+SQL> 
+SQL> REM 2 ROLLBACK TO B : IT WILL UNDO ONLY LAST 2 CHANGES
+SQL> 
+SQL> REM 3 ROLLBACK TO A : IT WILL UNDO ONLY LAST 5 CHAGNES
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 ROLLBACK : IT WILL UNDO ALL 9 CHANGES : IT WILL REMOVE BOTH THE SAVEPOINS
+SQL> 
+SQL> REM 3 ROLLBACK TO A : IT WILL UNDO ONLY LAST 5 CHAGNES : IT WILL KEEP BOTH THE SAVEPOINTS
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 ROLLBACK : IT WILL UNDO ALL 9 CHANGES : IT WILL REMOVE BOTH THE SAVEPOINS
+SQL> 
+SQL> REM 2 ROLLBACK TO B : IT WILL UNDO ONLY LAST 2 CHANGES  : IT WILL KEEP BOTH THE SAVEPOINTS
+SQL> 
+SQL> REM 3 ROLLBACK TO A : IT WILL UNDO ONLY LAST 5 CHAGNES : IT WILL REMOVE SAVEPOINT B
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICA                                                                                                                                                                                      
+         3 AFRICA                                                                                                                                                                                       
+
+SQL> TRUNCATE TABLE R1;
+
+Table truncated.
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> INSERT INTO R1 VALUES (1,'ASIA');
+
+1 row created.
+
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> INSERT INTO R1 VALUES (2,'AMERICAS');
+
+1 row created.
+
+SQL> SAVEPOINT B;
+
+Savepoint created.
+
+SQL> INSERT INTO R1 VALUES (3,'AFRICA');
+
+1 row created.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICAS                                                                                                                                                                                     
+         3 AFRICA                                                                                                                                                                                       
+
+SQL> ROLLBACK TO B;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICAS                                                                                                                                                                                     
+
+SQL> ROLLBACK TO B;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+         2 AMERICAS                                                                                                                                                                                     
+
+SQL> ROLLBACK TO A;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+
+SQL> ROLLBACK TO B;
+ROLLBACK TO B
+*
+ERROR at line 1:
+ORA-01086: savepoint 'B' never established in this session or is invalid 
+
+
+SQL> ROLLBACK TO A;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 ASIA                                                                                                                                                                                         
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> ROLLBACK TO A;
+ROLLBACK TO A
+*
+ERROR at line 1:
+ORA-01086: savepoint 'A' never established in this session or is invalid 
+
+
+SQL> REM CREATE TABLE R1 AS SELECT * FROM REGIONS WHERE 1 = 2;
+SQL> 
+SQL> REM 1 INSERT TWO ROWS
+SQL> 
+SQL> REM 2 LIST THE CHANGES
+SQL> 
+SQL> REM 3 UNDO BOTH THE CHANGES
+SQL> 
+SQL> REM 4 INSERT 3 ROWS
+SQL> 
+SQL> REM 5 MAKE THE CHANGES PERMANENT INTO TABLE
+SQL> 
+SQL> REM 6 LIST THE CHANGES
+SQL> 
+SQL> REM 7 INSERT A ROW
+SQL> 
+SQL> REM 8 CREATE SAVEPOINT NAMED A
+SQL> 
+SQL> REM 9 INSERT A ROW
+SQL> 
+SQL> REM 10 LIST THE CHANGES
+SQL> 
+SQL> REM 11 UNDO THE LAST ROW/INSERT
+SQL> 
+SQL> REM 12 LIST THE CHANGES
+SQL> 
+SQL> REM 13 MAKE THE CHANGES PERMANENT
+SQL> 
+SQL> REM 14 LIST THE CHANGES
+SQL> 
+SQL> REM 15 DROP TABLE R1;
+SQL> 
+SQL> INSERT INTO R1 VALUES (1,'ASIA');
+
+1 row created.
+
+SQL> INSERT INTO R1 VALUES (2,'EUROPE');
+
+1 row created.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> INSERT INTO R1 VALUES (1,'UK');
+
+1 row created.
+
+SQL> INSERT INTO R1 VALUES (2,'RUSSIA');
+
+1 row created.
+
+SQL> INSERT INTO R1 VALUES (3,'ASIA');
+
+1 row created.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 UK                                                                                                                                                                                           
+         2 RUSSIA                                                                                                                                                                                       
+         3 ASIA                                                                                                                                                                                         
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 UK                                                                                                                                                                                           
+         2 RUSSIA                                                                                                                                                                                       
+         3 ASIA                                                                                                                                                                                         
+
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> INSERT INTO R1 VALUES (5,'FRANCE');
+
+1 row created.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 UK                                                                                                                                                                                           
+         2 RUSSIA                                                                                                                                                                                       
+         3 ASIA                                                                                                                                                                                         
+         5 FRANCE                                                                                                                                                                                       
+
+SQL> ROLLBACK TO A;
+
+Rollback complete.
+
+SQL> DROP TABLE R1;
+
+Table dropped.
+
+SQL> SPOOL OFF

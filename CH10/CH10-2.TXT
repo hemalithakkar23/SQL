@@ -1,0 +1,192 @@
+SQL> 
+SQL> CL SCR
+
+SQL> SELECT SYSTIMESTAMP FROM DUAL;
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.05.242000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.05.440000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.05.600000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.05.763000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.05.911000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.06.064000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.06.209000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.06.367000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.06.512000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.06.675000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.06.832000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.06.968000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.07.113000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.07.255000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.07.417000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.07.561000 PM +05:30                                                                                                                                                                     
+
+SQL> /
+
+SYSTIMESTAMP                                                                                                                                                                                            
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.36.07.680000 PM +05:30                                                                                                                                                                     
+
+SQL> SELECT LOCALTIMESTAMP FROM DUAL;
+
+LOCALTIMESTAMP                                                                                                                                                                                          
+---------------------------------------------------------------------------                                                                                                                             
+14-JUN-25 09.37.41.441000 PM                                                                                                                                                                            
+
+SQL> ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-RRRR HH:MI.SS AM DAY';
+
+Session altered.
+
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                 
+---------------------------------                                                                                                                                                                       
+14-JUN-2025 09:47.26 PM SATURDAY                                                                                                                                                                        
+
+SQL> REM ADD/SUBTRACT : DAY HOUR MINUTE SECOND
+SQL> 
+SQL> REM 1 DAY = 24 HOURS = 1440 MINUTES = 86400 SECONDS
+SQL> 
+SQL> SELECT SYSDATE , SYSDATE + 2 + (2/24) + (2/1440) + (2/86400)  FROM DUAL;
+
+SYSDATE                           SYSDATE+2+(2/24)+(2/1440)+(2/8640                                                                                                                                     
+--------------------------------- ---------------------------------                                                                                                                                     
+14-JUN-2025 09:48.44 PM SATURDAY  16-JUN-2025 11:50.46 PM MONDAY                                                                                                                                        
+
+SQL> SELECT SYSDATE , SYSDATE TO_DSINTERVAL('2 2:2:2.2')  FROM DUAL;
+SELECT SYSDATE , SYSDATE TO_DSINTERVAL('2 2:2:2.2')  FROM DUAL
+                                      *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT SYSDATE , SYSDATE + TO_DSINTERVAL('2 2:2:2.2')  FROM DUAL;
+
+SYSDATE                           SYSDATE+TO_DSINTERVAL('22:2:2.2')                                                                                                                                     
+--------------------------------- ---------------------------------                                                                                                                                     
+14-JUN-2025 09:49.31 PM SATURDAY  16-JUN-2025 11:51.33 PM MONDAY                                                                                                                                        
+
+SQL> SELECT SYSTIMESTAMP , SYSTIMESTAMP + TO_DSINTERVAL('2 2:2:2.222')  FROM DUAL;
+
+SYSTIMESTAMP                                                                SYSTIMESTAMP+TO_DSINTERVAL('22:2:2.222')                                                                                    
+--------------------------------------------------------------------------- ---------------------------------------------------------------------------                                                 
+14-JUN-25 09.50.32.249000 PM +05:30                                         16-JUN-25 11.52.34.471000000 PM +05:30                                                                                      
+
+SQL> COL PARAMETER FORMAT A30
+SQL> COL VALUE FORMAT A30
+SQL> 
+SQL> SELECT * FROM NLS_SESSION_PARAMETERS;
+
+PARAMETER                      VALUE                                                                                                                                                                    
+------------------------------ ------------------------------                                                                                                                                           
+NLS_LANGUAGE                   AMERICAN                                                                                                                                                                 
+NLS_TERRITORY                  AMERICA                                                                                                                                                                  
+NLS_CURRENCY                   $                                                                                                                                                                        
+NLS_ISO_CURRENCY               AMERICA                                                                                                                                                                  
+NLS_NUMERIC_CHARACTERS         .,                                                                                                                                                                       
+NLS_CALENDAR                   GREGORIAN                                                                                                                                                                
+NLS_DATE_FORMAT                DD-MON-RRRR HH:MI.SS AM DAY                                                                                                                                              
+NLS_DATE_LANGUAGE              AMERICAN                                                                                                                                                                 
+NLS_SORT                       BINARY                                                                                                                                                                   
+NLS_TIME_FORMAT                HH.MI.SSXFF AM                                                                                                                                                           
+NLS_TIMESTAMP_FORMAT           DD-MON-RR HH.MI.SSXFF AM                                                                                                                                                 
+NLS_TIME_TZ_FORMAT             HH.MI.SSXFF AM TZR                                                                                                                                                       
+NLS_TIMESTAMP_TZ_FORMAT        DD-MON-RR HH.MI.SSXFF AM TZR                                                                                                                                             
+NLS_DUAL_CURRENCY              $                                                                                                                                                                        
+NLS_COMP                       BINARY                                                                                                                                                                   
+NLS_LENGTH_SEMANTICS           BYTE                                                                                                                                                                     
+NLS_NCHAR_CONV_EXCP            FALSE                                                                                                                                                                    
+
+17 rows selected.
+
+SQL> SELECT SYSDATE , ADD_MONTHS(SYSDATE,26) FROM DUAL;
+
+SYSDATE                           ADD_MONTHS(SYSDATE,26)                                                                                                                                                
+--------------------------------- ---------------------------------                                                                                                                                     
+14-JUN-2025 09:52.44 PM SATURDAY  14-AUG-2027 09:52.44 PM SATURDAY                                                                                                                                      
+
+SQL> SELECT SYSDATE , SYSDATE + TO_YMINTERVAL('2-2') FROM DUAL;
+
+SYSDATE                           SYSDATE+TO_YMINTERVAL('2-2')                                                                                                                                          
+--------------------------------- ---------------------------------                                                                                                                                     
+14-JUN-2025 09:53.19 PM SATURDAY  14-AUG-2027 09:53.19 PM SATURDAY                                                                                                                                      
+
+SQL> REM 4.30 : 5.30 : TO_DSINTERVAL('1 2:3:4.5')
+SQL> 
+SQL> SPOOL OFF

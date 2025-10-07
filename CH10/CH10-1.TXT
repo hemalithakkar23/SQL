@@ -1,0 +1,261 @@
+SQL> 
+SQL> REM CREATE TABLE :
+SQL> 
+SQL> REM WE CAN CREATE TABLE IN TWO STYLES : 1 FROM SCRATCH 2 USING subquery/EXISTING TABLE
+SQL> 
+SQL> REM CREATE TABLE FROM SCRATCH : CREATE TABLE tablename (columnname datatype(size) DEFAULT defaultvalue column level constraints, ... , tablelevel constraints )
+SQL> 
+SQL> 
+SQL> REM ORALCE SUPPORTS TWO DIFFERENT NAMING CONVENTIONS : 1 CASE INSENSITIVE (WIDELY USED) 2 CASE SENSITIIVE (RARELY USED)
+SQL> 
+SQL> REM RULES FOR CASE INSENSITIVE NAMING :
+SQL> 
+SQL> REM 1 MIN 1 CHARACTER , MAX 30 CHARACTERS
+SQL> 
+SQL> REM 2 FIRST CHARACTER MUST BE ALPHABET
+SQL> 
+SQL> REM 3 REMAINING CHARACTERS MAY BE ALPHABETS , DIGITS OR ANY OF THE 3 SPECIAL CHARACTERS _ # $
+SQL> 
+SQL> REM 4 WE CAN'T USE ORACLE/SQL KEY/RESERVE WORD AS TABLE NAME, BUT IT MAY BE PART OF IT.
+SQL> 
+SQL> REM 4 WE CAN'T USE SAME TABLE NAME UNDER SAME USER/SCHEMA.
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 ABC    2 123    3 #$     4 ABC123    5 ABC123#$    6 REGIONS   7 PURGE     8 MODIFY     9 EMPLOYEE    10 DAUL
+SQL> 
+SQL> REM 1 TRUE   2 FALSE  3 FALSE  4 TRUE      5 TRUE        6 FALSE     7 FALSE     8 FALSE      9 TRUE        10 TRUE
+SQL> 
+SQL> 
+SQL> 
+SQL> create table bgt(no number);
+
+Table created.
+
+SQL> INSERT INTO BGT VALUES (10);
+
+1 row created.
+
+SQL> select * from Bgt;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> select * from BgT;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> select * from BGT;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> select * from Bgt;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> select * from bgt;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> 
+SQL> REM RULES FOR CASE SENSITIVE NAMING :
+SQL> 
+SQL> REM 1 MIN 1 CHARACTER , MAXIMUM 30 CHARACTERS
+SQL> 
+SQL> REM 2 WE CAN START WITH ANY CHARACTER (AVOID USING &)
+SQL> 
+SQL> REM 3 REMAINING CHARACTERS MAY BE ANY (ALPHABETS , DIGITS , SPECIAL CHARACTERS)
+SQL> 
+SQL> REM 4 WE CAN USE SAME NAME UNDER SAME USER/SCHEMA, PROVIDED CASE OR SPACE IS DIFFERENT.
+SQL> 
+SQL> REM 5 WE CAN CREATE TABLE USING ANY ORACLE/SQL KEY/RESERVE WORD.
+SQL> 
+SQL> REM 6 WE MUST DELIMIT CASE SENSTIVE NAME WITH DOUBLE QUOTES.
+SQL> 
+SQL> REM 7 EVERY TIME WHEN WE REFER CASE SENSITIVE TABLE NAME WE MUST : 1 DELIMIT IT WITH DOUBLE QUOTES 2 USE SAME SPELLING 3 USE SAME CASE 4 USE SAME SPACING
+SQL> 
+SQL> 
+SQL> select * from &tn;
+Enter value for tn: EMPLOYEES
+old   1: select * from &tn
+new   1: select * from EMPLOYEES
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> /
+Enter value for tn: DEPARTMENTS
+old   1: select * from &tn
+new   1: select * from DEPARTMENTS
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> /
+Enter value for tn: LOCATIONS
+old   1: select * from &tn
+new   1: select * from LOCATIONS
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                           
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                           
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                           
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                           
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                           
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                           
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                           
+
+SQL> /
+Enter value for tn: COUNTRIES
+old   1: select * from &tn
+new   1: select * from COUNTRIES
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                  
+-- ---------------------------------------- ----------                                                                                                                                                  
+CA Canada                                            2                                                                                                                                                  
+DE Germany                                           1                                                                                                                                                  
+UK United Kingdom                                    1                                                                                                                                                  
+US United States of America                          2                                                                                                                                                  
+
+SQL> /
+Enter value for tn: REGIONS
+old   1: select * from &tn
+new   1: select * from REGIONS
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> CREATE TABLE "Qwe"(NO NUMBER);
+
+Table created.
+
+SQL> CREATE TABLE "qWe"(d date);
+
+Table created.
+
+SQL> CREATE TABLE "qwE"(C VARCHAR(10));
+
+Table created.
+
+SQL> insert into "Qwe" values (10);
+
+1 row created.
+
+SQL> insert into "qWe" values (10);
+insert into "qWe" values (10)
+                          *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected DATE got NUMBER 
+
+
+SQL> insert into "qWe" values (sysdate);
+
+1 row created.
+
+SQL> insert into "qwE" values ('ganesh');
+
+1 row created.
+
+SQL> insert into "qwE" values (sysdate);
+
+1 row created.
+
+SQL> insert into "qwE" values (123);
+
+1 row created.
+
+SQL> SELECT * FROM QWE;
+SELECT * FROM QWE
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT * FROM "Qwe";
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> SELECT * FROM "qWe";
+
+D                                                                                                                                                                                                       
+---------                                                                                                                                                                                               
+11-JUN-25                                                                                                                                                                                               
+
+SQL> SELECT * FROM "qwE";
+
+C                                                                                                                                                                                                       
+----------                                                                                                                                                                                              
+ganesh                                                                                                                                                                                                  
+11-JUN-25                                                                                                                                                                                               
+123                                                                                                                                                                                                     
+
+SQL> drop table "select";
+
+Table dropped.
+
+SQL> CREATE TABLE "select" (no number);
+
+Table created.
+
+SQL> insert into "select" values (10);
+
+1 row created.
+
+SQL> select * from "select";
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> REM 1 "ABC 123"   2 "def!@#"   3 pqr%^*   4 "DeLETe"    5 "EMPLOYEES"    6 "DEPARTMENT"    7 "Hi#hello~byE    8 'shri Ganesh'   9 "Ayush'    10 "ab%^&123"
+SQL> 
+SQL> REM 1 TRUE        2 TRUE       3 FALSE    4 TRUE        5 FALSE          6 CASE INSENSITIVE 7 FALSE           8 FALSE           9 FALSE      10 FALSE
+SQL> 
+SQL> 
+SQL> SPOOL OF

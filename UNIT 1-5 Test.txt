@@ -1,0 +1,217 @@
+UNIT 1:-
+SQL> 
+SQL> REM 1 SORTING 2 TOP n ANALYSIS 3 RESTRICTION/SELECTION
+SQL> 
+SQL> REM CHAPTER 1 SELECT SYNTAX : SELECT ... FROM ...;
+SQL> 
+SQL> REM CHAPTER 2 TO 4 SELECT SYNTAX : SELECT ... FROM ... WHERE ... ORDER BY ... OFFSET ... FETCH ...;
+SQL> 
+SQL> REM CLAUSE : KEY WORDS OF ANY COMMAND
+
+
+SQL> REM POWER
+SQL> 
+SQL> REM NVL
+SQL> 
+SQL> REM COLUMN ALIAS
+SQL> 
+SQL> REM Q(QUOTE OPERATOR)
+
+SQL> SELECT DISTINCT 6 - 2 FROM REGIONS;
+
+       6-2                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         4                                                                                                                                                                                              
+
+SQL> SELECT UNIQUE 6 - 2 FROM REGIONS;
+
+       6-2                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         4 
+
+SQL> REM Q(QUOTE OPERATOR) : TO CHANGE QUOTATION CHARACTER/DELIMITER.
+SQL> 
+SQL> SELECT FIRST_NAME || Q'#'s monthly salary is Rs.#' || SALARY || '/-.' FROM EMPLOYEES;
+
+
+SQL> REM QUALIFIERS , PSEUDOCOLUMNS
+REM 1 ROWID 2 ROWNUM
+
+
+
+unit 2
+
+SQL> REM 1 GETTING ROWS FROM TOP OF THE TABLE : FETCH ... 
+SQL> 
+SQL> REM 2 GETTING ROWS FROM BOTTOM OF THE TABLE : OFFSET ... 
+SQL> 
+SQL> REM 3 GETTING ROWS FROM MIDDLE OF THE TABLE : OFFSET ... FETCH ... 
+SQL> 
+
+ REM FETCH    FIRST/NEXT    1/INTEGER/DECIMAL/FORMULA/FUNCTION/FORMULA+FUNCTION    ROWS/ROW    ONLY/WITH TIES
+SQL> SELECT * FROM EMPLOYEES FETCH FIRST 6 ROWS ONLY;
+SQL> 
+SQL> OFFSET
+ 
+EX:-
+OFFSET 16 ROWS :- SHOW JUST 4 (LOGIC IS 20 - 16) 
+
+	REM OFFSET = TOTAL - RESULT
+SQL> 
+SQL> REM OFFSET = 20 - 6 = 14
+SQL> 
+SQL> SELECT * FROM EMPLOYEES OFFSET 14 ROWS;
+SQL> 
+SQL> REM OFFSET     INTEGER/DECIMAL/FORMULA/FUNCTION/FORMULA+FUNCTION    ROWS/ROW
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SOME ANY ALL 
+SELECT DEPARTMENT_ID , MANAGER_ID , FIRST_NAME FROM EMPLOYEES
+  2  WHERE ( DEPARTMENT_ID , MANAGER_ID ) = ANY ((20,201),(50,124),(60,103))
+  3  ORDER BY 1,2;
+
+SQL> SELECT DEPARTMENT_ID , MANAGER_ID , FIRST_NAME FROM EMPLOYEES
+  2  WHERE ( DEPARTMENT_ID , MANAGER_ID ) = SOME ((20,201),(50,124),(60,103))
+  3  ORDER BY 1,2;
+SQL> SELECT DEPARTMENT_ID , MANAGER_ID , FIRST_NAME FROM EMPLOYEES
+  2  WHERE ( DEPARTMENT_ID , MANAGER_ID ) != ALL ((20,201),(50,124),(60,103))
+  3  ORDER BY 1,2;
+SQL> REM DISPLAY ONLY THOSE LAST_NAME WHOSE FIRST ALPHABET IS IN THE RANGE OF 'S' TO 'Z'
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME >= 'S';
+
+
+SQL> REM TYPES OF COMPARISON OPERATORS : 1 SINGLE ROW 2 MULTI ROW 3 SPECIAL
+SQL> 
+SQL> REM SINGLE ROW : = < > <= >=    <> != ^=
+SQL> 
+SQL> REM MULTI ROW : ANY/SOME   ALL
+SQL> 
+SQL> REM SPECIAL OPERATORS :
+SQL> 
+SQL> REM LIST OF SPECIAL OPERATORS : 1 IN 2 BETWEEN 3 LIKE 4 IS NULL
+SQL> 
+SQL> REM 1 ALL SPECIAL OPERATORS WORK WITH ALL 3 BASIC DATA TYPE VALUES : CHARACTER , NUMBER , DATE
+SQL> 
+SQL> REM 2 ALL SPECIAL OPERATORS CAN BE USED FOR BOTH TYPES OF COMPARISONS : 1 POSITIVE 2 NEGATIVE
+SQL> 
+SQL> 
+SQL> REM 1 IN / NOT IN
+SQL> 
+SQL> REM 2 BETWEEN / NOT BETWEEN
+SQL> 
+SQL> REM 3 LIKE / NOT LIKE
+SQL> 
+SQL> REM 4 IS NULL / IS NOT NULL
+SQL> 
+SQL> 
+SQL> 
+SQL> REM IN : IT IS USED TO COMPARE MULTIPLE VALUES WITHIN SINGLE CONDITION.
+SQL> 
+SQL> REM = ANY , = SOME AND IN HAS IDENTICAL/SAME FUNCTIONALITY.
+SQL> 
+SQL> REM <> ALL AND NOT IN HAS IDENTICAL/SAME FUNCTIONALITY.
+
+SQL> REM DISPLAY COMBINATIONS : 90 AD_VP    50 ST_CLERK   80 SA_REP
+SQL> 
+SQL> SELECT DEPARTMENT_ID , JOB_ID , FIRST_NAME FROM EMPLOYEES
+  2  WHERE (DEPARTMENT_ID , JOB_ID) = ANY ((90,'AD_VP'),(50,'ST_CLERK'),(80,'SA_REP'));
+SQL> REM DISPLAY THOSE WHO GET SALARY IN THE RANGE OF 6000 TO 11000
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES WHERE SALARY BETWEEN 6000 AND 11000 ORDER BY 2;
+
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES WHERE SALARY NOT BETWEEN 11000 AND 6000 ORDER BY 2;
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE BETWEEN '1JAN95' AND '31DEC98'
+
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME BETWEEN 'J' AND 'S' ORDER BY 1;
+
+SQL> REM DISPLAY INFO. ABOUT EMPLOYEE WHOSE EMAIL IS RMATOS
+SQL> 
+SQL> SELECT FIRST_NAME , EMAIL FROM EMPLOYEES WHERE EMAIL = 'RMATOS';
+
+FIRST_NAME      EMAIL                                                                                                                                                                                   
+--------------- ----------                                                                                                                                                                              
+Randall         RMATOS                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , EMAIL FROM EMPLOYEES WHERE EMAIL IN 'RMATOS';
+
+FIRST_NAME      EMAIL                                                                                                                                                                                   
+--------------- ----------                                                                                                                                                                              
+Randall         RMATOS                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , EMAIL FROM EMPLOYEES WHERE EMAIL = ANY 'RMATOS';
+
+FIRST_NAME      EMAIL                                                                                                                                                                                   
+--------------- ----------                                                                                                                                                                              
+Randall         RMATOS                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , EMAIL FROM EMPLOYEES WHERE EMAIL = SOME 'RMATOS';
+
+FIRST_NAME      EMAIL                                                                                                                                                                                   
+--------------- ----------                                                                                                                                                                              
+Randall         RMATOS                                                                                                                                                                                  
+
+SQL> SELECT FIRST_NAME , EMAIL FROM EMPLOYEES WHERE EMAIL LIKE 'RMATOS';
+
+FIRST_NAME      EMAIL                                                                                                                                                                                   
+--------------- ----------                                                                                                                                                                              
+Randall         RMATOS                                                                                                                                                                                  
+
+
+
+SQL> REM DISPLAY ALL EXCEPT THOSE WHOSE FIRST_NAME SPELLING HAS 6 OR MORE CHARACTERS
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME NOT LIKE '______%';
+
+SQL> REM DISPLAY ALL EXCEPT THOSE WHOSE FIRST_NAME SPELLING HAS 6 OR LESS CHARACTERS
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME NOT LIKE '_______%';
+
+
+
+
+UNIT 3 
+REM FUNCTIONS : NVL , SQRT , POWER
+SQL> 
+SQL> REM TYPES OF FUNCTIONS : 1 SINGLE ROW 2 MULTI ROW
+SQL> 
+SQL> REM SINGLE ROW / SCALAR FUNCTION : IT READS SINGLE ROW AT A TIME AND RETURNS SINGLE VALUE.
+SQL> 
+SQL> REM NUMBER OF INPUT ROWS ARE ALWAYS EQUIVALENT TO NUMBER OF OUTPUT ROWS.
+
+SQL> REM SINGLE ROW FUNCTIONS / SCALAR FUNCTIONS :
+SQL> 
+SQL> REM TYPES OF SINGLE ROW FUNCTIONS : 1 CHARACTER 2 NUMBER 3 DATE 4 CONVERSION 5 GENERAL
+SQL> 
+SQL> REM TYPES OF CHARACTER FUNCTIONS : 1 CASE MANIPULATION 2 CHARACTER MANIPULATION
+SQL> 
+SQL> REM MANIPULATION : ANY TYPE OF CHANGES
+SQL> 
+SQL> REM 1 SHRI GANESH      2 shri ganesh   3 Shri Ganesh                                4 sHRI gaNEsh   sHrI GaNeSh ...
+SQL> 
+SQL> REM 1 CAPITAL/UPPER    2 SMALL/LOWER   3 INITCAP/PROPER/CAMEL                       4 MIXED
+SQL> 
+SQL> 
+SQL> REM LIST OF CASE MANIPULATION FUNCTIONS : 1 UPPER 2 LOWER 3 INITCAP
+
+SQL> REM CHARACTER MANIPULATION FUNCTIONS :
+SQL> 
+SQL> REM LIST OF CHARACTER MANIPULATION FUNCTIONS :  CONCAT   LPAD RPAD  LTRIM RTRIM TRIM   LENGTH   TRANSLATE REPLACE   SUBSTR INSTR
+SQL> 
+SQL> 
+SQL> 
+SQL> REM CONCAT : TO CLUB/COMBINE/JOIN TWO ITEMS.
+SQL> SELECT CONCAT(FIRST_NAME , LAST_NAME) FROM EMPLOYEES;
+
+SQL> REM 1 USING ONLY ||
+SQL> 
+SQL> REM 2 USING ONLY CONCAT (2 STYLES)
+SQL> 
+SQL> REM 3 USING CONCAT AND || (INSIDE)  (2 STYLES)
+SQL> 
+SQL> REM 4 USING CONCAT AND || (OUTSIDE)  (2 STYLES)
+
+

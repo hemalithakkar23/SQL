@@ -1,0 +1,942 @@
+SQL> 
+SQL> REM NULL RELATED FUNCTIONS :
+SQL> 
+SQL> REM LIST OF NULL RELATED FUNCTIONS : 1 NVL 2 NVL2 3 NULLIF 4 COALESCE
+SQL> 
+SQL> REM NULLIF : IT ACCEPTS EXACTLY TWO ARGUMENTS.
+SQL> 
+SQL> REM IF WILL CHECK FOR EQUALITY OF BOTH THE ARGUMENTS.
+SQL> 
+SQL> REM IF BOTH ARE EQUAL IT WILL RETURN NULL.
+SQL> 
+SQL> REM IF BOTH ARE NOT EQUAL IT WILL FIRST ARGUMENT.
+SQL> 
+SQL> REM DATA TYPES OF BOTH ARGUMENTS MUST MATCH.
+SQL> 
+SQL> SELECT NULLIF('RAM','ram') FROM DUAL;
+
+NUL                                                                                                                                                                                                     
+---                                                                                                                                                                                                     
+RAM                                                                                                                                                                                                     
+
+SQL> SELECT NULLIF('RAM','RAM') FROM DUAL;
+
+N                                                                                                                                                                                                       
+-                                                                                                                                                                                                       
+                                                                                                                                                                                                        
+
+SQL> SELECT NVL2(NULLIF('RAM','ram'),'DIFFERENT', FROM DUAL;
+SELECT NVL2(NULLIF('RAM','ram'),'DIFFERENT', FROM DUAL
+                                             *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT NVL2(NULLIF('RAM','ram'),'DIFFERENT','IDENTICAL') FROM DUAL;
+
+NVL2(NULL                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+
+SQL> SELECT NVL2(NULLIF('RAM','RAM'),'DIFFERENT','IDENTICAL') FROM DUAL;
+
+NVL2(NULL                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+IDENTICAL                                                                                                                                                                                               
+
+SQL> SELECT FIRST_NAME , LAST_NAME , SUBSTR(FIRST_NAME,2,1) , SUBSTR(LAST_NAME,2,1) FROM EMPLOYEES;
+
+FIRST_NAME      LAST_NAME       SUBS SUBS                                                                                                                                                               
+--------------- --------------- ---- ----                                                                                                                                                               
+Steven          King            t    i                                                                                                                                                                  
+Neena           Kochhar         e    o                                                                                                                                                                  
+Lex             De Haan         e    e                                                                                                                                                                  
+Alexander       Hunold          l    u                                                                                                                                                                  
+Bruce           Ernst           r    r                                                                                                                                                                  
+Diana           Lorentz         i    o                                                                                                                                                                  
+Kevin           Mourgos         e    o                                                                                                                                                                  
+Trenna          Rajs            r    a                                                                                                                                                                  
+Curtis          Davies          u    a                                                                                                                                                                  
+Randall         Matos           a    a                                                                                                                                                                  
+Peter           Vargas          e    a                                                                                                                                                                  
+Eleni           Zlotkey         l    l                                                                                                                                                                  
+Ellen           Abel            l    b                                                                                                                                                                  
+Jonathon        Taylor          o    a                                                                                                                                                                  
+Kimerely        Grant           i    r                                                                                                                                                                  
+Jennifer        Whalen          e    h                                                                                                                                                                  
+Michael         Hartstein       i    a                                                                                                                                                                  
+Pat             Fay             a    a                                                                                                                                                                  
+Shelley         Higgins         h    i                                                                                                                                                                  
+William         Gietz           i    i                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT SUBSTR(FIRST_NAME,2,1) , SUBSTR(LAST_NAME,2,1) , NULLIF(SUBSTR(FIRST_NAME,2,1) , SUBSTR(LAST_NAME,2,1)) FROM EMPLOYEES;
+
+SUBS SUBS NULL                                                                                                                                                                                          
+---- ---- ----                                                                                                                                                                                          
+t    i    t                                                                                                                                                                                             
+e    o    e                                                                                                                                                                                             
+e    e                                                                                                                                                                                                  
+l    u    l                                                                                                                                                                                             
+r    r                                                                                                                                                                                                  
+i    o    i                                                                                                                                                                                             
+e    o    e                                                                                                                                                                                             
+r    a    r                                                                                                                                                                                             
+u    a    u                                                                                                                                                                                             
+a    a                                                                                                                                                                                                  
+e    a    e                                                                                                                                                                                             
+l    l                                                                                                                                                                                                  
+l    b    l                                                                                                                                                                                             
+o    a    o                                                                                                                                                                                             
+i    r    i                                                                                                                                                                                             
+e    h    e                                                                                                                                                                                             
+i    a    i                                                                                                                                                                                             
+a    a                                                                                                                                                                                                  
+h    i    h                                                                                                                                                                                             
+i    i                                                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT SUBSTR(FIRST_NAME,2,1) , SUBSTR(LAST_NAME,2,1) , NULLIF(SUBSTR(LAST_NAME,2,1) , SUBSTR(FIRST_NAME,2,1)) FROM EMPLOYEES;
+
+SUBS SUBS NULL                                                                                                                                                                                          
+---- ---- ----                                                                                                                                                                                          
+t    i    i                                                                                                                                                                                             
+e    o    o                                                                                                                                                                                             
+e    e                                                                                                                                                                                                  
+l    u    u                                                                                                                                                                                             
+r    r                                                                                                                                                                                                  
+i    o    o                                                                                                                                                                                             
+e    o    o                                                                                                                                                                                             
+r    a    a                                                                                                                                                                                             
+u    a    a                                                                                                                                                                                             
+a    a                                                                                                                                                                                                  
+e    a    a                                                                                                                                                                                             
+l    l                                                                                                                                                                                                  
+l    b    b                                                                                                                                                                                             
+o    a    a                                                                                                                                                                                             
+i    r    r                                                                                                                                                                                             
+e    h    h                                                                                                                                                                                             
+i    a    a                                                                                                                                                                                             
+a    a                                                                                                                                                                                                  
+h    i    i                                                                                                                                                                                             
+i    i                                                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT NULLIF('ONE',1) FROM DUAL;
+SELECT NULLIF('ONE',1) FROM DUAL
+                    *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected CHAR got NUMBER 
+
+
+SQL> SELECT NULLIF('ONE',TO_CHAR(1)) FROM DUAL;
+
+NUL                                                                                                                                                                                                     
+---                                                                                                                                                                                                     
+ONE                                                                                                                                                                                                     
+
+SQL> SELECT NULLIF(SYSDAE,420) FROM DUAL;
+SELECT NULLIF(SYSDAE,420) FROM DUAL
+              *
+ERROR at line 1:
+ORA-00904: "SYSDAE": invalid identifier 
+
+
+SQL> SELECT NULLIF(SYSDATE,420) FROM DUAL;
+SELECT NULLIF(SYSDATE,420) FROM DUAL
+                      *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected DATE got NUMBER 
+
+
+SQL> SELECT NULLIF(SYSDATE,'15-JAN-71') FROM DUAL;
+SELECT NULLIF(SYSDATE,'15-JAN-71') FROM DUAL
+                      *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected DATE got CHAR 
+
+
+SQL> SELECT NULLIF(SYSDATE,TO_DATE('15-JAN-71')) FROM DUAL;
+
+NULLIF(SY                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+13-DEC-24                                                                                                                                                                                               
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 COMPARE SECOND LAST CHARACTER OF FIRST_NAME AND SECOND CHARACTER OF LAST_NAME
+SQL> 
+SQL> REM 2 COMPARE SECOND DIGIT AND SECOND LAST DIGIT OF HIRE_DATE
+SQL> 
+SQL> REM 3 COMPARE 4th CHARACTER AND 5th LAST CHARACTER OF PHONE_NUMBER
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 COMPARE SECOND LAST CHARACTER OF FIRST_NAME AND SECOND CHARACTER OF LAST_NAME
+SQL> 
+SQL> SELECT SUBSTR(FIRST_NAME,-2,1) , SUBSTR(LAST_NAME,2,1) FROM EMPLOYEES;
+
+SUBS SUBS                                                                                                                                                                                               
+---- ----                                                                                                                                                                                               
+e    i                                                                                                                                                                                                  
+n    o                                                                                                                                                                                                  
+e    e                                                                                                                                                                                                  
+e    u                                                                                                                                                                                                  
+c    r                                                                                                                                                                                                  
+n    o                                                                                                                                                                                                  
+i    o                                                                                                                                                                                                  
+n    a                                                                                                                                                                                                  
+i    a                                                                                                                                                                                                  
+l    a                                                                                                                                                                                                  
+e    a                                                                                                                                                                                                  
+n    l                                                                                                                                                                                                  
+e    b                                                                                                                                                                                                  
+o    a                                                                                                                                                                                                  
+l    r                                                                                                                                                                                                  
+e    h                                                                                                                                                                                                  
+e    a                                                                                                                                                                                                  
+a    a                                                                                                                                                                                                  
+e    i                                                                                                                                                                                                  
+a    i                                                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT SUBSTR(FIRST_NAME,-2,1) , SUBSTR(LAST_NAME,2,1) , NULIF(SUBSTR(FIRST_NAME,-2,1) , SUBSTR(LAST_NAME,2,1)) FROM EMPLOYEES;
+SELECT SUBSTR(FIRST_NAME,-2,1) , SUBSTR(LAST_NAME,2,1) , NULIF(SUBSTR(FIRST_NAME,-2,1) , SUBSTR(LAST_NAME,2,1)) FROM EMPLOYEES
+                                                         *
+ERROR at line 1:
+ORA-00904: "NULIF": invalid identifier 
+
+
+SQL> SELECT SUBSTR(FIRST_NAME,-2,1) , SUBSTR(LAST_NAME,2,1) , NULLIF(SUBSTR(FIRST_NAME,-2,1) , SUBSTR(LAST_NAME,2,1)) FROM EMPLOYEES;
+
+SUBS SUBS NULL                                                                                                                                                                                          
+---- ---- ----                                                                                                                                                                                          
+e    i    e                                                                                                                                                                                             
+n    o    n                                                                                                                                                                                             
+e    e                                                                                                                                                                                                  
+e    u    e                                                                                                                                                                                             
+c    r    c                                                                                                                                                                                             
+n    o    n                                                                                                                                                                                             
+i    o    i                                                                                                                                                                                             
+n    a    n                                                                                                                                                                                             
+i    a    i                                                                                                                                                                                             
+l    a    l                                                                                                                                                                                             
+e    a    e                                                                                                                                                                                             
+n    l    n                                                                                                                                                                                             
+e    b    e                                                                                                                                                                                             
+o    a    o                                                                                                                                                                                             
+l    r    l                                                                                                                                                                                             
+e    h    e                                                                                                                                                                                             
+e    a    e                                                                                                                                                                                             
+a    a                                                                                                                                                                                                  
+e    i    e                                                                                                                                                                                             
+a    i    a                                                                                                                                                                                             
+
+20 rows selected.
+
+SQL> REM 2 COMPARE SECOND DIGIT AND SECOND LAST DIGIT OF HIRE_DATE
+SQL> 
+SQL> SELECT HIRE_DATE , SUBSTR(HIRE_DATE,2,1) , SUBSTR(HIRE_DATE-2,1) , NULLIF(SUBSTR(HIRE_DATE,2,1) , SUBSTR(HIRE_DATE-2,1)) FROM EMPLOYEES;
+
+HIRE_DATE SUBS SUBSTR(HIRE_DATE-2,1)                                                    NULL                                                                                                            
+--------- ---- ------------------------------------------------------------------------ ----                                                                                                            
+17-JUL-87 7    15-JUL-87                                                                7                                                                                                               
+21-SEP-89 1    19-SEP-89                                                                1                                                                                                               
+13-JAN-93 3    11-JAN-93                                                                3                                                                                                               
+03-JAN-90 3    01-JAN-90                                                                3                                                                                                               
+21-MAY-91 1    19-MAY-91                                                                1                                                                                                               
+07-FEB-99 7    05-FEB-99                                                                7                                                                                                               
+16-NOV-99 6    14-NOV-99                                                                6                                                                                                               
+17-OCT-95 7    15-OCT-95                                                                7                                                                                                               
+29-JAN-97 9    27-JAN-97                                                                9                                                                                                               
+15-MAR-98 5    13-MAR-98                                                                5                                                                                                               
+09-JUL-98 9    07-JUL-98                                                                9                                                                                                               
+29-JAN-00 9    27-JAN-00                                                                9                                                                                                               
+11-MAY-96 1    09-MAY-96                                                                1                                                                                                               
+24-MAR-98 4    22-MAR-98                                                                4                                                                                                               
+24-MAY-99 4    22-MAY-99                                                                4                                                                                                               
+17-SEP-87 7    15-SEP-87                                                                7                                                                                                               
+17-FEB-96 7    15-FEB-96                                                                7                                                                                                               
+17-AUG-97 7    15-AUG-97                                                                7                                                                                                               
+07-JUN-94 7    05-JUN-94                                                                7                                                                                                               
+07-JUN-94 7    05-JUN-94                                                                7                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE , SUBSTR(HIRE_DATE,2,1) , SUBSTR(HIRE_DATE,-2,1) , NULLIF(SUBSTR(HIRE_DATE,2,1) , SUBSTR(HIRE_DATE,-2,1)) FROM EMPLOYEES;
+
+HIRE_DATE SUBS SUBS NULL                                                                                                                                                                                
+--------- ---- ---- ----                                                                                                                                                                                
+17-JUL-87 7    8    7                                                                                                                                                                                   
+21-SEP-89 1    8    1                                                                                                                                                                                   
+13-JAN-93 3    9    3                                                                                                                                                                                   
+03-JAN-90 3    9    3                                                                                                                                                                                   
+21-MAY-91 1    9    1                                                                                                                                                                                   
+07-FEB-99 7    9    7                                                                                                                                                                                   
+16-NOV-99 6    9    6                                                                                                                                                                                   
+17-OCT-95 7    9    7                                                                                                                                                                                   
+29-JAN-97 9    9                                                                                                                                                                                        
+15-MAR-98 5    9    5                                                                                                                                                                                   
+09-JUL-98 9    9                                                                                                                                                                                        
+29-JAN-00 9    0    9                                                                                                                                                                                   
+11-MAY-96 1    9    1                                                                                                                                                                                   
+24-MAR-98 4    9    4                                                                                                                                                                                   
+24-MAY-99 4    9    4                                                                                                                                                                                   
+17-SEP-87 7    8    7                                                                                                                                                                                   
+17-FEB-96 7    9    7                                                                                                                                                                                   
+17-AUG-97 7    9    7                                                                                                                                                                                   
+07-JUN-94 7    9    7                                                                                                                                                                                   
+07-JUN-94 7    9    7                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM 3 COMPARE 4th CHARACTER AND 5th LAST CHARACTER OF PHONE_NUMBER
+SQL> 
+SQL> SELECT PHONE_NUMBER , SUBSTR(PHONE_NUMBER,4,1) , SUBSTR(PHONE_NUMBER,-5,1) , NULLIF ( SUBSTR(PHONE_NUMBER,4,1) , SUBSTR(PHONE_NUMBER,-5,1)) FROM EMPLOYEES;
+
+PHONE_NUMBER         SUBS SUBS NULL                                                                                                                                                                     
+-------------------- ---- ---- ----                                                                                                                                                                     
+515.123.4567         .    .                                                                                                                                                                             
+515.123.4568         .    .                                                                                                                                                                             
+515.123.4569         .    .                                                                                                                                                                             
+590.423.4567         .    .                                                                                                                                                                             
+590.423.4568         .    .                                                                                                                                                                             
+590.423.5567         .    .                                                                                                                                                                             
+650.123.5234         .    .                                                                                                                                                                             
+650.121.8009         .    .                                                                                                                                                                             
+650.121.2994         .    .                                                                                                                                                                             
+650.121.2874         .    .                                                                                                                                                                             
+650.121.2004         .    .                                                                                                                                                                             
+011.44.1344.429018   .    2    .                                                                                                                                                                        
+011.44.1644.429267   .    2    .                                                                                                                                                                        
+011.44.1644.429265   .    2    .                                                                                                                                                                        
+011.44.1644.429263   .    2    .                                                                                                                                                                        
+515.123.4444         .    .                                                                                                                                                                             
+515.123.5555         .    .                                                                                                                                                                             
+603.123.6666         .    .                                                                                                                                                                             
+515.123.8080         .    .                                                                                                                                                                             
+515.123.8181         .    .                                                                                                                                                                             
+
+20 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 COMPARE SECOND DIGIT OF EMPLOYEE_ID AND MANAGER_ID. IF BOTH ARE SAME DISPLAY 'SAME' OTHERWISE DISPLAY 'DIFFRENT'
+SQL> 
+SQL> REM 2 COMPARE FIRST DIGIT OF PHONE_NUMBER AND THIRD LAST DIGIT OF PHONE_NUMBER. IF BOTH ARE SAME DISPLAY 'IDENTICAL' OTHERWISE DISPLAY 'NOT SAME'
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 COMPARE SECOND DIGIT OF EMPLOYEE_ID AND MANAGER_ID. IF BOTH ARE SAME DISPLAY 'SAME' OTHERWISE DISPLAY 'DIFFRENT'
+SQL> 
+SQL> SELECT NULLIF(SUBSTR(EMPLOYEE_ID,2,1) , SUBSTR(MANAGER_ID,2,1)) FROM EMPLOYEES;
+
+NULL                                                                                                                                                                                                    
+----                                                                                                                                                                                                    
+0                                                                                                                                                                                                       
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+2                                                                                                                                                                                                       
+4                                                                                                                                                                                                       
+4                                                                                                                                                                                                       
+4                                                                                                                                                                                                       
+4                                                                                                                                                                                                       
+4                                                                                                                                                                                                       
+7                                                                                                                                                                                                       
+7                                                                                                                                                                                                       
+7                                                                                                                                                                                                       
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT NVL2(NULLIF(SUBSTR(EMPLOYEE_ID,2,1) , SUBSTR(MANAGER_ID,2,1)),'DIFFERENT','SAME') FROM EMPLOYEES;
+
+NVL2(NULL                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+DIFFERENT                                                                                                                                                                                               
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+SAME                                                                                                                                                                                                    
+
+20 rows selected.
+
+SQL> SELECT SUBSTR(EMPLOYEE_ID,2,1) , SUBSTR(MANAGER_ID,2,1),NVL2(NULLIF(SUBSTR(EMPLOYEE_ID,2,1) , SUBSTR(MANAGER_ID,2,1)),'DIFFERENT','SAME') FROM EMPLOYEES;
+
+SUBS SUBS NVL2(NULL                                                                                                                                                                                     
+---- ---- ---------                                                                                                                                                                                     
+0         DIFFERENT                                                                                                                                                                                     
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+2    0    DIFFERENT                                                                                                                                                                                     
+4    2    DIFFERENT                                                                                                                                                                                     
+4    2    DIFFERENT                                                                                                                                                                                     
+4    2    DIFFERENT                                                                                                                                                                                     
+4    2    DIFFERENT                                                                                                                                                                                     
+4    0    DIFFERENT                                                                                                                                                                                     
+7    4    DIFFERENT                                                                                                                                                                                     
+7    4    DIFFERENT                                                                                                                                                                                     
+7    4    DIFFERENT                                                                                                                                                                                     
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+0    0    SAME                                                                                                                                                                                          
+
+20 rows selected.
+
+SQL> REM 2 COMPARE FIRST DIGIT OF PHONE_NUMBER AND THIRD LAST DIGIT OF PHONE_NUMBER. IF BOTH ARE SAME DISPLAY 'IDENTICAL' OTHERWISE DISPLAY 'NOT SAME'
+SQL> 
+SQL> SELECT SUBSTR(PHONE_NUMBER,1,1) , SUBSTR(PHONE_NUMBER,-3,1) ,
+  2  NVL2(NULLIF(SUBSTR(PHONE_NUMBER,1,1) , SUBSTR(PHONE_NUMBER,-3,1),'NOT SAME','IDENTICAL') FROM EMPLOYEES;
+NVL2(NULLIF(SUBSTR(PHONE_NUMBER,1,1) , SUBSTR(PHONE_NUMBER,-3,1),'NOT SAME','IDENTICAL') FROM EMPLOYEES
+     *
+ERROR at line 2:
+ORA-00909: invalid number of arguments 
+
+
+SQL> SELECT SUBSTR(PHONE_NUMBER,1,1) , SUBSTR(PHONE_NUMBER,-3,1) ,
+  2  NVL2(NULLIF(SUBSTR(PHONE_NUMBER,1,1) , SUBSTR(PHONE_NUMBER,-3,1)),'NOT SAME','IDENTICAL') FROM EMPLOYEES;
+
+SUBS SUBS NVL2(NULL                                                                                                                                                                                     
+---- ---- ---------                                                                                                                                                                                     
+5    5    IDENTICAL                                                                                                                                                                                     
+5    5    IDENTICAL                                                                                                                                                                                     
+5    5    IDENTICAL                                                                                                                                                                                     
+5    5    IDENTICAL                                                                                                                                                                                     
+5    5    IDENTICAL                                                                                                                                                                                     
+5    5    IDENTICAL                                                                                                                                                                                     
+6    2    NOT SAME                                                                                                                                                                                      
+6    0    NOT SAME                                                                                                                                                                                      
+6    9    NOT SAME                                                                                                                                                                                      
+6    8    NOT SAME                                                                                                                                                                                      
+6    0    NOT SAME                                                                                                                                                                                      
+0    0    IDENTICAL                                                                                                                                                                                     
+0    2    NOT SAME                                                                                                                                                                                      
+0    2    NOT SAME                                                                                                                                                                                      
+0    2    NOT SAME                                                                                                                                                                                      
+5    4    NOT SAME                                                                                                                                                                                      
+5    5    IDENTICAL                                                                                                                                                                                     
+6    6    IDENTICAL                                                                                                                                                                                     
+5    0    NOT SAME                                                                                                                                                                                      
+5    1    NOT SAME                                                                                                                                                                                      
+
+20 rows selected.
+
+SQL> REM COALESCE : IT ACCEPTS INFINITE ARGUMENTS.
+SQL> 
+SQL> REM DATA TYPES OF ALL ARGUMENTS MUST BE SAME.
+SQL> 
+SQL> REM IT WILL CHECK FROM LEFT TO RIGHT.
+SQL> 
+SQL> REM IT RETURNS FIRST NON-NULL ARGUMENT.
+SQL> 
+SQL> SELECT * FROM CONTACTNO;
+
+NAME                     MOBILE     OPHONE     RPHONE                                                                                                                                                   
+-------------------- ---------- ---------- ----------                                                                                                                                                   
+AMIT                 1234567890 9876543210 1122334455                                                                                                                                                   
+BIREN                6644882244            9876452316                                                                                                                                                   
+CHETAN                          2277554488                                                                                                                                                              
+DHIREN                                     6789054123                                                                                                                                                   
+EKTA                                                                                                                                                                                                    
+
+SQL> REM NAME   CONTACTNO
+SQL> 
+SQL> REM AMIT   1234567890
+SQL> REM BIREN  6644882244
+SQL> REM CHETAN 2277554488
+SQL> REM DHIREN 6789054123
+SQL> REM EKTA
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT NAME , COALESCE( MOBILE , OPHONE , RPHONE ) CONTACTNO FROM CONTACTNO;
+
+NAME                  CONTACTNO                                                                                                                                                                         
+-------------------- ----------                                                                                                                                                                         
+AMIT                 1234567890                                                                                                                                                                         
+BIREN                6644882244                                                                                                                                                                         
+CHETAN               2277554488                                                                                                                                                                         
+DHIREN               6789054123                                                                                                                                                                         
+EKTA                                                                                                                                                                                                    
+
+SQL> 
+SQL> SELECT NAME , COALESCE( RPHONE , MOBILE , OPHONE ) CONTACTNO FROM CONTACTNO;
+
+NAME                  CONTACTNO                                                                                                                                                                         
+-------------------- ----------                                                                                                                                                                         
+AMIT                 1122334455                                                                                                                                                                         
+BIREN                9876452316                                                                                                                                                                         
+CHETAN               2277554488                                                                                                                                                                         
+DHIREN               6789054123                                                                                                                                                                         
+EKTA                                                                                                                                                                                                    
+
+SQL> 
+SQL> 
+SQL> SELECT COMMISSION_PCT , MANAGER_ID , DEPARTMENT_ID FROM EMPLOYEES;
+
+COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                                                                                                                                 
+-------------- ---------- -------------                                                                                                                                                                 
+                                     90                                                                                                                                                                 
+                      100            90                                                                                                                                                                 
+                      100            90                                                                                                                                                                 
+                      102            60                                                                                                                                                                 
+                      103            60                                                                                                                                                                 
+                      103            60                                                                                                                                                                 
+                      100            50                                                                                                                                                                 
+                      124            50                                                                                                                                                                 
+                      124            50                                                                                                                                                                 
+                      124            50                                                                                                                                                                 
+                      124            50                                                                                                                                                                 
+            .2        100            80                                                                                                                                                                 
+            .3        149            80                                                                                                                                                                 
+            .3        149            80                                                                                                                                                                 
+           .15        149                                                                                                                                                                               
+                      101            10                                                                                                                                                                 
+                      100            20                                                                                                                                                                 
+                      201            20                                                                                                                                                                 
+                      101           110                                                                                                                                                                 
+                      205           110                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT COALESCE(COMMISSION_PCT , MANAGER_ID , DEPARTMENT_ID) FROM EMPLOYEES;
+
+COALESCE(COMMISSION_PCT,MANAGER_ID,DEPARTMENT_ID)                                                                                                                                                       
+-------------------------------------------------                                                                                                                                                       
+                                               90                                                                                                                                                       
+                                              100                                                                                                                                                       
+                                              100                                                                                                                                                       
+                                              102                                                                                                                                                       
+                                              103                                                                                                                                                       
+                                              103                                                                                                                                                       
+                                              100                                                                                                                                                       
+                                              124                                                                                                                                                       
+                                              124                                                                                                                                                       
+                                              124                                                                                                                                                       
+                                              124                                                                                                                                                       
+                                               .2                                                                                                                                                       
+                                               .3                                                                                                                                                       
+                                               .3                                                                                                                                                       
+                                              .15                                                                                                                                                       
+                                              101                                                                                                                                                       
+                                              100                                                                                                                                                       
+                                              201                                                                                                                                                       
+                                              101                                                                                                                                                       
+                                              205                                                                                                                                                       
+
+20 rows selected.
+
+SQL> REM CONDITIONAL FUNCTIONS :
+SQL> 
+SQL> REM LIST OF CONDITIONAL FUNCTIONS : 1 DECODE 2 CASE I 3 CASE II
+SQL> 
+SQL> REM COMPANY DECLARES +1500 INCREMENT FOR ALL. DISPLAY NEW_SALARY.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY , SALARY + 1500 NEW_SALARY FROM EMPLOYEES;
+
+FIRST_NAME          SALARY NEW_SALARY                                                                                                                                                                   
+--------------- ---------- ----------                                                                                                                                                                   
+Steven               24000      25500                                                                                                                                                                   
+Neena                17000      18500                                                                                                                                                                   
+Lex                  17000      18500                                                                                                                                                                   
+Alexander             9000      10500                                                                                                                                                                   
+Bruce                 6000       7500                                                                                                                                                                   
+Diana                 4200       5700                                                                                                                                                                   
+Kevin                 5800       7300                                                                                                                                                                   
+Trenna                3500       5000                                                                                                                                                                   
+Curtis                3100       4600                                                                                                                                                                   
+Randall               2600       4100                                                                                                                                                                   
+Peter                 2500       4000                                                                                                                                                                   
+Eleni                10500      12000                                                                                                                                                                   
+Ellen                11000      12500                                                                                                                                                                   
+Jonathon              8600      10100                                                                                                                                                                   
+Kimerely              7000       8500                                                                                                                                                                   
+Jennifer              4400       5900                                                                                                                                                                   
+Michael              13000      14500                                                                                                                                                                   
+Pat                   6000       7500                                                                                                                                                                   
+Shelley              12000      13500                                                                                                                                                                   
+William               8300       9800                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM COMPANY DECLARES +10% INCREMENT FOR ALL. DISPLAY NEW_SALARY.
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY , SALARY * 1.1 NEW_SALARY FROM EMPLOYEES;
+
+FIRST_NAME          SALARY NEW_SALARY                                                                                                                                                                   
+--------------- ---------- ----------                                                                                                                                                                   
+Steven               24000      26400                                                                                                                                                                   
+Neena                17000      18700                                                                                                                                                                   
+Lex                  17000      18700                                                                                                                                                                   
+Alexander             9000       9900                                                                                                                                                                   
+Bruce                 6000       6600                                                                                                                                                                   
+Diana                 4200       4620                                                                                                                                                                   
+Kevin                 5800       6380                                                                                                                                                                   
+Trenna                3500       3850                                                                                                                                                                   
+Curtis                3100       3410                                                                                                                                                                   
+Randall               2600       2860                                                                                                                                                                   
+Peter                 2500       2750                                                                                                                                                                   
+Eleni                10500      11550                                                                                                                                                                   
+Ellen                11000      12100                                                                                                                                                                   
+Jonathon              8600       9460                                                                                                                                                                   
+Kimerely              7000       7700                                                                                                                                                                   
+Jennifer              4400       4840                                                                                                                                                                   
+Michael              13000      14300                                                                                                                                                                   
+Pat                   6000       6600                                                                                                                                                                   
+Shelley              12000      13200                                                                                                                                                                   
+William               8300       9130                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> REM COMPANY DECLARES INCREMENT BASED ON DEPARTMENT_ID : 10 +1000 , 50 +1500 , 80 +2000 , FOR REMAINING +750
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID , SALARY ,
+  2  DECODE ( DEPARTMENT_ID , 10 , SALARY + 1000
+  3                         , 50 , SALARY + 1500
+  4                         , 80 , SALARY + 2000 , SALARY + 750) NEW_SALARY
+  5  FROM EMPLOYEES;
+
+FIRST_NAME      DEPARTMENT_ID     SALARY NEW_SALARY                                                                                                                                                     
+--------------- ------------- ---------- ----------                                                                                                                                                     
+Steven                     90      24000      24750                                                                                                                                                     
+Neena                      90      17000      17750                                                                                                                                                     
+Lex                        90      17000      17750                                                                                                                                                     
+Alexander                  60       9000       9750                                                                                                                                                     
+Bruce                      60       6000       6750                                                                                                                                                     
+Diana                      60       4200       4950                                                                                                                                                     
+Kevin                      50       5800       7300                                                                                                                                                     
+Trenna                     50       3500       5000                                                                                                                                                     
+Curtis                     50       3100       4600                                                                                                                                                     
+Randall                    50       2600       4100                                                                                                                                                     
+Peter                      50       2500       4000                                                                                                                                                     
+Eleni                      80      10500      12500                                                                                                                                                     
+Ellen                      80      11000      13000                                                                                                                                                     
+Jonathon                   80       8600      10600                                                                                                                                                     
+Kimerely                            7000       7750                                                                                                                                                     
+Jennifer                   10       4400       5400                                                                                                                                                     
+Michael                    20      13000      13750                                                                                                                                                     
+Pat                        20       6000       6750                                                                                                                                                     
+Shelley                   110      12000      12750                                                                                                                                                     
+William                   110       8300       9050                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM COMPANY DECLARES INCREMENT BASED ON DEPARTMENT_ID : 10 +1000 , 50 +1500 , 80 +2000 , FOR REMAINING NO INCREMENT
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID , SALARY ,
+  2  DECODE ( DEPARTMENT_ID , 10 , SALARY + 1000
+  3                         , 50 , SALARY + 1500
+  4                         , 80 , SALARY + 2000) NEW_SALARY
+  5  FROM EMPLOYEES;
+
+FIRST_NAME      DEPARTMENT_ID     SALARY NEW_SALARY                                                                                                                                                     
+--------------- ------------- ---------- ----------                                                                                                                                                     
+Steven                     90      24000                                                                                                                                                                
+Neena                      90      17000                                                                                                                                                                
+Lex                        90      17000                                                                                                                                                                
+Alexander                  60       9000                                                                                                                                                                
+Bruce                      60       6000                                                                                                                                                                
+Diana                      60       4200                                                                                                                                                                
+Kevin                      50       5800       7300                                                                                                                                                     
+Trenna                     50       3500       5000                                                                                                                                                     
+Curtis                     50       3100       4600                                                                                                                                                     
+Randall                    50       2600       4100                                                                                                                                                     
+Peter                      50       2500       4000                                                                                                                                                     
+Eleni                      80      10500      12500                                                                                                                                                     
+Ellen                      80      11000      13000                                                                                                                                                     
+Jonathon                   80       8600      10600                                                                                                                                                     
+Kimerely                            7000                                                                                                                                                                
+Jennifer                   10       4400       5400                                                                                                                                                     
+Michael                    20      13000                                                                                                                                                                
+Pat                        20       6000                                                                                                                                                                
+Shelley                   110      12000                                                                                                                                                                
+William                   110       8300                                                                                                                                                                
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID , SALARY ,
+  2  DECODE ( DEPARTMENT_ID , 10 , SALARY + 1000
+  3                         , 50 , SALARY + 1500
+  4                         , 80 , SALARY + 2000 , SALARY) NEW_SALARY
+  5  FROM EMPLOYEES;
+
+FIRST_NAME      DEPARTMENT_ID     SALARY NEW_SALARY                                                                                                                                                     
+--------------- ------------- ---------- ----------                                                                                                                                                     
+Steven                     90      24000      24000                                                                                                                                                     
+Neena                      90      17000      17000                                                                                                                                                     
+Lex                        90      17000      17000                                                                                                                                                     
+Alexander                  60       9000       9000                                                                                                                                                     
+Bruce                      60       6000       6000                                                                                                                                                     
+Diana                      60       4200       4200                                                                                                                                                     
+Kevin                      50       5800       7300                                                                                                                                                     
+Trenna                     50       3500       5000                                                                                                                                                     
+Curtis                     50       3100       4600                                                                                                                                                     
+Randall                    50       2600       4100                                                                                                                                                     
+Peter                      50       2500       4000                                                                                                                                                     
+Eleni                      80      10500      12500                                                                                                                                                     
+Ellen                      80      11000      13000                                                                                                                                                     
+Jonathon                   80       8600      10600                                                                                                                                                     
+Kimerely                            7000       7000                                                                                                                                                     
+Jennifer                   10       4400       5400                                                                                                                                                     
+Michael                    20      13000      13000                                                                                                                                                     
+Pat                        20       6000       6000                                                                                                                                                     
+Shelley                   110      12000      12000                                                                                                                                                     
+William                   110       8300       8300                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 COMPANY DECLARES INCREMENT/DECREMENT BASED ON MANAGER_ID : 100 -> +1000 , 124 -> +1500 , 149 -> -500 , REMAINING -250
+SQL> 
+SQL> REM 2 COMPANY DECLARES INCREMENT/DECREMENT BASED ON JOB_ID : IT_PROG -> +20% , ST_CLERK +12.5% , SA_REP -7.5% , REMAINING -10%
+SQL> 
+SQL> 
+SQL> 
+SQL> REM CALCULATE 30% OF 12000
+SQL> 
+SQL> SELECT 12000 * 30 / 100 FROM DUAL;
+
+12000*30/100                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+        3600                                                                                                                                                                                            
+
+SQL> SELECT 30 / 100 FROM DUAL;
+
+    30/100                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        .3                                                                                                                                                                                              
+
+SQL> SELECT 12000 * .3 FROM DUAL;
+
+  12000*.3                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      3600                                                                                                                                                                                              
+
+SQL> SELECT 12000 + 12000 * 30 / 100 FROM DUAL;
+
+12000+12000*30/100                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+             15600                                                                                                                                                                                      
+
+SQL> SELECT 12000 + 12000 * .3 FROM DUAL;
+
+12000+12000*.3                                                                                                                                                                                          
+--------------                                                                                                                                                                                          
+         15600                                                                                                                                                                                          
+
+SQL> SELECT 12000 * 1.3 FROM DUAL;
+
+ 12000*1.3                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+     15600                                                                                                                                                                                              
+
+SQL> 
+SQL> REM 1 COMPANY DECLARES INCREMENT/DECREMENT BASED ON MANAGER_ID : 100 -> +1000 , 124 -> +1500 , 149 -> -500 , REMAINING -250
+SQL> 
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY ,
+  2  DECODE ( MANAGER_ID , 100 , SALARY + 1000
+  3                      , 124 , SALARY + 1500
+  4                      , 149 , SALARY - 500 , SALARY - 250) NEW_SALARY
+  5  FROM EMPLOYEES;
+
+FIRST_NAME      MANAGER_ID     SALARY NEW_SALARY                                                                                                                                                        
+--------------- ---------- ---------- ----------                                                                                                                                                        
+Steven                          24000      23750                                                                                                                                                        
+Neena                  100      17000      18000                                                                                                                                                        
+Lex                    100      17000      18000                                                                                                                                                        
+Alexander              102       9000       8750                                                                                                                                                        
+Bruce                  103       6000       5750                                                                                                                                                        
+Diana                  103       4200       3950                                                                                                                                                        
+Kevin                  100       5800       6800                                                                                                                                                        
+Trenna                 124       3500       5000                                                                                                                                                        
+Curtis                 124       3100       4600                                                                                                                                                        
+Randall                124       2600       4100                                                                                                                                                        
+Peter                  124       2500       4000                                                                                                                                                        
+Eleni                  100      10500      11500                                                                                                                                                        
+Ellen                  149      11000      10500                                                                                                                                                        
+Jonathon               149       8600       8100                                                                                                                                                        
+Kimerely               149       7000       6500                                                                                                                                                        
+Jennifer               101       4400       4150                                                                                                                                                        
+Michael                100      13000      14000                                                                                                                                                        
+Pat                    201       6000       5750                                                                                                                                                        
+Shelley                101      12000      11750                                                                                                                                                        
+William                205       8300       8050                                                                                                                                                        
+
+20 rows selected.
+
+SQL> REM 2 COMPANY DECLARES INCREMENT/DECREMENT BASED ON JOB_ID : IT_PROG -> +20% , ST_CLERK +12.5% , SA_REP -7.5% , REMAINING -10%
+SQL> 
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY ,
+  2  DECODE ( JOB_ID , 'IT_PROG' , SALARY * 1.2
+  3                  , 'ST_CLERK' , SALARY * 1.125
+  4                  , 'SA_REP' , SALARY * .925 , SALARY * .9) NEW_SALARY
+  5  FROM EMPLOYEES;
+
+FIRST_NAME      JOB_ID         SALARY NEW_SALARY                                                                                                                                                        
+--------------- ---------- ---------- ----------                                                                                                                                                        
+Steven          AD_PRES         24000      21600                                                                                                                                                        
+Neena           AD_VP           17000      15300                                                                                                                                                        
+Lex             AD_VP           17000      15300                                                                                                                                                        
+Alexander       IT_PROG          9000      10800                                                                                                                                                        
+Bruce           IT_PROG          6000       7200                                                                                                                                                        
+Diana           IT_PROG          4200       5040                                                                                                                                                        
+Kevin           ST_MAN           5800       5220                                                                                                                                                        
+Trenna          ST_CLERK         3500     3937.5                                                                                                                                                        
+Curtis          ST_CLERK         3100     3487.5                                                                                                                                                        
+Randall         ST_CLERK         2600       2925                                                                                                                                                        
+Peter           ST_CLERK         2500     2812.5                                                                                                                                                        
+Eleni           SA_MAN          10500       9450                                                                                                                                                        
+Ellen           SA_REP          11000      10175                                                                                                                                                        
+Jonathon        SA_REP           8600       7955                                                                                                                                                        
+Kimerely        SA_REP           7000       6475                                                                                                                                                        
+Jennifer        AD_ASST          4400       3960                                                                                                                                                        
+Michael         MK_MAN          13000      11700                                                                                                                                                        
+Pat             MK_REP           6000       5400                                                                                                                                                        
+Shelley         AC_MGR          12000      10800                                                                                                                                                        
+William         AC_ACCOUNT       8300       7470                                                                                                                                                        
+
+20 rows selected.
+
+SQL> REM 1.20 , 1.15 , .90 , .95
+SQL> 
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 COMPANY DECLARES INCREMENT/DECREMENT BASED ON HIRE YEAR : 99 -> +10% , 98 -> -15% , 94 -> 5% , OTHER WISE +10%
+SQL> 
+SQL> REM 2 COMPANY DECLARES INCREMENT BASED ON HIRE QUARTER : 1 -> 10% , 2 -> 20% , 3 -> 30% , REMAINING 40%
+SQL> 
+SQL> SPOOL OFF

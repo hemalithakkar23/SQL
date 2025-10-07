@@ -1,0 +1,352 @@
+SQL> 
+SQL> SET LINES 200 PAGES 24 SERVEROUT ON FORMAT WRA
+SQL> 
+SQL> REM DEPT_20_MIN_SAL   DEPT_60_AVG_SAL   DEPT_90_MAX_SAL    DEPT_110_SUM_SAL
+SQL> 
+SQL> SELECT MIN(DECODE(DEPARTMENT_ID , 20 , SALARY)) DEPT_20_MIN_SAL,
+  2         AVG(DECODE(DEPARTMENT_ID , 60 , SALARY)) DEPT_60_AVG_SAL,
+  3         MAX(DECODE(DEPARTMENT_ID , 90 , SALARY)) DEPT_90_MAX_SAL,
+  4         SUM(DECODE(DEPARTMENT_ID , 110 , SALARY)) DEPT_110_SUM_SAL
+  5  FROM EMPLOYEES;
+
+DEPT_20_MIN_SAL DEPT_60_AVG_SAL DEPT_90_MAX_SAL DEPT_110_SUM_SAL                                                                                                                                        
+--------------- --------------- --------------- ----------------                                                                                                                                        
+           6000            6400           24000            20300                                                                                                                                        
+
+SQL> SELECT MIN(CASE DEPARTMENT_ID WHEN 20 THEN SALARY END) DEPT_20_MIN_SAL,
+  2         AVG(CASE DEPARTMENT_ID WHEN 60 THEN SALARY END) DEPT_60_AVG_SAL,
+  3         MAX(CASE DEPARTMENT_ID WHEN 90 THEN SALARY END) DEPT_90_MAX_SAL,
+  4         SUM(CASE DEPARTMENT_ID WHEN 110 THEN SALARY END) DEPT_110_SUM_SAL
+  5  FROM EMPLOYEES;
+
+DEPT_20_MIN_SAL DEPT_60_AVG_SAL DEPT_90_MAX_SAL DEPT_110_SUM_SAL                                                                                                                                        
+--------------- --------------- --------------- ----------------                                                                                                                                        
+           6000            6400           24000            20300                                                                                                                                        
+
+SQL> REM HY_UPTO_93_MIN_SAL   HY_94_97_AVG_SAL   HY_98_ONWARDS_MAX_SAL
+SQL> 
+SQL> SELECT MIN(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') <= 1993 THEN SALARY END) HY_UPTO_93_MIN_SAL,
+  2         AVG(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') BETWEEN 1994 AND 1998 THEN SALARY END) HY_94_97_AVG_SAL,
+  3         MAX(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1998 END) HY_98_ONWARDS_MAX_SAL
+  4  FROM EMPLOYEES;
+       MAX(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1998 END) HY_98_ONWARDS_MAX_SAL
+                                                       *
+ERROR at line 3:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT MIN(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') <= 1993 THEN SALARY END) HY_UPTO_93_MIN_SAL,
+  2         AVG(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') BETWEEN 1994 AND 1998 THEN SALARY END) HY_94_97_AVG_SAL,
+  3         MAX(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1998 THEN SALARY END) HY_98_ONWARDS_MAX_SAL
+  4  
+SQL> SELECT MIN(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') <= 1993 THEN SALARY END) HY_UPTO_93_MIN_SAL,
+  2         AVG(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') BETWEEN 1994 AND 1997 THEN SALARY END) HY_94_97_AVG_SAL,
+  3         MAX(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1998 THEN SALARY END) HY_98_ONWARDS_MAX_SAL
+  4  FROM EMPLOYEES;
+
+HY_UPTO_93_MIN_SAL HY_94_97_AVG_SAL HY_98_ONWARDS_MAX_SAL                                                                                                                                               
+------------------ ---------------- ---------------------                                                                                                                                               
+              4400       8128.57143                 10500                                                                                                                                               
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas                     650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel            EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 MIN_SAL_DEPT_20_60     MAX_SAL_DEPT_90_10_50     SUM_SAL_DEPT_80_110
+SQL> 
+SQL> REM 2 MIN_SAL_ODD_QTRS       MAX_SAL_EVEN_QTRS
+SQL> 
+SQL> REM 3 SUM_SAL_ODD_WOM        COUNT_EVEN_WOM
+SQL> 
+SQL> REM 4 MIN_SAL_JAN_MAR_MAY    AVG_SAL_FEB_SEP_DEC      SUM_SAL_JUN_JUL_AUG
+SQL> 
+SQL> REM 5 MGR_102_201_205_MAX_SAL     MGR_124_A49_AVG_SAL   SUM_SAL_OF_REST_MGR
+SQL> 
+SQL> SELECT MIN(CASE WHEN DEPARTMENT_ID = ANY(20,60) THEN SALARY END) MIN_SAL_DEPT_20_60 ,
+  2         MAX(CASE WHEN DEPARTMENT_ID = ANY(90,10,50) THEN SALARY END) MAX_SAL_DEPT_90_10_50 ,
+  3         SUM(CASE WHEN DEPARTMENT_ID = ANY(80,110) THEN SALARY END) MAX_SAL_DEPT_80_110 FROM EMPLOYEES;
+
+MIN_SAL_DEPT_20_60 MAX_SAL_DEPT_90_10_50 MAX_SAL_DEPT_80_110                                                                                                                                            
+------------------ --------------------- -------------------                                                                                                                                            
+              4200                 24000               50400                                                                                                                                            
+
+SQL> SELECT MIN(CASE WHEN TO_CHAR(HIRE_DATE,'Q') IN (2,4) THEN SALARY END) MIN_SAL_ODD_QTRS ,
+  2         MAX(CASE WHEN TO_CHAR(HIRE_DATE,'Q') IN (1,3) THEN SALARY END)  MAX_SAL_EVEN_QTRS FROM EMPLOYEES;
+
+MIN_SAL_ODD_QTRS MAX_SAL_EVEN_QTRS                                                                                                                                                                      
+---------------- -----------------                                                                                                                                                                      
+            3500             24000                                                                                                                                                                      
+
+SQL> SELECT SUM(CASE WHEN TO_CHAR(HIRE_DATE,'W') IN (2,4) THEN SALARY END) SUM_SAL_ODD_WOM ,
+  2         COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'W') IN (1,3,5) THEN '*' END) COUNT_EVEN_WOM FROM EMPLOYEES;
+
+SUM_SAL_ODD_WOM COUNT_EVEN_WOM                                                                                                                                                                          
+--------------- --------------                                                                                                                                                                          
+          46100             15                                                                                                                                                                          
+
+SQL> SELECT MIN(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('JAN','MAR','MAY') THEN SALARY END) MIN_SAL_JAN_MAR_MAY ,
+  2      AVG(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('FEB','SEP','DEC') THEN SALARY END) AVG_SAL_FEB_SEP_DEC   SUM(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('JUN','JUL','AUG') THEN SALARY END) SUM_SAL_JUN_JUL_AUG FROM EMPLOYEES;
+    AVG(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('FEB','SEP','DEC') THEN SALARY END) AVG_SAL_FEB_SEP_DEC   SUM(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('JUN','JUL','AUG') THEN SALARY END) SUM_SAL_JUN_JUL_AUG FROM EMPLOYEES
+                                                                                                         *
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT MIN(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('JAN','MAR','MAY') THEN SALARY END) MIN_SAL_JAN_MAR_MAY ,
+  2      AVG(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('FEB','SEP','DEC') THEN SALARY END) AVG_SAL_FEB_SEP_DEC ,  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'MON') IN ('JUN','JUL','AUG') THEN SALARY END) SUM_SAL_JUN_JUL_AUG FROM EMPLOYEES;
+
+MIN_SAL_JAN_MAR_MAY AVG_SAL_FEB_SEP_DEC SUM_SAL_JUN_JUL_AUG                                                                                                                                             
+------------------- ------------------- -------------------                                                                                                                                             
+               2600                9650               52800                                                                                                                                             
+
+SQL> SELECT MAX(CASE WHEN MANAGER_ID = ANY(102,201,205) THEN SALARY END) MGR_102_201_205_MAX_SAL ,
+  2         AVG(CASE WHEN MANAGER_ID = ANY(124,149) THEN SALARY END ) MGR_124_A49_AVG_SAL ,
+  3         SUM(CASE WHEN MANAGER_ID = ANY(100,101,102,103,124,149,201,205) THEN SALARY END) SUM_SAL_OF_REST_MGR FROM EMPLOYEES;
+
+MGR_102_201_205_MAX_SAL MGR_124_A49_AVG_SAL SUM_SAL_OF_REST_MGR                                                                                                                                         
+----------------------- ------------------- -------------------                                                                                                                                         
+                   9000          5471.42857              151500                                                                                                                                         
+
+SQL> REM DISPLAY DEPARTMENT_ID WISE CNT_HY_UPTO_91   CNT_HY_92_95   CNT_HY_96_98   CNT_HR_99_ONWARDS
+SQL> 
+SQL> 
+SQL> SELECT DEPARTMENT_ID ,
+  2  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') <= 1991 THEN '*' END),
+  3  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1992 AND TO_CHAR(HIRE_DATE,'RRRR') <= 1995 THEN '*' END) CNT_HY_92_95,
+  4  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') BETWEEN 1996 AND 1998 THEN '*' END) CNT_HY_96_98,
+  5  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1999 THEN '*' END) CNT_HR_99_ONWARDS
+  6  
+SQL> 
+SQL> SELECT DEPARTMENT_ID ,
+  2  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') <= 1991 THEN '*' END) CNT_HY_UPTO_91,
+  3  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1992 AND TO_CHAR(HIRE_DATE,'RRRR') <= 1995 THEN '*' END) CNT_HY_92_95,
+  4  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') BETWEEN 1996 AND 1998 THEN '*' END) CNT_HY_96_98,
+  5  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1999 THEN '*' END) CNT_HR_99_ONWARDS
+  6  FROM EMPLOYEES
+  7  GROUP BY DEPARTMENT_ID
+  8  ORDER BY 1;
+
+DEPARTMENT_ID CNT_HY_UPTO_91 CNT_HY_92_95 CNT_HY_96_98 CNT_HR_99_ONWARDS                                                                                                                                
+------------- -------------- ------------ ------------ -----------------                                                                                                                                
+           10              1            0            0                 0                                                                                                                                
+           20              0            0            2                 0                                                                                                                                
+           50              0            1            3                 1                                                                                                                                
+           60              2            0            0                 1                                                                                                                                
+           80              0            0            2                 1                                                                                                                                
+           90              2            1            0                 0                                                                                                                                
+          110              0            2            0                 0                                                                                                                                
+                           0            0            0                 1                                                                                                                                
+
+8 rows selected.
+
+SQL> REM 1 JOB_ID WISE , CNT_SAL_UPTO_5000   , CNT_SAL_5001_9000   , CNT_SAL_9001_13000   , CNT_SAL_13001_ONWARDS
+SQL> 
+SQL> REM 2 HIRE YEAR WISE , SUM_SAL_Q1 , SUM_SAL_Q2 , SUM_SAL_Q3 , SUM_SAL_Q4
+SQL> 
+SQL> REM 3 FIRST_NAME RANGE WISE (A-D , E-H , I-N , O-T , U-Z) CNT_OF_EMP_HIRED_UPTO_94   CNT_OF_EMP_HIRED_95_97  CNT_OF_EMP_HIRED_98_ONWARDS
+SQL> 
+SQL> 
+SQL> REM 1 JOB_ID WISE , CNT_SAL_UPTO_5000   , CNT_SAL_5001_9000   , CNT_SAL_9001_13000   , CNT_SAL_13001_ONWARDS
+SQL> 
+SQL> SELECT JOB_ID ,
+  2  COUNT(CASE WHEN SALARY <= 5000 THEN '*' END) CNT_SAL_UPTO_5000,
+  3  COUNT(CASE WHEN SALARY BETWEEN 5001 AND 9000 THEN '*' END) CNT_SAL_5001_9000,
+  4  COUNT(CASE WHEN SALARY BETWEEN 9001 AND 13000 THEN '*' END) CNT_SAL_9001_13000,
+  5  COUNT(CASE WHEN SALARY >= 13001 THEN '*' END) CNT_SAL_13001_ONWARDS
+  6  FROM EMPLOYEES
+  7  GROUP BY JOB_ID
+  8  ORDER BY 1;
+
+JOB_ID     CNT_SAL_UPTO_5000 CNT_SAL_5001_9000 CNT_SAL_9001_13000 CNT_SAL_13001_ONWARDS                                                                                                                 
+---------- ----------------- ----------------- ------------------ ---------------------                                                                                                                 
+AC_ACCOUNT                 0                 1                  0                     0                                                                                                                 
+AC_MGR                     0                 0                  1                     0                                                                                                                 
+AD_ASST                    1                 0                  0                     0                                                                                                                 
+AD_PRES                    0                 0                  0                     1                                                                                                                 
+AD_VP                      0                 0                  0                     2                                                                                                                 
+IT_PROG                    1                 2                  0                     0                                                                                                                 
+MK_MAN                     0                 0                  1                     0                                                                                                                 
+MK_REP                     0                 1                  0                     0                                                                                                                 
+SA_MAN                     0                 0                  1                     0                                                                                                                 
+SA_REP                     0                 2                  1                     0                                                                                                                 
+ST_CLERK                   4                 0                  0                     0                                                                                                                 
+ST_MAN                     0                 1                  0                     0                                                                                                                 
+
+12 rows selected.
+
+SQL> REM 2 HIRE YEAR WISE , SUM_SAL_Q1 , SUM_SAL_Q2 , SUM_SAL_Q3 , SUM_SAL_Q4
+SQL> 
+SQL> SELECT TO_CHAR(HIRE_dATE,'RRRR') YEAR ,
+  2  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 1 THEN SALARY END) SUM_SAL_Q1,
+  3  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 2 THEN SALARY END) SUM_SAL_Q2,
+  4  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 3 THEN SALARY END) SUM_SAL_Q3,
+  5  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 4 THEN SALARY END) SUM_SAL_Q4
+  6  FROM EMPLOYEES
+  7  GROUP BY TO_CHAR(HIRE_dATE,'RRRR') YEAR
+  8  ORDER BY 1;
+GROUP BY TO_CHAR(HIRE_dATE,'RRRR') YEAR
+                                   *
+ERROR at line 7:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT TO_CHAR(HIRE_dATE,'RRRR') YEAR ,
+  2  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 1 THEN SALARY END) SUM_SAL_Q1,
+  3  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 2 THEN SALARY END) SUM_SAL_Q2,
+  4  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 3 THEN SALARY END) SUM_SAL_Q3,
+  5  SUM(CASE WHEN TO_CHAR(HIRE_DATE,'Q') = 4 THEN SALARY END) SUM_SAL_Q4
+  6  FROM EMPLOYEES
+  7  GROUP BY TO_CHAR(HIRE_dATE,'RRRR')
+  8  ORDER BY 1;
+
+YEAR SUM_SAL_Q1 SUM_SAL_Q2 SUM_SAL_Q3 SUM_SAL_Q4                                                                                                                                                        
+---- ---------- ---------- ---------- ----------                                                                                                                                                        
+1987                            28400                                                                                                                                                                   
+1989                            17000                                                                                                                                                                   
+1990       9000                                                                                                                                                                                         
+1991                  6000                                                                                                                                                                              
+1993      17000                                                                                                                                                                                         
+1994                 20300                                                                                                                                                                              
+1995                                        3500                                                                                                                                                        
+1996      13000      11000                                                                                                                                                                              
+1997       3100                  6000                                                                                                                                                                   
+1998      11200                  2500                                                                                                                                                                   
+1999       4200       7000                  5800                                                                                                                                                        
+2000      10500                                                                                                                                                                                         
+
+12 rows selected.
+
+SQL> REM 3 FIRST_NAME RANGE WISE (A-D , E-H , I-N , O-T , U-Z) CNT_OF_EMP_HIRED_UPTO_94   CNT_OF_EMP_HIRED_95_97  CNT_OF_EMP_HIRED_98_ONWARDS
+SQL> 
+SQL> SELECT CASE WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'A' AND 'D' THEN 'A-D'
+  2              WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'E' AND 'H' THEN 'E-H'
+  3              WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'I' AND 'N' THEN 'I-N'
+  4              WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'O' AND 'T' THEN 'O-T' ELSE 'U-Z' END RANGE,
+  5  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') <= 1994 THEN '*' END) CNT_OF_EMP_HIRED_UPTO_94,
+  6  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') BETWEEN 1995 AND 1997 THEN '*' END) CNT_OF_EMP_HIRED_95_97,
+  7  COUNT(CASE WHEN TO_CHAR(HIRE_DATE,'RRRR') >= 1998 THEN '*' END) CNT_OF_EMP_HIRED_98_ONWARDS
+  8  FROM EMPLOYEES
+  9  GROUP BY CASE WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'A' AND 'D' THEN 'A-D'
+ 10       WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'E' AND 'H' THEN 'E-H'
+ 11       WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'I' AND 'N' THEN 'I-N'
+ 12       WHEN SUBSTR(FIRST_NAME,1,1) BETWEEN 'O' AND 'T' THEN 'O-T' ELSE 'U-Z' END
+ 13  ORDER BY 1;
+
+RAN CNT_OF_EMP_HIRED_UPTO_94 CNT_OF_EMP_HIRED_95_97 CNT_OF_EMP_HIRED_98_ONWARDS                                                                                                                         
+--- ------------------------ ---------------------- ---------------------------                                                                                                                         
+A-D                        2                      1                           1                                                                                                                         
+E-H                        0                      1                           1                                                                                                                         
+I-N                        3                      1                           3                                                                                                                         
+O-T                        2                      2                           2                                                                                                                         
+U-Z                        1                      0                           0                                                                                                                         
+
+SQL> REM 18 DISPLAY DATE IN SPECIFIED FORMAT : Ninth September, 2021 Thursday
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'FMDdspth Month, RRRR Day') FROM DUAL;
+
+SYSDATE   TO_CHAR(SYSDATE,'FMDDSPTHMONTH,RRRRDAY')                                                                                                                                                      
+--------- ----------------------------------------------------------------------------------------------                                                                                                
+11-FEB-25 Eleventh February, 2025 Tuesday                                                                                                                                                               
+
+SQL> SELECT TO_CHAR('9-SEP-2021','FMDdspth Month, RRRR Day') FROM DUAL;
+SELECT TO_CHAR('9-SEP-2021','FMDdspth Month, RRRR Day') FROM DUAL
+               *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT TO_CHAR(TO_DATE('9-SEP-2021'),'FMDdspth Month, RRRR Day') FROM DUAL;
+
+TO_CHAR(TO_DATE('9-SEP-2021'),                                                                                                                                                                          
+------------------------------                                                                                                                                                                          
+Ninth September, 2021 Thursday                                                                                                                                                                          
+
+SQL> REM DISPLAY SALARY IN FORMAT SPECIFIED : @24|000*00 (USING 3 PARAMETERS)
+SQL> 
+SQL> SELECT SALARY , TO_CHAR(SALARY,'L99G999D00','NLS_CURRENCY=@ NLS_NUMERIC_CHARACTERS=*|') FROM DUAL;
+SELECT SALARY , TO_CHAR(SALARY,'L99G999D00','NLS_CURRENCY=@ NLS_NUMERIC_CHARACTERS=*|') FROM DUAL
+                        *
+ERROR at line 1:
+ORA-00904: "SALARY": invalid identifier 
+
+
+SQL> SELECT SALARY , TO_CHAR(SALARY,'L99G999D00','NLS_CURRENCY=@ NLS_NUMERIC_CHARACTERS=*|') FROM EMPLOYEES;
+
+    SALARY TO_CHAR(SALARY,'L99G                                                                                                                                                                         
+---------- --------------------                                                                                                                                                                         
+     24000           @24|000*00                                                                                                                                                                         
+     17000           @17|000*00                                                                                                                                                                         
+     17000           @17|000*00                                                                                                                                                                         
+      9000            @9|000*00                                                                                                                                                                         
+      6000            @6|000*00                                                                                                                                                                         
+      4200            @4|200*00                                                                                                                                                                         
+      5800            @5|800*00                                                                                                                                                                         
+      3500            @3|500*00                                                                                                                                                                         
+      3100            @3|100*00                                                                                                                                                                         
+      2600            @2|600*00                                                                                                                                                                         
+      2500            @2|500*00                                                                                                                                                                         
+     10500           @10|500*00                                                                                                                                                                         
+     11000           @11|000*00                                                                                                                                                                         
+      8600            @8|600*00                                                                                                                                                                         
+      7000            @7|000*00                                                                                                                                                                         
+      4400            @4|400*00                                                                                                                                                                         
+     13000           @13|000*00                                                                                                                                                                         
+      6000            @6|000*00                                                                                                                                                                         
+     12000           @12|000*00                                                                                                                                                                         
+      8300            @8|300*00                                                                                                                                                                         
+
+20 rows selected.
+
+SQL> REM 23 DISPLAY FIRST_NAME , SALARY , NEW_COMM_PCT , NEW_COMM_AMT. (USING NVL FUNCTION : .3 FOR THOSE WHO DO NOT GET COMMISSION AND .15 EXTRA TO THOSE WHO GETS COMMISSION)
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY , NVL(COMMISSION_PCT+.15,.3) NEW_COMM_PCT , SALARY * NVL(COMMISSION_PCT+.15,.3) NEW_COMM_AMT FROM EMPLOYEES;
+
+FIRST_NAME          SALARY NEW_COMM_PCT NEW_COMM_AMT                                                                                                                                                    
+--------------- ---------- ------------ ------------                                                                                                                                                    
+Steven               24000           .3         7200                                                                                                                                                    
+Neena                17000           .3         5100                                                                                                                                                    
+Lex                  17000           .3         5100                                                                                                                                                    
+Alexander             9000           .3         2700                                                                                                                                                    
+Bruce                 6000           .3         1800                                                                                                                                                    
+Diana                 4200           .3         1260                                                                                                                                                    
+Kevin                 5800           .3         1740                                                                                                                                                    
+Trenna                3500           .3         1050                                                                                                                                                    
+Curtis                3100           .3          930                                                                                                                                                    
+Randall               2600           .3          780                                                                                                                                                    
+Peter                 2500           .3          750                                                                                                                                                    
+Eleni                10500          .35         3675                                                                                                                                                    
+Ellen                11000          .45         4950                                                                                                                                                    
+Jonathon              8600          .45         3870                                                                                                                                                    
+Kimerely              7000           .3         2100                                                                                                                                                    
+Jennifer              4400           .3         1320                                                                                                                                                    
+Michael              13000           .3         3900                                                                                                                                                    
+Pat                   6000           .3         1800                                                                                                                                                    
+Shelley              12000           .3         3600                                                                                                                                                    
+William               8300           .3         2490                                                                                                                                                    
+
+20 rows selected.
+
+SQL> SPOOL OFF

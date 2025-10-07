@@ -1,0 +1,853 @@
+SQL> 
+SQL> REM OUTER JOIN :
+SQL> 
+SQL> REM OUTER JOIN : TO GET EXTRA/UNMATCHED/ADDITIONAL ROWS INTO RESULT SET.
+SQL> 
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                  
+-- ---------------------------------------- ----------                                                                                                                                                  
+CA Canada                                            2                                                                                                                                                  
+DE Germany                                           1                                                                                                                                                  
+UK United Kingdom                                    1                                                                                                                                                  
+US United States of America                          2                                                                                                                                                  
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM COUNTRIES NATURAL JOIN REGIONS;
+
+ REGION_ID CO COUNTRY_NAME                             REGION_NAME                                                                                                                                      
+---------- -- ---------------------------------------- -------------------------                                                                                                                        
+         1 DE Germany                                  Europe                                                                                                                                           
+         1 UK United Kingdom                           Europe                                                                                                                                           
+         2 CA Canada                                   Americas                                                                                                                                         
+         2 US United States of America                 Americas                                                                                                                                         
+
+SQL> SELECT * FROM COUNTRIES JOIN REGIONS USING (REGION_ID);
+
+ REGION_ID CO COUNTRY_NAME                             REGION_NAME                                                                                                                                      
+---------- -- ---------------------------------------- -------------------------                                                                                                                        
+         1 DE Germany                                  Europe                                                                                                                                           
+         1 UK United Kingdom                           Europe                                                                                                                                           
+         2 CA Canada                                   Americas                                                                                                                                         
+         2 US United States of America                 Americas                                                                                                                                         
+
+SQL> SELECT * FROM COUNTRIES C JOIN REGIONS R ON C.REGION_ID = R.REGION_ID;
+
+CO COUNTRY_NAME                              REGION_ID  REGION_ID REGION_NAME                                                                                                                           
+-- ---------------------------------------- ---------- ---------- -------------------------                                                                                                             
+DE Germany                                           1          1 Europe                                                                                                                                
+UK United Kingdom                                    1          1 Europe                                                                                                                                
+CA Canada                                            2          2 Americas                                                                                                                              
+US United States of America                          2          2 Americas                                                                                                                              
+
+SQL> REM OUTER JOIN SYNTAX 1 : FROM table1 LEFT/RIGHT/FULL OUTER JOIN table2 USING (COMMON COLUMN LIST)
+SQL> 
+SQL> REM OUTER JOIN SYNTAX 2 : FROM table1 LEFT/RIGHT/FULL OUTER JOIN table2 ON join condition(s)
+SQL> 
+SQL> 
+SQL> SELECT * FROM COUNTRIES INNER JOIN REGIONS USING (REGION_ID);
+
+ REGION_ID CO COUNTRY_NAME                             REGION_NAME                                                                                                                                      
+---------- -- ---------------------------------------- -------------------------                                                                                                                        
+         1 DE Germany                                  Europe                                                                                                                                           
+         1 UK United Kingdom                           Europe                                                                                                                                           
+         2 CA Canada                                   Americas                                                                                                                                         
+         2 US United States of America                 Americas                                                                                                                                         
+
+SQL> SELECT * FROM COUNTRIES OUTER JOIN REGIONS USING (REGION_ID);
+
+ REGION_ID CO COUNTRY_NAME                             REGION_NAME                                                                                                                                      
+---------- -- ---------------------------------------- -------------------------                                                                                                                        
+         1 DE Germany                                  Europe                                                                                                                                           
+         1 UK United Kingdom                           Europe                                                                                                                                           
+         2 CA Canada                                   Americas                                                                                                                                         
+         2 US United States of America                 Americas                                                                                                                                         
+
+SQL> SELECT OUTER.COUNTRY_NAME , REGION_NAME FROM COUNTRIES OUTER JOIN REGIONS USING (REGION_ID);
+
+COUNTRY_NAME                             REGION_NAME                                                                                                                                                    
+---------------------------------------- -------------------------                                                                                                                                      
+Germany                                  Europe                                                                                                                                                         
+United Kingdom                           Europe                                                                                                                                                         
+Canada                                   Americas                                                                                                                                                       
+United States of America                 Americas                                                                                                                                                       
+
+SQL> SELECT COUNTRIES.COUNTRY_NAME , REGION_NAME FROM COUNTRIES OUTER JOIN REGIONS USING (REGION_ID);
+SELECT COUNTRIES.COUNTRY_NAME , REGION_NAME FROM COUNTRIES OUTER JOIN REGIONS USING (REGION_ID)
+       *
+ERROR at line 1:
+ORA-00904: "COUNTRIES"."COUNTRY_NAME": invalid identifier 
+
+
+SQL> SELECT * FROM COUNTRIES RIGHT OUTER JOIN REGIONS USING (REGION_ID);
+
+ REGION_ID CO COUNTRY_NAME                             REGION_NAME                                                                                                                                      
+---------- -- ---------------------------------------- -------------------------                                                                                                                        
+         2 CA Canada                                   Americas                                                                                                                                         
+         1 DE Germany                                  Europe                                                                                                                                           
+         1 UK United Kingdom                           Europe                                                                                                                                           
+         2 US United States of America                 Americas                                                                                                                                         
+         4                                             Middle East and Africa                                                                                                                           
+         3                                             Asia                                                                                                                                             
+
+6 rows selected.
+
+SQL> SELECT * FROM COUNTRIES LEFT OUTER JOIN REGIONS USING (REGION_ID);
+
+ REGION_ID CO COUNTRY_NAME                             REGION_NAME                                                                                                                                      
+---------- -- ---------------------------------------- -------------------------                                                                                                                        
+         1 DE Germany                                  Europe                                                                                                                                           
+         1 UK United Kingdom                           Europe                                                                                                                                           
+         2 CA Canada                                   Americas                                                                                                                                         
+         2 US United States of America                 Americas                                                                                                                                         
+
+SQL> SELECT * FROM REGIONS LEFT OUTER JOIN COUNTRIES USING (REGION_ID);
+
+ REGION_ID REGION_NAME               CO COUNTRY_NAME                                                                                                                                                    
+---------- ------------------------- -- ----------------------------------------                                                                                                                        
+         2 Americas                  CA Canada                                                                                                                                                          
+         1 Europe                    DE Germany                                                                                                                                                         
+         1 Europe                    UK United Kingdom                                                                                                                                                  
+         2 Americas                  US United States of America                                                                                                                                        
+         4 Middle East and Africa                                                                                                                                                                       
+         3 Asia                                                                                                                                                                                         
+
+6 rows selected.
+
+SQL> SELECT * FROM REGIONS FOOL OUTER JOIN COUNTRIES USING (REGION_ID);
+SELECT * FROM REGIONS FOOL OUTER JOIN COUNTRIES USING (REGION_ID)
+                                 *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT * FROM REGIONS FULL OUTER JOIN COUNTRIES USING (REGION_ID);
+
+ REGION_ID REGION_NAME               CO COUNTRY_NAME                                                                                                                                                    
+---------- ------------------------- -- ----------------------------------------                                                                                                                        
+         2 Americas                  CA Canada                                                                                                                                                          
+         1 Europe                    DE Germany                                                                                                                                                         
+         1 Europe                    UK United Kingdom                                                                                                                                                  
+         2 Americas                  US United States of America                                                                                                                                        
+         4 Middle East and Africa                                                                                                                                                                       
+         3 Asia                                                                                                                                                                                         
+
+6 rows selected.
+
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                           
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                           
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                           
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                           
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                           
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                           
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                           
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                  
+-- ---------------------------------------- ----------                                                                                                                                                  
+CA Canada                                            2                                                                                                                                                  
+DE Germany                                           1                                                                                                                                                  
+UK United Kingdom                                    1                                                                                                                                                  
+US United States of America                          2                                                                                                                                                  
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> REM 1 DISPLAY CITY AND COUNTRY_NAME (EXTRA)
+SQL> 
+SQL> REM 2 DISPLAY COUNTRY_NAME , REGION_NAME (EXTRA)
+SQL> 
+SQL> REM 3 DISPLAY STATE_PROVINCE , COUNTRY_NAME (EXTRA) , REGION_NAME (EXTRA)
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY CITY AND COUNTRY_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> REM 2 DISPLAY COUNTRY_NAME , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> REM 3 DISPLAY STATE_PROVINCE , COUNTRY_NAME (EXTRA) , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT 3 LEFT + RIGHT
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY CITY AND COUNTRY_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> SELECT CITY , COUNTRY_NAME
+  2  FROM COUNTRIES
+  3  LEFT JOIN LOCATIONS USING (COUNTRY_ID);
+
+CITY                           COUNTRY_NAME                                                                                                                                                             
+------------------------------ ----------------------------------------                                                                                                                                 
+Southlake                      United States of America                                                                                                                                                 
+South San Francisco            United States of America                                                                                                                                                 
+Seattle                        United States of America                                                                                                                                                 
+Toronto                        Canada                                                                                                                                                                   
+Oxford                         United Kingdom                                                                                                                                                           
+                               Germany                                                                                                                                                                  
+
+6 rows selected.
+
+SQL> SELECT CITY , COUNTRY_NAME
+  2  FROM LOCATIONS
+  3  RIGHT JOIN COUNTRIES USING (COUNTRY_ID);
+
+CITY                           COUNTRY_NAME                                                                                                                                                             
+------------------------------ ----------------------------------------                                                                                                                                 
+Southlake                      United States of America                                                                                                                                                 
+South San Francisco            United States of America                                                                                                                                                 
+Seattle                        United States of America                                                                                                                                                 
+Toronto                        Canada                                                                                                                                                                   
+Oxford                         United Kingdom                                                                                                                                                           
+                               Germany                                                                                                                                                                  
+
+6 rows selected.
+
+SQL> REM 2 DISPLAY COUNTRY_NAME , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> SELECT COUNTRY_NAME , REGION_NAME
+  2  FROM REGIONS
+  3  LEFT JOIN COUNTRIES USING (REGION_ID);
+
+COUNTRY_NAME                             REGION_NAME                                                                                                                                                    
+---------------------------------------- -------------------------                                                                                                                                      
+Canada                                   Americas                                                                                                                                                       
+Germany                                  Europe                                                                                                                                                         
+United Kingdom                           Europe                                                                                                                                                         
+United States of America                 Americas                                                                                                                                                       
+                                         Middle East and Africa                                                                                                                                         
+                                         Asia                                                                                                                                                           
+
+6 rows selected.
+
+SQL> SELECT COUNTRY_NAME , REGION_NAME
+  2  FROM COUNTRIES
+  3  RIGHT JOIN REGIONS USING (REGION_ID);
+
+COUNTRY_NAME                             REGION_NAME                                                                                                                                                    
+---------------------------------------- -------------------------                                                                                                                                      
+Canada                                   Americas                                                                                                                                                       
+Germany                                  Europe                                                                                                                                                         
+United Kingdom                           Europe                                                                                                                                                         
+United States of America                 Americas                                                                                                                                                       
+                                         Middle East and Africa                                                                                                                                         
+                                         Asia                                                                                                                                                           
+
+6 rows selected.
+
+SQL> REM 3 DISPLAY STATE_PROVINCE , COUNTRY_NAME (EXTRA) , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT 3 LEFT + RIGHT
+SQL> 
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM REGIONS
+  3  LEFT JOIN COUNTRIES USING (REGION_ID)
+  4  LEFT JOIN LOCATIONS USING (COUNTRY_ID);
+
+STATE_PROVINCE            COUNTRY_NAME                             REGION_NAME                                                                                                                          
+------------------------- ---------------------------------------- -------------------------                                                                                                            
+Texas                     United States of America                 Americas                                                                                                                             
+California                United States of America                 Americas                                                                                                                             
+Washington                United States of America                 Americas                                                                                                                             
+Ontario                   Canada                                   Americas                                                                                                                             
+Oxford                    United Kingdom                           Europe                                                                                                                               
+                          Germany                                  Europe                                                                                                                               
+                                                                   Middle East and Africa                                                                                                               
+                                                                   Asia                                                                                                                                 
+
+8 rows selected.
+
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM LOCATIONS
+  3  RIGHT JOIN COUNTRIES USING (COUNTRY_ID)
+  4  RIGHT JOIN REGIONS   USING (REGION_ID);
+
+STATE_PROVINCE            COUNTRY_NAME                             REGION_NAME                                                                                                                          
+------------------------- ---------------------------------------- -------------------------                                                                                                            
+Texas                     United States of America                 Americas                                                                                                                             
+California                United States of America                 Americas                                                                                                                             
+Washington                United States of America                 Americas                                                                                                                             
+Ontario                   Canada                                   Americas                                                                                                                             
+Oxford                    United Kingdom                           Europe                                                                                                                               
+                          Germany                                  Europe                                                                                                                               
+                                                                   Middle East and Africa                                                                                                               
+                                                                   Asia                                                                                                                                 
+
+8 rows selected.
+
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM COUNTRIES
+  3  LEFT JOIN LOCATION USING (COUNTRY_ID)
+  4  RIGHT JOIN REGIONS USING (REGION_ID);
+LEFT JOIN LOCATION USING (COUNTRY_ID)
+          *
+ERROR at line 3:
+ORA-00942: table or view does not exist 
+
+
+SQL> 
+SQL> 
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM COUNTRIES
+  3  LEFT JOIN LOCATIONS USING (COUNTRY_ID)
+  4  RIGHT JOIN REGIONS USING (REGION_ID);
+
+STATE_PROVINCE            COUNTRY_NAME                             REGION_NAME                                                                                                                          
+------------------------- ---------------------------------------- -------------------------                                                                                                            
+Texas                     United States of America                 Americas                                                                                                                             
+California                United States of America                 Americas                                                                                                                             
+Washington                United States of America                 Americas                                                                                                                             
+Ontario                   Canada                                   Americas                                                                                                                             
+Oxford                    United Kingdom                           Europe                                                                                                                               
+                          Germany                                  Europe                                                                                                                               
+                                                                   Middle East and Africa                                                                                                               
+                                                                   Asia                                                                                                                                 
+
+8 rows selected.
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                  
+-- ---------------------------------------- ----------                                                                                                                                                  
+CA Canada                                            2                                                                                                                                                  
+DE Germany                                           1                                                                                                                                                  
+UK United Kingdom                                    1                                                                                                                                                  
+US United States of America                          2                                                                                                                                                  
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT COUNTRY_NAME , REGION_NAME
+  2  FROM COUNTRIES C
+  3  RIGHT JOIN REGIONS R ON C.REGION_ID = R.REGION_ID;
+
+COUNTRY_NAME                             REGION_NAME                                                                                                                                                    
+---------------------------------------- -------------------------                                                                                                                                      
+Canada                                   Americas                                                                                                                                                       
+Germany                                  Europe                                                                                                                                                         
+United Kingdom                           Europe                                                                                                                                                         
+United States of America                 Americas                                                                                                                                                       
+                                         Middle East and Africa                                                                                                                                         
+                                         Asia                                                                                                                                                           
+
+6 rows selected.
+
+SQL> REM 1 DISPLAY CITY AND COUNTRY_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> REM 2 DISPLAY COUNTRY_NAME , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> REM 3 DISPLAY STATE_PROVINCE , COUNTRY_NAME (EXTRA) , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT 3 LEFT + RIGHT
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY CITY AND COUNTRY_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> SELECT CITY , COUNTRY_NAME
+  2  FROM COUNTRIES C
+  3  JOIN LOCATIONS L ON C.COUNTRY_ID = L.COUNTRY_ID;
+
+CITY                           COUNTRY_NAME                                                                                                                                                             
+------------------------------ ----------------------------------------                                                                                                                                 
+Southlake                      United States of America                                                                                                                                                 
+South San Francisco            United States of America                                                                                                                                                 
+Seattle                        United States of America                                                                                                                                                 
+Toronto                        Canada                                                                                                                                                                   
+Oxford                         United Kingdom                                                                                                                                                           
+
+SQL> SELECT CITY , COUNTRY_NAME
+  2  FROM COUNTRIES C
+  3  LEFT JOIN LOCATIONS L ON C.COUNTRY_ID = L.COUNTRY_ID;
+
+CITY                           COUNTRY_NAME                                                                                                                                                             
+------------------------------ ----------------------------------------                                                                                                                                 
+Southlake                      United States of America                                                                                                                                                 
+South San Francisco            United States of America                                                                                                                                                 
+Seattle                        United States of America                                                                                                                                                 
+Toronto                        Canada                                                                                                                                                                   
+Oxford                         United Kingdom                                                                                                                                                           
+                               Germany                                                                                                                                                                  
+
+6 rows selected.
+
+SQL> SELECT CITY , COUNTRY_NAME
+  2  FROM LOCATIONS L
+  3  RIGHT JOIN COUNTRIES C ON C.COUNTRY_ID = L.COUNTRY_ID;
+
+CITY                           COUNTRY_NAME                                                                                                                                                             
+------------------------------ ----------------------------------------                                                                                                                                 
+Southlake                      United States of America                                                                                                                                                 
+South San Francisco            United States of America                                                                                                                                                 
+Seattle                        United States of America                                                                                                                                                 
+Toronto                        Canada                                                                                                                                                                   
+Oxford                         United Kingdom                                                                                                                                                           
+                               Germany                                                                                                                                                                  
+
+6 rows selected.
+
+SQL> REM 2 DISPLAY COUNTRY_NAME , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT
+SQL> 
+SQL> SELECT COUNTRY_NAME , REGION_NAME
+  2  FROM REGIONS R
+  3  LEFT JOIN COUNTRIES C ON R.REGION_ID = C.REGION_ID;
+
+COUNTRY_NAME                             REGION_NAME                                                                                                                                                    
+---------------------------------------- -------------------------                                                                                                                                      
+Canada                                   Americas                                                                                                                                                       
+Germany                                  Europe                                                                                                                                                         
+United Kingdom                           Europe                                                                                                                                                         
+United States of America                 Americas                                                                                                                                                       
+                                         Middle East and Africa                                                                                                                                         
+                                         Asia                                                                                                                                                           
+
+6 rows selected.
+
+SQL> SELECT COUNTRY_NAME , REGION_NAME
+  2  FROM COUNTRIES C
+  3  RIGHT JOIN REGIONS R ON C.REGION_ID = R.REGION_ID;
+
+COUNTRY_NAME                             REGION_NAME                                                                                                                                                    
+---------------------------------------- -------------------------                                                                                                                                      
+Canada                                   Americas                                                                                                                                                       
+Germany                                  Europe                                                                                                                                                         
+United Kingdom                           Europe                                                                                                                                                         
+United States of America                 Americas                                                                                                                                                       
+                                         Middle East and Africa                                                                                                                                         
+                                         Asia                                                                                                                                                           
+
+6 rows selected.
+
+SQL> REM 3 DISPLAY STATE_PROVINCE , COUNTRY_NAME (EXTRA) , REGION_NAME (EXTRA) : 1 LEFT 2 RIGHT 3 LEFT + RIGHT
+SQL> 
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM REGIONS R
+  3  LEFT JOIN COUNTRIES C ON R.REGION_ID = C.REGION_ID
+  4  LEFT JOIN LOCATIONS L ON C.COUNTRY_ID = L.LOCATION_ID;
+LEFT JOIN LOCATIONS L ON C.COUNTRY_ID = L.LOCATION_ID
+                         *
+ERROR at line 4:
+ORA-01722: invalid number 
+
+
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM REGIONS R
+  3  LEFT JOIN COUNTRIES C ON R.REGION_ID = C.REGION_ID
+  4  LEFT JOIN LOCATIONS L ON C.COUNTRY_ID = L.COUNTRY_ID;
+
+STATE_PROVINCE            COUNTRY_NAME                             REGION_NAME                                                                                                                          
+------------------------- ---------------------------------------- -------------------------                                                                                                            
+Texas                     United States of America                 Americas                                                                                                                             
+California                United States of America                 Americas                                                                                                                             
+Washington                United States of America                 Americas                                                                                                                             
+Ontario                   Canada                                   Americas                                                                                                                             
+Oxford                    United Kingdom                           Europe                                                                                                                               
+                          Germany                                  Europe                                                                                                                               
+                                                                   Middle East and Africa                                                                                                               
+                                                                   Asia                                                                                                                                 
+
+8 rows selected.
+
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM LOCATIONS L
+  3  RIGHT JOIN COUNTRIES C ON L.COUNTRY_ID = C.COUNTRY_ID
+  4  RIGHT JOIN REGIONS   R ON C.REGION_ID  = R.REGION_ID;
+
+STATE_PROVINCE            COUNTRY_NAME                             REGION_NAME                                                                                                                          
+------------------------- ---------------------------------------- -------------------------                                                                                                            
+Texas                     United States of America                 Americas                                                                                                                             
+California                United States of America                 Americas                                                                                                                             
+Washington                United States of America                 Americas                                                                                                                             
+Ontario                   Canada                                   Americas                                                                                                                             
+Oxford                    United Kingdom                           Europe                                                                                                                               
+                          Germany                                  Europe                                                                                                                               
+                                                                   Middle East and Africa                                                                                                               
+                                                                   Asia                                                                                                                                 
+
+8 rows selected.
+
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM REGIONS R
+  3  
+SQL> 
+SQL> SELECT STATE_PROVINCE , COUNTRY_NAME , REGION_NAME
+  2  FROM COUNTRIES C
+  3  LEFT JOIN LOCATIONS L ON C.COUNTRY_ID = L.COUNTRY_ID
+  4  RIGHT JOIN REGIONS  R ON C.REGION_ID = R.REGION_ID;
+
+STATE_PROVINCE            COUNTRY_NAME                             REGION_NAME                                                                                                                          
+------------------------- ---------------------------------------- -------------------------                                                                                                            
+Texas                     United States of America                 Americas                                                                                                                             
+California                United States of America                 Americas                                                                                                                             
+Washington                United States of America                 Americas                                                                                                                             
+Ontario                   Canada                                   Americas                                                                                                                             
+Oxford                    United Kingdom                           Europe                                                                                                                               
+                          Germany                                  Europe                                                                                                                               
+                                                                   Middle East and Africa                                                                                                               
+                                                                   Asia                                                                                                                                 
+
+8 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID FROM EMPLOYEES;
+
+FIRST_NAME      DEPARTMENT_ID                                                                                                                                                                           
+--------------- -------------                                                                                                                                                                           
+Steven                     90                                                                                                                                                                           
+Neena                      90                                                                                                                                                                           
+Lex                        90                                                                                                                                                                           
+Alexander                  60                                                                                                                                                                           
+Bruce                      60                                                                                                                                                                           
+Diana                      60                                                                                                                                                                           
+Kevin                      50                                                                                                                                                                           
+Trenna                     50                                                                                                                                                                           
+Curtis                     50                                                                                                                                                                           
+Randall                    50                                                                                                                                                                           
+Peter                      50                                                                                                                                                                           
+Eleni                      80                                                                                                                                                                           
+Ellen                      80                                                                                                                                                                           
+Jonathon                   80                                                                                                                                                                           
+Kimerely                                                                                                                                                                                                
+Jennifer                   10                                                                                                                                                                           
+Michael                    20                                                                                                                                                                           
+Pat                        20                                                                                                                                                                           
+Shelley                   110                                                                                                                                                                           
+William                   110                                                                                                                                                                           
+
+20 rows selected.
+
+SQL> SELECT DEPARTMENT_NAME , DEPARTMENT_ID FROM DEPARTMENTS;
+
+DEPARTMENT_NAME                DEPARTMENT_ID                                                                                                                                                            
+------------------------------ -------------                                                                                                                                                            
+Administration                            10                                                                                                                                                            
+Marketing                                 20                                                                                                                                                            
+Shiping                                   50                                                                                                                                                            
+IT                                        60                                                                                                                                                            
+Sales                                     80                                                                                                                                                            
+Executive                                 90                                                                                                                                                            
+Accounting                               110                                                                                                                                                            
+Contracting                              190                                                                                                                                                            
+
+8 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID FROM EMPLOYEES ORDER BY 2;
+
+FIRST_NAME      DEPARTMENT_ID                                                                                                                                                                           
+--------------- -------------                                                                                                                                                                           
+Jennifer                   10                                                                                                                                                                           
+Michael                    20                                                                                                                                                                           
+Pat                        20                                                                                                                                                                           
+Kevin                      50                                                                                                                                                                           
+Peter                      50                                                                                                                                                                           
+Randall                    50                                                                                                                                                                           
+Curtis                     50                                                                                                                                                                           
+Trenna                     50                                                                                                                                                                           
+Diana                      60                                                                                                                                                                           
+Bruce                      60                                                                                                                                                                           
+Alexander                  60                                                                                                                                                                           
+Ellen                      80                                                                                                                                                                           
+Eleni                      80                                                                                                                                                                           
+Jonathon                   80                                                                                                                                                                           
+Lex                        90                                                                                                                                                                           
+Steven                     90                                                                                                                                                                           
+Neena                      90                                                                                                                                                                           
+William                   110                                                                                                                                                                           
+Shelley                   110                                                                                                                                                                           
+Kimerely                                                                                                                                                                                                
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME
+  2  FROM EMPLOYEES
+  3  JOIN DEPARTMENTS USING (DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_NAME                                                                                                                                                                         
+--------------- ------------------------------                                                                                                                                                          
+Jennifer        Administration                                                                                                                                                                          
+Michael         Marketing                                                                                                                                                                               
+Pat             Marketing                                                                                                                                                                               
+Kevin           Shiping                                                                                                                                                                                 
+Peter           Shiping                                                                                                                                                                                 
+Randall         Shiping                                                                                                                                                                                 
+Curtis          Shiping                                                                                                                                                                                 
+Trenna          Shiping                                                                                                                                                                                 
+Diana           IT                                                                                                                                                                                      
+Bruce           IT                                                                                                                                                                                      
+Alexander       IT                                                                                                                                                                                      
+Ellen           Sales                                                                                                                                                                                   
+Eleni           Sales                                                                                                                                                                                   
+Jonathon        Sales                                                                                                                                                                                   
+Lex             Executive                                                                                                                                                                               
+Steven          Executive                                                                                                                                                                               
+Neena           Executive                                                                                                                                                                               
+William         Accounting                                                                                                                                                                              
+Shelley         Accounting                                                                                                                                                                              
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME
+  2  FROM EMPLOYEES
+  3  LEFT JOIN DEPARTMENTS USING (DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_NAME                                                                                                                                                                         
+--------------- ------------------------------                                                                                                                                                          
+Jennifer        Administration                                                                                                                                                                          
+Michael         Marketing                                                                                                                                                                               
+Pat             Marketing                                                                                                                                                                               
+Kevin           Shiping                                                                                                                                                                                 
+Trenna          Shiping                                                                                                                                                                                 
+Curtis          Shiping                                                                                                                                                                                 
+Randall         Shiping                                                                                                                                                                                 
+Peter           Shiping                                                                                                                                                                                 
+Alexander       IT                                                                                                                                                                                      
+Bruce           IT                                                                                                                                                                                      
+Diana           IT                                                                                                                                                                                      
+Eleni           Sales                                                                                                                                                                                   
+Ellen           Sales                                                                                                                                                                                   
+Jonathon        Sales                                                                                                                                                                                   
+Steven          Executive                                                                                                                                                                               
+Neena           Executive                                                                                                                                                                               
+Lex             Executive                                                                                                                                                                               
+Shelley         Accounting                                                                                                                                                                              
+William         Accounting                                                                                                                                                                              
+Kimerely                                                                                                                                                                                                
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME
+  2  FROM EMPLOYEES
+  3  RIGHT JOIN DEPARTMENTS USING (DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_NAME                                                                                                                                                                         
+--------------- ------------------------------                                                                                                                                                          
+Jennifer        Administration                                                                                                                                                                          
+Michael         Marketing                                                                                                                                                                               
+Pat             Marketing                                                                                                                                                                               
+Kevin           Shiping                                                                                                                                                                                 
+Peter           Shiping                                                                                                                                                                                 
+Randall         Shiping                                                                                                                                                                                 
+Curtis          Shiping                                                                                                                                                                                 
+Trenna          Shiping                                                                                                                                                                                 
+Diana           IT                                                                                                                                                                                      
+Bruce           IT                                                                                                                                                                                      
+Alexander       IT                                                                                                                                                                                      
+Ellen           Sales                                                                                                                                                                                   
+Eleni           Sales                                                                                                                                                                                   
+Jonathon        Sales                                                                                                                                                                                   
+Lex             Executive                                                                                                                                                                               
+Steven          Executive                                                                                                                                                                               
+Neena           Executive                                                                                                                                                                               
+William         Accounting                                                                                                                                                                              
+Shelley         Accounting                                                                                                                                                                              
+                Contracting                                                                                                                                                                             
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME
+  2  FROM EMPLOYEES
+  3  FULL JOIN DEPARTMENTS USING (DEPARTMENT_ID);
+
+FIRST_NAME      DEPARTMENT_NAME                                                                                                                                                                         
+--------------- ------------------------------                                                                                                                                                          
+Steven          Executive                                                                                                                                                                               
+Neena           Executive                                                                                                                                                                               
+Lex             Executive                                                                                                                                                                               
+Alexander       IT                                                                                                                                                                                      
+Bruce           IT                                                                                                                                                                                      
+Diana           IT                                                                                                                                                                                      
+Kevin           Shiping                                                                                                                                                                                 
+Trenna          Shiping                                                                                                                                                                                 
+Curtis          Shiping                                                                                                                                                                                 
+Randall         Shiping                                                                                                                                                                                 
+Peter           Shiping                                                                                                                                                                                 
+Eleni           Sales                                                                                                                                                                                   
+Ellen           Sales                                                                                                                                                                                   
+Jonathon        Sales                                                                                                                                                                                   
+Kimerely                                                                                                                                                                                                
+Jennifer        Administration                                                                                                                                                                          
+Michael         Marketing                                                                                                                                                                               
+Pat             Marketing                                                                                                                                                                               
+Shelley         Accounting                                                                                                                                                                              
+William         Accounting                                                                                                                                                                              
+                Contracting                                                                                                                                                                             
+
+21 rows selected.
+
+SQL> REM DISPLAY ONLY THOSE DEPARTMENT_NAME IN WHICH NO EMPLOYEE IS STILL HIRED.
+SQL> 
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME , DEPARTMENT_ID , DEPARTMENT_NAME
+  2  FROM EMPLOYEES E
+  3  RIGHT JOIN DEPARMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID;
+RIGHT JOIN DEPARMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+           *
+ERROR at line 3:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME , DEPARTMENT_ID , DEPARTMENT_NAME
+  2  FROM EMPLOYEES E
+  3  RIGHT JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID;
+SELECT EMPLOYEE_ID , FIRST_NAME , DEPARTMENT_ID , DEPARTMENT_NAME
+                                  *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME , D.DEPARTMENT_ID , DEPARTMENT_NAME
+  2  FROM EMPLOYEES E
+  3  RIGHT JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID;
+
+EMPLOYEE_ID FIRST_NAME      DEPARTMENT_ID DEPARTMENT_NAME                                                                                                                                               
+----------- --------------- ------------- ------------------------------                                                                                                                                
+        200 Jennifer                   10 Administration                                                                                                                                                
+        201 Michael                    20 Marketing                                                                                                                                                     
+        202 Pat                        20 Marketing                                                                                                                                                     
+        124 Kevin                      50 Shiping                                                                                                                                                       
+        144 Peter                      50 Shiping                                                                                                                                                       
+        143 Randall                    50 Shiping                                                                                                                                                       
+        142 Curtis                     50 Shiping                                                                                                                                                       
+        141 Trenna                     50 Shiping                                                                                                                                                       
+        107 Diana                      60 IT                                                                                                                                                            
+        104 Bruce                      60 IT                                                                                                                                                            
+        103 Alexander                  60 IT                                                                                                                                                            
+        174 Ellen                      80 Sales                                                                                                                                                         
+        149 Eleni                      80 Sales                                                                                                                                                         
+        176 Jonathon                   80 Sales                                                                                                                                                         
+        102 Lex                        90 Executive                                                                                                                                                     
+        100 Steven                     90 Executive                                                                                                                                                     
+        101 Neena                      90 Executive                                                                                                                                                     
+        206 William                   110 Accounting                                                                                                                                                    
+        205 Shelley                   110 Accounting                                                                                                                                                    
+                                      190 Contracting                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME , D.DEPARTMENT_ID , DEPARTMENT_NAME
+  2  FROM EMPLOYEES E
+  3  RIGHT JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID AND E.EMPLOYEE_ID IS NULL;
+
+EMPLOYEE_ID FIRST_NAME      DEPARTMENT_ID DEPARTMENT_NAME                                                                                                                                               
+----------- --------------- ------------- ------------------------------                                                                                                                                
+                                       10 Administration                                                                                                                                                
+                                       20 Marketing                                                                                                                                                     
+                                       50 Shiping                                                                                                                                                       
+                                       60 IT                                                                                                                                                            
+                                       80 Sales                                                                                                                                                         
+                                       90 Executive                                                                                                                                                     
+                                      110 Accounting                                                                                                                                                    
+                                      190 Contracting                                                                                                                                                   
+
+8 rows selected.
+
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME , D.DEPARTMENT_ID , DEPARTMENT_NAME
+  2  FROM EMPLOYEES E
+  3  RIGHT JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID WHERE E.EMPLOYEE_ID IS NULL;
+
+EMPLOYEE_ID FIRST_NAME      DEPARTMENT_ID DEPARTMENT_NAME                                                                                                                                               
+----------- --------------- ------------- ------------------------------                                                                                                                                
+                                      190 Contracting                                                                                                                                                   
+
+SQL> SELECT DEPARTMENT_NAME
+  2  FROM EMPLOYEES E
+  3  RIGHT JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID WHERE E.EMPLOYEE_ID IS NULL;
+
+DEPARTMENT_NAME                                                                                                                                                                                         
+------------------------------                                                                                                                                                                          
+Contracting                                                                                                                                                                                             
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                           
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                           
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                           
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                           
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                           
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                           
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                           
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                  
+-- ---------------------------------------- ----------                                                                                                                                                  
+CA Canada                                            2                                                                                                                                                  
+DE Germany                                           1                                                                                                                                                  
+UK United Kingdom                                    1                                                                                                                                                  
+US United States of America                          2                                                                                                                                                  
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> REM 1 DISPLAY ONLY EXTRA COUNTRY_NAME
+SQL> 
+SQL> REM 2 DISPLAY ONLY EXTRA REGION_NAME
+SQL> 
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY ONLY EXTRA COUNTRY_NAME (LEFT JOIN , USING)
+SQL> 
+SQL> REM 2 DISPLAY ONLY EXTRA REGION_NAME (RIGHT JOIN , ON)
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY ONLY EXTRA COUNTRY_NAME (LEFT JOIN , USING)
+SQL> 
+SQL> SELECT COUNTRY_NAME
+  2  FROM COUNTRIES
+  3  LEFT JOIN LOCATIONS USING (COUNTRY_ID) WHERE LOCATION_ID IS NULL;
+
+COUNTRY_NAME                                                                                                                                                                                            
+----------------------------------------                                                                                                                                                                
+Germany                                                                                                                                                                                                 
+
+SQL> REM 2 DISPLAY ONLY EXTRA REGION_NAME (RIGHT JOIN , ON)
+SQL> 
+SQL> SELECT REGION_NAME
+  2  FROM COUNTRIES C
+  3  RIGHT JOIN REGIONS R ON C.REGION_ID = R.REGION_ID
+  4  WHERE C.COUNTRY_ID IS NULL;
+
+REGION_NAME                                                                                                                                                                                             
+-------------------------                                                                                                                                                                               
+Middle East and Africa                                                                                                                                                                                  
+Asia                                                                                                                                                                                                    
+
+SQL> SPOOL OFF

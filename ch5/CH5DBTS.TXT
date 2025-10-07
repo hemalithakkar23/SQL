@@ -1,0 +1,369 @@
+SQL> 
+SQL> 22 DISPLAY COUNT OF THOSE WHO WERE HIRED IN ODD MONTHS OF EVEN QUARTERS OR EVEN MONTHS OF ODD QUARTERS.
+SQL> 
+SQL> REM EVEN QUARTERS : 2 4 : MAY NOV
+SQL> 
+SQL> REM ODD QUARTERS : 1 3 : FEB AUG
+SQL> 
+SQL> REM MONTH NUMBERS : 2 5 8 11
+SQL> 
+SQL> REM EVEN QUARTERS : 2 4 : APR JUN    OCT DEC
+SQL> 
+SQL> 
+SQL> SELECT TO_CHAR(HIRE_DATE,'MON') , COUNT(*)
+  2  FROM EMPLOYEES
+  3  WHERE TO_CHAR(HIRE_DATE,'MON') IN ('APR','JUN','OCT','DEC','FEB','AUG')
+  4  GROUP BY TO_CHAR(HIRE_DATE,'MON')
+  5  ;
+
+TO_CHAR(HIRE   COUNT(*)                                                                                                                                                                                 
+------------ ----------                                                                                                                                                                                 
+OCT                   1                                                                                                                                                                                 
+FEB                   2                                                                                                                                                                                 
+AUG                   1                                                                                                                                                                                 
+JUN                   2                                                                                                                                                                                 
+
+SQL> REM DISPLAY MANAGER_ID WISE COUNT OF EMPLOYEES FOR IT_PROG (DECODE), COUNT OF EMPLOYEES FOR MANAGER 100 (CASE)
+SQL> 
+SQL> SELECT COUNT(DECODE(JOB_ID,'IT_PROG','*')) CNT_IT_PROG , COUNT(CASE MANAGER_ID WHEN 100 THEN '*' END) CNT_MGR_100 FROM EMPLOYEES;
+
+CNT_IT_PROG CNT_MGR_100                                                                                                                                                                                 
+----------- -----------                                                                                                                                                                                 
+          3           5                                                                                                                                                                                 
+
+SQL> SELECT MANAGER_ID , COUNT(DECODE(JOB_ID,'IT_PROG','*')) CNT_IT_PROG , COUNT(CASE MANAGER_ID WHEN 100 THEN '*' END) CNT_MGR_100 FROM EMPLOYEES
+  2  GROUP BY MANAGER_ID;
+
+MANAGER_ID CNT_IT_PROG CNT_MGR_100                                                                                                                                                                      
+---------- ----------- -----------                                                                                                                                                                      
+                     0           0                                                                                                                                                                      
+       100           0           5                                                                                                                                                                      
+       149           0           0                                                                                                                                                                      
+       205           0           0                                                                                                                                                                      
+       102           1           0                                                                                                                                                                      
+       201           0           0                                                                                                                                                                      
+       101           0           0                                                                                                                                                                      
+       124           0           0                                                                                                                                                                      
+       103           2           0                                                                                                                                                                      
+
+9 rows selected.
+
+SQL> REM 13 DISPLAY HIRE MONTH WISE, HIGHEST SALARY , LOWEST SALARY , DIFFERENCE OF HIGHEST AND LOWEST SALARY. DISPLAY ONLY THOSE WHERE DIFFERENCE IS HIGHER THAN 4000.
+SQL> 
+SQL> SELECT TO_CHAR(HIRE_DATE,'MON') , MAX(SALARY) , MIN(SALARY)
+  2  FROM EMPLOYEES
+  3  GROUP BY TO_CHAR(HIRE_DATE,'MON')
+  4  HAVING MAX(SALARY) - MIN(SALARY) > 4000;
+
+TO_CHAR(HIRE MAX(SALARY) MIN(SALARY)                                                                                                                                                                    
+------------ ----------- -----------                                                                                                                                                                    
+MAR                 8600        2600                                                                                                                                                                    
+SEP                17000        4400                                                                                                                                                                    
+FEB                13000        4200                                                                                                                                                                    
+JUL                24000        2500                                                                                                                                                                    
+JAN                17000        3100                                                                                                                                                                    
+MAY                11000        6000                                                                                                                                                                    
+
+6 rows selected.
+
+SQL> 
+SQL> SELECT TO_CHAR(HIRE_DATE,'MON') , MAX(SALARY) , MIN(SALARY) , MAX(SALARY) - MIN(SALARY) DIFF
+  2  
+SQL> SELECT TO_CHAR(HIRE_DATE,'MON') , MAX(SALARY) , MIN(SALARY) , MAX(SALARY) - MIN(SALARY) DIFF
+  2  FROM EMPLOYEES
+  3  GROUP BY TO_CHAR(HIRE_DATE,'MON')
+  4  HAVING MAX(SALARY) - MIN(SALARY) > 4000;
+
+TO_CHAR(HIRE MAX(SALARY) MIN(SALARY)       DIFF                                                                                                                                                         
+------------ ----------- ----------- ----------                                                                                                                                                         
+MAR                 8600        2600       6000                                                                                                                                                         
+SEP                17000        4400      12600                                                                                                                                                         
+FEB                13000        4200       8800                                                                                                                                                         
+JUL                24000        2500      21500                                                                                                                                                         
+JAN                17000        3100      13900                                                                                                                                                         
+MAY                11000        6000       5000                                                                                                                                                         
+
+6 rows selected.
+
+SQL> REM FROM EMPLOYEES
+SQL> GROUP BY TO_CHAR(HIRE_DATE,'MON')
+SP2-0734: unknown command beginning "GROUP BY T..." - rest of line ignored.
+SQL> HAVING MAX(SALARY) - MIN(SALARY) > 4000;
+SP2-0734: unknown command beginning "HAVING MAX..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> REM 12 DISPLAY HIRE QUARTER WISE , NO. OF EMPLOYEES HIRED. DISPLAY ONLY QUARTER 2 AND 4 INFO.
+SQL> 
+SQL> REM 14 SOLVE ABOVE QUESTION IN WHICH JOB_ID MUST BE DISPLAYED AS HEADING AND COUNT MUST BE DISPLAYED BELOW EACH JOB_ID
+SQL> 
+SQL> REM DISPLAY QTR WISE : DEPT_50_SUM_SAL   DEPT_90_SUM_SAL  OTHER_DEPT_SUM_SAL   ALL_DEPT_SUM_SAL
+SQL>    USING              DECODE            CASE I           CASE II              ANY OF YOUR CHOICE
+SP2-0734: unknown command beginning "USING     ..." - rest of line ignored.
+SQL> 
+SQL> /*
+SQL> 
+SQL> DISPLAY QTR WISE : DEPT_50_SUM_SAL   DEPT_90_SUM_SAL  OTHER_DEPT_SUM_SAL   ALL_DEPT_SUM_SAL
+SQL>    USING              DECODE            CASE I           CASE II              ANY OF YOUR CHOICE
+SQL> 
+SQL> */
+SQL> 
+SQL> 
+SQL> SELECT SUM(DECODE(DEPARTMENT_ID, 50 , SALARY)) DEPT_50_SUM_SAL,
+  2         SUM(CASE DEPARTMENT_ID WHEN 90 THEN SALARY END) DEPT_90_SUM_SAL,
+  3         SUM(CASE WHEN DEPARTMENT_ID NOT IN (50,90) THEN SALARY END) OTHER_DEPT_SUM_SAL,
+  4         SUM(SALARY) ALL_DEPT_SUM_SAL
+  5  FROM EMPLOYEES;
+
+DEPT_50_SUM_SAL DEPT_90_SUM_SAL OTHER_DEPT_SUM_SAL ALL_DEPT_SUM_SAL                                                                                                                                     
+--------------- --------------- ------------------ ----------------                                                                                                                                     
+          17500           58000              93000           175500                                                                                                                                     
+
+SQL> /*
+SQL> 
+SQL> 2. DISPLAY HIGHEST SALARY PAID TO THOSE WHO HAVE JOINED IN MONTHS WHICH HAS 31 DAYS.
+SQL> 3. DISPLAY COUNT OF THOSE WHO WERE HIRED IN 2nd MONTH OF ANY QUARTER.
+SQL> 
+SQL> */
+SQL> 
+SQL> 2. DISPLAY HIGHEST SALARY PAID TO THOSE WHO HAVE JOINED IN MONTHS WHICH HAS 31 DAYS.
+SP2-0734: unknown command beginning "2. DISPLAY..." - rest of line ignored.
+SQL> 
+SQL> REM 2. DISPLAY HIGHEST SALARY PAID TO THOSE WHO HAVE JOINED IN MONTHS WHICH HAS 31 DAYS.
+SQL> 
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES WHERE TO_CHAR(LAST_DAY(HIRE_DATE),1,2) = 31;
+SELECT MAX(SALARY) FROM EMPLOYEES WHERE TO_CHAR(LAST_DAY(HIRE_DATE),1,2) = 31
+                                                                    *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected DATE got NUMBER 
+
+
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES WHERE TO_CHAR(LAST_DAY(HIRE_DATE),'DD') = 31;
+
+MAX(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      24000                                                                                                                                                                                             
+
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES WHERE SUBSTR(LAST_DAY(HIRE_DATE),1,2) = 31;
+
+MAX(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      24000                                                                                                                                                                                             
+
+SQL> REM 3. DISPLAY COUNT OF THOSE WHO WERE HIRED IN 2nd MONTH OF ANY QUARTER.
+SQL> 
+SQL> REM 2 5 8 11
+SQL> 
+SQL> SELECT TO_CHAR(HIRE_DATE,'MM') , COUNT(*)
+  2  FROM EMPLOYEES
+  3  GROUP BY TO_CHAR(HIRE_DATE,'MM')
+  4  
+SQL> 
+SQL> SELECT TO_CHAR(HIRE_DATE,'MM') , COUNT(*)
+  2  FROM EMPLOYEES
+  3  WHERE TO_CHAR(HIRE_DATE,'MM') IN (2,5,8,11)
+  4  GROUP BY TO_CHAR(HIRE_DATE,'MM')
+  5  ORDER BY 1;
+
+TO   COUNT(*)                                                                                                                                                                                           
+-- ----------                                                                                                                                                                                           
+02          2                                                                                                                                                                                           
+05          3                                                                                                                                                                                           
+08          1                                                                                                                                                                                           
+11          1                                                                                                                                                                                           
+
+SQL> /*
+SQL> 
+SQL> 3 DISPLAY HIGHEST SALARY OF EMPLOYEES FOR MANAGER_ID 100 , 124 , 149 (CROSS TAB REPORT)
+SQL> 4 DISPLAY DEPARTMENT_ID WISE AVERAGE SALARY FOR IT_PROG , SA_REP , AD_VP , ST_CLERK (MATRIX REPORT)
+SQL> 5 DISPLAY MANAGER_ID WISE TOTAL OF SALARY FOR DEPARTMENT_ID 50,60,80,90 (PIVOTE REPORT)
+SQL> 
+SQL> 
+SQL> */
+SQL> 
+SQL> REM 3 DISPLAY HIGHEST SALARY OF EMPLOYEES FOR MANAGER_ID 100 , 124 , 149 (CROSS TAB REPORT)
+SQL> 
+SQL> SELECT MAX(DECODE(MANAGER_ID,100,SALARY)) MGR_100_MAX_SAL,
+  2         MAX(DECODE(MANAGER_ID,124,SALARY)) MGR_124_MAX_SAL,
+  3         MAX(DECODE(MANAGER_ID,149,SALARY)) MGR_149_MAX_SAL
+  4  FROM EMPLOYEES;
+
+MGR_100_MAX_SAL MGR_124_MAX_SAL MGR_149_MAX_SAL                                                                                                                                                         
+--------------- --------------- ---------------                                                                                                                                                         
+          17000            3500           11000                                                                                                                                                         
+
+SQL> REM 4 DISPLAY DEPARTMENT_ID WISE AVERAGE SALARY FOR IT_PROG , SA_REP , AD_VP , ST_CLERK (MATRIX REPORT)
+SQL> 
+SQL> 5 DISPLAY MANAGER_ID WISE TOTAL OF SALARY FOR DEPARTMENT_ID 50,60,80,90 (PIVOTE REPORT)
+SQL> 
+SQL> REM 17 DISPLAY COUNT OF FIRST_NAME WITH ZERO 'e' , 1 OCCURRENCE OF 'e' , 2 OCCURRENCES OF 'e' : CNT_0_E  CNT_1_E  CNT_2_E
+
+SELECT COUNT(CASE WHEN LENGTH(FIRST_NAME)- LENGTH(TRANSLATE(UPPER(FIRST_NAME),'#E','#'))=0  THEN '*' END ) CNT_0_E,
+ COUNT (CASE WHEN LENGTH(FIRST_NAME)- LENGTH(TRANSLATE(UPPER(FIRST_NAME),'#E','#'))=1 THEN '*' END) CNT_1_E,
+ COUNT (CASE WHEN LENGTH(FIRST_NAME)- LENGTH(TRANSLATE(UPPER(FIRST_NAME),'#E','#'))=2 THEN '*' END) CNT_2_E
+FROM EMPLOYEES;
+
+SQL> 
+SQL> SELECT COUNT(CASE WHEN INSTR(LOWER(FIRST_NAME),'e') <> 0 THEN '*' END),
+  2         COUNT(CASE WHEN INSTR(LOWER(FIRST_NAME),'e') <> 0 THEN '*' END),
+  3  
+SQL> 
+SQL> SELECT COUNT(CASE WHEN INSTR(LOWER(FIRST_NAME),'e') = 0 THEN '*' END) CNT_0_E,
+  2         COUNT(CASE WHEN INSTR(LOWER(FIRST_NAME),'e') <> 0 AND INSTR(LOWER(FIRST_NAME),'e',1,2) = 0 THEN '*' END) CNT_1_E,
+  3         COUNT(CASE WHEN INSTR(LOWER(FIRST_NAME),'e',1,2) != 0 THEN '*' END) CNT_2_E
+  4  FROM EMPLOYEES;
+
+   CNT_0_E    CNT_1_E    CNT_2_E                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+         6          5          9                                                                                                                                                                        
+
+SQL> SELECT COUNT(CASE WHEN LENGTH(FIRST_NAME) - LENGTH(TRANSLATE(LOWER(FIRST_NAME),'#e','#')) = 0 THEN '*' END) CNT_0_E,
+  2         COUNT(CASE WHEN LENGTH(FIRST_NAME) - LENGTH(TRANSLATE(LOWER(FIRST_NAME),'#e','#')) = 1 THEN '*' END) CNT_1_E,
+  3         COUNT(CASE WHEN LENGTH(FIRST_NAME) - LENGTH(TRANSLATE(LOWER(FIRST_NAME),'#e','#')) = 2 THEN '*' END) CNT_2_E
+  4  FROM EMPLOYEES;
+
+   CNT_0_E    CNT_1_E    CNT_2_E                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+         6          5          9                                                                                                                                                                        
+
+SQL> REM 18 DISPLAY COUNT OF VOWELS IN LAST_NAME SPELLING (COUNT BOTH CAPITAL OR LOWER) : CNT_A   CNT_E   CNT_I   CNT_O   CNT_U
+SQL> 
+SQL> SELECT SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWERTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_A FROM EMPLOYEES;
+
+     CNT_A                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        15                                                                                                                                                                                              
+
+SQL> SELECT SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWERTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_A.
+  2  
+SQL> SELECT SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWERTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_A,
+  2         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_E,
+  3         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEOPSDFGHJKLZXCVBNM','#'))) CNT_I,
+  4         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEIPSDFGHJKLZXCVBNM','#'))) CNT_O,
+  5         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYOEIPSDFGHJKLZXCVBNM','#'))) CNT_U
+  6  FROM EMPLOYEES;
+
+     CNT_A      CNT_E      CNT_I      CNT_O      CNT_U                                                                                                                                                  
+---------- ---------- ---------- ---------- ----------                                                                                                                                                  
+        15         10          7          9          3                                                                                                                                                  
+
+SQL> SELECT SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWERTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_A,
+  2         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_E,
+  3         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEOPSDFGHJKLZXCVBNM','#'))) CNT_I,
+  4         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEIPSDFGHJKLZXCVBNM','#'))) CNT_O,
+  5         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYOEIPSDFGHJKLZXCVBNM','#'))) CNT_U
+  6  FROM EMPLOYEES;
+
+     CNT_A      CNT_E      CNT_I      CNT_O      CNT_U                                                                                                                                                  
+---------- ---------- ---------- ---------- ----------                                                                                                                                                  
+        15         10          7          9          3                                                                                                                                                  
+
+SQL> SELECT SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWERTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_A,
+  2         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_E,
+  3         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEOPSDFGHJKLZXCVBNM','#'))) CNT_I,
+  4         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEIPSDFGHJKLZXCVBNM','#'))) CNT_O,
+  5         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYOEIPSDFGHJKLZXCVBNM','#'))) CNT_U
+  6  FROM EMPLOYEES
+  7  WHERE DEPARTEMNT_ID IN 50;
+WHERE DEPARTEMNT_ID IN 50
+      *
+ERROR at line 7:
+ORA-00904: "DEPARTEMNT_ID": invalid identifier 
+
+
+SQL> SELECT SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWERTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_A,
+  2         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUIOPSDFGHJKLZXCVBNM','#'))) CNT_E,
+  3         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEOPSDFGHJKLZXCVBNM','#'))) CNT_I,
+  4         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYUEIPSDFGHJKLZXCVBNM','#'))) CNT_O,
+  5         SUM(LENGTH(TRANSLATE(UPPER(LAST_NAME),'#QWARTYOEIPSDFGHJKLZXCVBNM','#'))) CNT_U
+  6  FROM EMPLOYEES
+  7  WHERE DEPARTMENT_ID IN 50;
+
+     CNT_A      CNT_E      CNT_I      CNT_O      CNT_U                                                                                                                                                  
+---------- ---------- ---------- ---------- ----------                                                                                                                                                  
+         5          1          1          3          1                                                                                                                                                  
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES
+  2  WHERE DEPARTMENT_ID IN 50;
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+Mourgos                                                                                                                                                                                                 
+Rajs                                                                                                                                                                                                    
+Davies                                                                                                                                                                                                  
+Matos                                                                                                                                                                                                   
+Vargas                                                                                                                                                                                                  
+
+SQL> REM 22 CNT JOB ID : 1. _ FOLLOWED BY P...  2. _ FOLLOWED BY ANY CHARACTER, FOLLOWED BY P 3. _ FOLLWED BY TWO CHARACTERS, FOLLOWED BY P
+SQL> 
+SQL> REM %_P%    %_?P%  %_??P%
+SQL> 
+SQL> 
+SQL> SELECT COUNT(CASE WHEN JOB_ID LIKE '%\_P%' ESCAPE '\' THEN '*' END) CNT_P FROM EMPLOYEES;
+
+     CNT_P                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         4                                                                                                                                                                                              
+
+SQL> SELECT COUNT(CASE WHEN JOB_ID LIKE '%\_P%' ESCAPE '\' THEN '*' END) CNT_P ,
+  2         COUNT(CASE WHEN JOB_ID LIKE '%\__P%' ESCAPE '\' THEN '*' END) "CNT_?P" ,
+  3         COUNT(CASE WHEN JOB_ID LIKE '%\___P%' ESCAPE '\' THEN '*' END) "CNT_??P"
+  4  FROM EMPLOYEES;
+
+     CNT_P     CNT_?P    CNT_??P                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+         4          2          4                                                                                                                                                                        
+
+SQL> SELECT * FROM MPSLIKETBL;
+
+NAME                                                                                                                                                                                                    
+------------------------------                                                                                                                                                                          
+AMIT PATEL                                                                                                                                                                                              
+AMIT_PATEL                                                                                                                                                                                              
+AMIT%PATEL                                                                                                                                                                                              
+AMIT_%PATEL                                                                                                                                                                                             
+AMIT  PATEL                                                                                                                                                                                             
+TAPAN PATEL                                                                                                                                                                                             
+PARMAR TARAK                                                                                                                                                                                            
+AMIT^PATEL                                                                                                                                                                                              
+AMIT_^PATEL                                                                                                                                                                                             
+AMIT^%PATEL                                                                                                                                                                                             
+
+10 rows selected.
+
+SQL> SELECT JOB_ID FROM EMPLOYEES;
+
+JOB_ID                                                                                                                                                                                                  
+----------                                                                                                                                                                                              
+AD_PRES                                                                                                                                                                                                 
+AD_VP                                                                                                                                                                                                   
+AD_VP                                                                                                                                                                                                   
+IT_PROG                                                                                                                                                                                                 
+IT_PROG                                                                                                                                                                                                 
+IT_PROG                                                                                                                                                                                                 
+ST_MAN                                                                                                                                                                                                  
+ST_CLERK                                                                                                                                                                                                
+ST_CLERK                                                                                                                                                                                                
+ST_CLERK                                                                                                                                                                                                
+ST_CLERK                                                                                                                                                                                                
+SA_MAN                                                                                                                                                                                                  
+SA_REP                                                                                                                                                                                                  
+SA_REP                                                                                                                                                                                                  
+SA_REP                                                                                                                                                                                                  
+AD_ASST                                                                                                                                                                                                 
+MK_MAN                                                                                                                                                                                                  
+MK_REP                                                                                                                                                                                                  
+AC_MGR                                                                                                                                                                                                  
+AC_ACCOUNT                                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT COUNT(CASE WHEN JOB_ID LIKE '%\_P%' ESCAPE '\' THEN '*' END) CNT_P ,
+  2         COUNT(CASE WHEN JOB_ID LIKE '%\__P%' ESCAPE '\' THEN '*' END) "CNT_?P" ,
+  3         COUNT(CASE WHEN JOB_ID LIKE '%\___P%' ESCAPE '\' THEN '*' END) "CNT_??P"
+  4  FROM EMPLOYEES;
+
+     CNT_P     CNT_?P    CNT_??P                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+         4          2          4                                                                                                                                                                        
+
+SQL> SPOOL OFF

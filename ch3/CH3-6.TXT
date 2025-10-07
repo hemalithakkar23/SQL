@@ -1,0 +1,891 @@
+SQL> 
+SQL> REM 1 DISPLAY THOSE FIRST_NAME WHICH HAS e ON 3rd POSITION
+SQL> 
+SQL> REM 2 DISPLAY THOSE LAST_NAME WHICH HAS a ON 3rd LAST POSITION
+SQL> 
+SQL> REM 3 DISPLAY THOSE LAST_NAME WHICH HAS N ON LAST POSITION
+SQL> 
+SQL> REM 4 DISPLAY THOSE HIRE_DATE WHICH COMES BEFORE 10th
+SQL> 
+SQL> REM 1 LIKE 2 INSTR ( IN 'WHERE' CLAUSE )
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE FIRST_NAME WHICH HAS e ON 3rd POSITION
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE FIRST_NAME LIKE '__e%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Trenna                                                                                                                                                                                                  
+Eleni                                                                                                                                                                                                   
+Shelley                                                                                                                                                                                                 
+
+6 rows selected.
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE INSTR(FIRST_NAME,'e',3) = 3;
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Alexander                                                                                                                                                                                               
+Trenna                                                                                                                                                                                                  
+Eleni                                                                                                                                                                                                   
+Shelley                                                                                                                                                                                                 
+
+6 rows selected.
+
+SQL> REM 2 DISPLAY THOSE LAST_NAME WHICH HAS a ON 3rd LAST POSITION
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '%e__';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+Hartstein                                                                                                                                                                                               
+Gietz                                                                                                                                                                                                   
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE INSTR(LAST_NAME,'e',-3) = LENGTH(LAST_NAME)-2;
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+Hartstein                                                                                                                                                                                               
+Gietz                                                                                                                                                                                                   
+
+SQL> REM 3 DISPLAY THOSE LAST_NAME WHICH HAS N ON LAST POSITION
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LAST_NAME LIKE '%n';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+De Haan                                                                                                                                                                                                 
+Whalen                                                                                                                                                                                                  
+Hartstein                                                                                                                                                                                               
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE INSTR(LAST_NAME,'n') = LENGTH(LAST_NAME);
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+De Haan                                                                                                                                                                                                 
+Whalen                                                                                                                                                                                                  
+Hartstein                                                                                                                                                                                               
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE INSTR(LAST_NAME,'n',-1) = LENGTH(LAST_NAME);
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+De Haan                                                                                                                                                                                                 
+Whalen                                                                                                                                                                                                  
+Hartstein                                                                                                                                                                                               
+
+SQL> REM 3 DISPLAY THOSE EMAIL WHICH HAS N ON LAST POSITION
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE EMAIL LIKE '%N';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+De Haan                                                                                                                                                                                                 
+Whalen                                                                                                                                                                                                  
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE INSTR(EMAIL,'N',-1) = LENGTH(EMAIL);
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+De Haan                                                                                                                                                                                                 
+Whalen                                                                                                                                                                                                  
+
+SQL> SELECT EMAIL FROM EMPLOYEES WHERE EMAIL LIKE '%N';
+
+EMAIL                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+LDEHAAN                                                                                                                                                                                                 
+JWHALEN                                                                                                                                                                                                 
+
+SQL> SELECT EMAIL FROM EMPLOYEES WHERE INSTR(EMAIL,'N',-1) = LENGTH(EMAIL);
+
+EMAIL                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+LDEHAAN                                                                                                                                                                                                 
+JWHALEN                                                                                                                                                                                                 
+
+SQL> REM 4 DISPLAY THOSE HIRE_DATE WHICH COMES BEFORE 10th
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE HIRE_DATE LIKE '0%';
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE INSTR(HIRE_DATE,'0') = 1;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME      LAST_NAME       EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                     
+----------- --------------- --------------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                     
+        100 Steven          King            SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                     
+        101 Neena           Kochhar         NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                     
+        102 Lex             De Haan         LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                     
+        103 Alexander       Hunold          AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                     
+        104 Bruce           Ernst           BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                     
+        107 Diana           Lorentz         DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                     
+        124 Kevin           Mourgos         KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                     
+        141 Trenna          Rajs            TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                     
+        142 Curtis          Davies          CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                     
+        143 Randall         Matos           RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                     
+        144 Peter           Vargas          PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                     
+        149 Eleni           Zlotkey         EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                     
+        174 Ellen           Abel                       011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                     
+        176 Jonathon        Taylor          JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                     
+        178 Kimerely        Grant           KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                   
+        200 Jennifer        Whalen          JWHALEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                     
+        201 Michael         Hartstein       MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                     
+        202 Pat             Fay             PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                     
+        205 Shelley         Higgins         SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                     
+        206 William         Gietz           WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                     
+
+20 rows selected.
+
+SQL> REM 1 DISPLAY THOSE WHOSE FIRST_NAME SPELLING HAS e AS IT'S LEFT MOST VOWEL.
+SQL> 
+SQL> REM 2 DISPLAY THOSE WHOSE LAST_NAME SPELLING HAS o AS IT'S RIGHT MOST VOWEL.
+SQL> 
+SQL> REM 3 DISPLAY ALL EXCEPT THOSE WHOSE LAST_NAME SPELLING 3 VOWELS.
+SQL> 
+SQL> 
+SQL> REM 1 DISPLAY THOSE WHOSE FIRST_NAME SPELLING HAS e AS IT'S LEFT MOST VOWEL.
+SQL> 
+SQL> SELECT FIRST_NAME , LOWER(FIRST_NAME) FROM EMPLOYEES;
+
+FIRST_NAME      LOWER(FIRST_NAM                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+Steven          steven                                                                                                                                                                                  
+Neena           neena                                                                                                                                                                                   
+Lex             lex                                                                                                                                                                                     
+Alexander       alexander                                                                                                                                                                               
+Bruce           bruce                                                                                                                                                                                   
+Diana           diana                                                                                                                                                                                   
+Kevin           kevin                                                                                                                                                                                   
+Trenna          trenna                                                                                                                                                                                  
+Curtis          curtis                                                                                                                                                                                  
+Randall         randall                                                                                                                                                                                 
+Peter           peter                                                                                                                                                                                   
+Eleni           eleni                                                                                                                                                                                   
+Ellen           ellen                                                                                                                                                                                   
+Jonathon        jonathon                                                                                                                                                                                
+Kimerely        kimerely                                                                                                                                                                                
+Jennifer        jennifer                                                                                                                                                                                
+Michael         michael                                                                                                                                                                                 
+Pat             pat                                                                                                                                                                                     
+Shelley         shelley                                                                                                                                                                                 
+William         william                                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME , LTRIM(LOWER(FIRST_NAME),'qwrtypsdfghjklzxcvbnm') FROM EMPLOYEES;
+
+FIRST_NAME      LTRIM(LOWER(FIR                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+Steven          even                                                                                                                                                                                    
+Neena           eena                                                                                                                                                                                    
+Lex             ex                                                                                                                                                                                      
+Alexander       alexander                                                                                                                                                                               
+Bruce           uce                                                                                                                                                                                     
+Diana           iana                                                                                                                                                                                    
+Kevin           evin                                                                                                                                                                                    
+Trenna          enna                                                                                                                                                                                    
+Curtis          urtis                                                                                                                                                                                   
+Randall         andall                                                                                                                                                                                  
+Peter           eter                                                                                                                                                                                    
+Eleni           eleni                                                                                                                                                                                   
+Ellen           ellen                                                                                                                                                                                   
+Jonathon        onathon                                                                                                                                                                                 
+Kimerely        imerely                                                                                                                                                                                 
+Jennifer        ennifer                                                                                                                                                                                 
+Michael         ichael                                                                                                                                                                                  
+Pat             at                                                                                                                                                                                      
+Shelley         elley                                                                                                                                                                                   
+William         illiam                                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE LTRIM(LOWER(FIRST_NAME),'qwrtypsdfghjklzxcvbnm') LIKE 'e%';
+
+FIRST_NAME                                                                                                                                                                                              
+---------------                                                                                                                                                                                         
+Steven                                                                                                                                                                                                  
+Neena                                                                                                                                                                                                   
+Lex                                                                                                                                                                                                     
+Kevin                                                                                                                                                                                                   
+Trenna                                                                                                                                                                                                  
+Peter                                                                                                                                                                                                   
+Eleni                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Jennifer                                                                                                                                                                                                
+Shelley                                                                                                                                                                                                 
+
+10 rows selected.
+
+SQL> REM 2 DISPLAY THOSE WHOSE LAST_NAME SPELLING HAS o AS IT'S RIGHT MOST VOWEL.
+SQL> 
+SQL> SELECT LAST_NAME , LOWER(LAST_NAME) FROM EMPLOYEES;
+
+LAST_NAME       LOWER(LAST_NAME                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+King            king                                                                                                                                                                                    
+Kochhar         kochhar                                                                                                                                                                                 
+De Haan         de haan                                                                                                                                                                                 
+Hunold          hunold                                                                                                                                                                                  
+Ernst           ernst                                                                                                                                                                                   
+Lorentz         lorentz                                                                                                                                                                                 
+Mourgos         mourgos                                                                                                                                                                                 
+Rajs            rajs                                                                                                                                                                                    
+Davies          davies                                                                                                                                                                                  
+Matos           matos                                                                                                                                                                                   
+Vargas          vargas                                                                                                                                                                                  
+Zlotkey         zlotkey                                                                                                                                                                                 
+Abel            abel                                                                                                                                                                                    
+Taylor          taylor                                                                                                                                                                                  
+Grant           grant                                                                                                                                                                                   
+Whalen          whalen                                                                                                                                                                                  
+Hartstein       hartstein                                                                                                                                                                               
+Fay             fay                                                                                                                                                                                     
+Higgins         higgins                                                                                                                                                                                 
+Gietz           gietz                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME , RTRIM(LOWER(LAST_NAME),'qwrtypsdfghjklzxcvbnm') FROM EMPLOYEES;
+
+LAST_NAME       RTRIM(LOWER(LAS                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+King            ki                                                                                                                                                                                      
+Kochhar         kochha                                                                                                                                                                                  
+De Haan         de haa                                                                                                                                                                                  
+Hunold          huno                                                                                                                                                                                    
+Ernst           e                                                                                                                                                                                       
+Lorentz         lore                                                                                                                                                                                    
+Mourgos         mourgo                                                                                                                                                                                  
+Rajs            ra                                                                                                                                                                                      
+Davies          davie                                                                                                                                                                                   
+Matos           mato                                                                                                                                                                                    
+Vargas          varga                                                                                                                                                                                   
+Zlotkey         zlotke                                                                                                                                                                                  
+Abel            abe                                                                                                                                                                                     
+Taylor          taylo                                                                                                                                                                                   
+Grant           gra                                                                                                                                                                                     
+Whalen          whale                                                                                                                                                                                   
+Hartstein       hartstei                                                                                                                                                                                
+Fay             fa                                                                                                                                                                                      
+Higgins         higgi                                                                                                                                                                                   
+Gietz           gie                                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE RTRIM(LOWER(LAST_NAME),'qwrtypsdfghjklzxcvbnm') LIKE '%o';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+Hunold                                                                                                                                                                                                  
+Mourgos                                                                                                                                                                                                 
+Matos                                                                                                                                                                                                   
+Taylor                                                                                                                                                                                                  
+
+SQL> REM 3 DISPLAY ALL EXCEPT THOSE WHOSE LAST_NAME SPELLING 3 VOWELS.
+SQL> 
+SQL> 
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE RTRIM(LTRIM(LOWER(LAST_NAME),'qwrtypsdfghjklzxcvbnm'),'qwrtypsdfghjklmnbvcxz') NOT LIKE '%a%e%i%o%u';
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+King                                                                                                                                                                                                    
+Kochhar                                                                                                                                                                                                 
+De Haan                                                                                                                                                                                                 
+Hunold                                                                                                                                                                                                  
+Ernst                                                                                                                                                                                                   
+Lorentz                                                                                                                                                                                                 
+Mourgos                                                                                                                                                                                                 
+Rajs                                                                                                                                                                                                    
+Davies                                                                                                                                                                                                  
+Matos                                                                                                                                                                                                   
+Vargas                                                                                                                                                                                                  
+Zlotkey                                                                                                                                                                                                 
+Abel                                                                                                                                                                                                    
+Taylor                                                                                                                                                                                                  
+Grant                                                                                                                                                                                                   
+Whalen                                                                                                                                                                                                  
+Hartstein                                                                                                                                                                                               
+Fay                                                                                                                                                                                                     
+Higgins                                                                                                                                                                                                 
+Gietz                                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME , LOWER(LAST_NAME) FROM EMPLOYEES;
+
+LAST_NAME       LOWER(LAST_NAME                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+King            king                                                                                                                                                                                    
+Kochhar         kochhar                                                                                                                                                                                 
+De Haan         de haan                                                                                                                                                                                 
+Hunold          hunold                                                                                                                                                                                  
+Ernst           ernst                                                                                                                                                                                   
+Lorentz         lorentz                                                                                                                                                                                 
+Mourgos         mourgos                                                                                                                                                                                 
+Rajs            rajs                                                                                                                                                                                    
+Davies          davies                                                                                                                                                                                  
+Matos           matos                                                                                                                                                                                   
+Vargas          vargas                                                                                                                                                                                  
+Zlotkey         zlotkey                                                                                                                                                                                 
+Abel            abel                                                                                                                                                                                    
+Taylor          taylor                                                                                                                                                                                  
+Grant           grant                                                                                                                                                                                   
+Whalen          whalen                                                                                                                                                                                  
+Hartstein       hartstein                                                                                                                                                                               
+Fay             fay                                                                                                                                                                                     
+Higgins         higgins                                                                                                                                                                                 
+Gietz           gietz                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME , TRANSLATE(LOWER(LAST_NAME),'#qwrtypsdfghjklzxcvbnm','#') FROM EMPLOYEES;
+
+LAST_NAME       TRANSLATE(LOWER(LAST_NAME),'#QWRTYPSDFGHJKLZXCVBNM','#')                                                                                                                                
+--------------- ------------------------------------------------------------                                                                                                                            
+King            i                                                                                                                                                                                       
+Kochhar         oa                                                                                                                                                                                      
+De Haan         e aa                                                                                                                                                                                    
+Hunold          uo                                                                                                                                                                                      
+Ernst           e                                                                                                                                                                                       
+Lorentz         oe                                                                                                                                                                                      
+Mourgos         ouo                                                                                                                                                                                     
+Rajs            a                                                                                                                                                                                       
+Davies          aie                                                                                                                                                                                     
+Matos           ao                                                                                                                                                                                      
+Vargas          aa                                                                                                                                                                                      
+Zlotkey         oe                                                                                                                                                                                      
+Abel            ae                                                                                                                                                                                      
+Taylor          ao                                                                                                                                                                                      
+Grant           a                                                                                                                                                                                       
+Whalen          ae                                                                                                                                                                                      
+Hartstein       aei                                                                                                                                                                                     
+Fay             a                                                                                                                                                                                       
+Higgins         ii                                                                                                                                                                                      
+Gietz           ie                                                                                                                                                                                      
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME , TRANSLATE(LOWER(LAST_NAME),'# qwrtypsdfghjklzxcvbnm','#') FROM EMPLOYEES;
+
+LAST_NAME       TRANSLATE(LOWER(LAST_NAME),'#QWRTYPSDFGHJKLZXCVBNM','#')                                                                                                                                
+--------------- ------------------------------------------------------------                                                                                                                            
+King            i                                                                                                                                                                                       
+Kochhar         oa                                                                                                                                                                                      
+De Haan         eaa                                                                                                                                                                                     
+Hunold          uo                                                                                                                                                                                      
+Ernst           e                                                                                                                                                                                       
+Lorentz         oe                                                                                                                                                                                      
+Mourgos         ouo                                                                                                                                                                                     
+Rajs            a                                                                                                                                                                                       
+Davies          aie                                                                                                                                                                                     
+Matos           ao                                                                                                                                                                                      
+Vargas          aa                                                                                                                                                                                      
+Zlotkey         oe                                                                                                                                                                                      
+Abel            ae                                                                                                                                                                                      
+Taylor          ao                                                                                                                                                                                      
+Grant           a                                                                                                                                                                                       
+Whalen          ae                                                                                                                                                                                      
+Hartstein       aei                                                                                                                                                                                     
+Fay             a                                                                                                                                                                                       
+Higgins         ii                                                                                                                                                                                      
+Gietz           ie                                                                                                                                                                                      
+
+20 rows selected.
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LENGHT(TRANSLATE(LOWER(LAST_NAME),'# qwrtypsdfghjklzxcvbnm','#')) <> 3;
+SELECT LAST_NAME FROM EMPLOYEES WHERE LENGHT(TRANSLATE(LOWER(LAST_NAME),'# qwrtypsdfghjklzxcvbnm','#')) <> 3
+                                      *
+ERROR at line 1:
+ORA-00904: "LENGHT": invalid identifier 
+
+
+SQL> SELECT LAST_NAME FROM EMPLOYEES WHERE LENGTH(TRANSLATE(LOWER(LAST_NAME),'# qwrtypsdfghjklzxcvbnm','#')) <> 3;
+
+LAST_NAME                                                                                                                                                                                               
+---------------                                                                                                                                                                                         
+King                                                                                                                                                                                                    
+Kochhar                                                                                                                                                                                                 
+Hunold                                                                                                                                                                                                  
+Ernst                                                                                                                                                                                                   
+Lorentz                                                                                                                                                                                                 
+Rajs                                                                                                                                                                                                    
+Matos                                                                                                                                                                                                   
+Vargas                                                                                                                                                                                                  
+Zlotkey                                                                                                                                                                                                 
+Abel                                                                                                                                                                                                    
+Taylor                                                                                                                                                                                                  
+Grant                                                                                                                                                                                                   
+Whalen                                                                                                                                                                                                  
+Fay                                                                                                                                                                                                     
+Higgins                                                                                                                                                                                                 
+Gietz                                                                                                                                                                                                   
+
+16 rows selected.
+
+SQL> REM NUMBER FUNCTIONS :
+SQL> 
+SQL> REM LIST OF NUMBER FUNCTIONS : POWER SQRT   MOD    FLOOR CEIL   TRUNC ROUND
+SQL> 
+SQL> 
+SQL> REM POWER : IT IS USED TO CALCULATE RAISED TO OR ROOT VALUE.
+SQL> 
+SQL> SELECT POWER(9,2) , POWER(9,1/2) FROM DUAL;
+
+POWER(9,2) POWER(9,1/2)                                                                                                                                                                                 
+---------- ------------                                                                                                                                                                                 
+        81            3                                                                                                                                                                                 
+
+SQL> SELECT POWER(8,3) , POWER(8,1/3) FROM DUAL;
+
+POWER(8,3) POWER(8,1/3)                                                                                                                                                                                 
+---------- ------------                                                                                                                                                                                 
+       512            2                                                                                                                                                                                 
+
+SQL> SELECT POWER(4.12,2) FROM DUAL;
+
+POWER(4.12,2)                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+      16.9744                                                                                                                                                                                           
+
+SQL> SELECT POWER(4,2.67) FROM DUAL;
+
+POWER(4,2.67)                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+    40.504211                                                                                                                                                                                           
+
+SQL> SELECT POWER(4.6534,2.67) FROM DUAL;
+
+POWER(4.6534,2.67)                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+        60.6662191                                                                                                                                                                                      
+
+SQL> SELECT POWER(-4,2) FROM DUAL;
+
+POWER(-4,2)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+         16                                                                                                                                                                                             
+
+SQL> SELECT POWER(-4,3) FROM DUAL;
+
+POWER(-4,3)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+        -64                                                                                                                                                                                             
+
+SQL> SELECT POWER(-4,4) FROM DUAL;
+
+POWER(-4,4)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+        256                                                                                                                                                                                             
+
+SQL> SELECT POWER(-4,5) FROM DUAL;
+
+POWER(-4,5)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      -1024                                                                                                                                                                                             
+
+SQL> SELECT POWER(-4,1/2) FROM DUAL;
+SELECT POWER(-4,1/2) FROM DUAL
+             *
+ERROR at line 1:
+ORA-01428: argument '-4' is out of range 
+
+
+SQL> SELECT POWER(POWER(2,2),3) FROM DUAL;
+
+POWER(POWER(2,2),3)                                                                                                                                                                                     
+-------------------                                                                                                                                                                                     
+                 64                                                                                                                                                                                     
+
+SQL> SELECT POWER(POWER(9,1/2),POWER(4,.5)) FROM DUAL;
+
+POWER(POWER(9,1/2),POWER(4,.5))                                                                                                                                                                         
+-------------------------------                                                                                                                                                                         
+                              9                                                                                                                                                                         
+
+SQL> REM SQRT : TO FIND SQUARE ROOT OF NUMBER
+SQL> 
+SQL> SELECT SQRT(16) FROM DUAL;
+
+  SQRT(16)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         4                                                                                                                                                                                              
+
+SQL> SELECT SQRT(17) FROM DUAL;
+
+  SQRT(17)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+4.12310563                                                                                                                                                                                              
+
+SQL> SELECT SQRT(17.78) FROM DUAL;
+
+SQRT(17.78)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+ 4.21663373                                                                                                                                                                                             
+
+SQL> SELECT SQRT(-17.78) FROM DUAL;
+SELECT SQRT(-17.78) FROM DUAL
+            *
+ERROR at line 1:
+ORA-01428: argument '-17.78' is out of range 
+
+
+SQL> SELECT SQRT(SQRT(16)) FROM DUAL;
+
+SQRT(SQRT(16))                                                                                                                                                                                          
+--------------                                                                                                                                                                                          
+             2                                                                                                                                                                                          
+
+SQL> SELECT POWER(SQRT(25),POWER(27,1/3)) FROM DUAL;
+
+POWER(SQRT(25),POWER(27,1/3))                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                          125                                                                                                                                                                           
+
+SQL> REM MOD : TO FIND REMAINDER.
+SQL> 
+SQL> SELECT MOD(15,4) FROM DUAL;
+
+ MOD(15,4)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         3                                                                                                                                                                                              
+
+SQL> SELECT MOD(15,6) FROM DUAL;
+
+ MOD(15,6)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         3                                                                                                                                                                                              
+
+SQL> SELECT MOD(15,5) FROM DUAL;
+
+ MOD(15,5)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         0                                                                                                                                                                                              
+
+SQL> SELECT SALARY FROM EMPLOYEES;
+
+    SALARY                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+     24000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+      9000                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+      4200                                                                                                                                                                                              
+      5800                                                                                                                                                                                              
+      3500                                                                                                                                                                                              
+      3100                                                                                                                                                                                              
+      2600                                                                                                                                                                                              
+      2500                                                                                                                                                                                              
+     10500                                                                                                                                                                                              
+     11000                                                                                                                                                                                              
+      8600                                                                                                                                                                                              
+      7000                                                                                                                                                                                              
+      4400                                                                                                                                                                                              
+     13000                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+     12000                                                                                                                                                                                              
+      8300                                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT EMPLOYEE_ID FROM EMPLOYEES;
+
+EMPLOYEE_ID                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+        100                                                                                                                                                                                             
+        101                                                                                                                                                                                             
+        102                                                                                                                                                                                             
+        103                                                                                                                                                                                             
+        104                                                                                                                                                                                             
+        107                                                                                                                                                                                             
+        124                                                                                                                                                                                             
+        141                                                                                                                                                                                             
+        142                                                                                                                                                                                             
+        143                                                                                                                                                                                             
+        144                                                                                                                                                                                             
+        149                                                                                                                                                                                             
+        174                                                                                                                                                                                             
+        176                                                                                                                                                                                             
+        178                                                                                                                                                                                             
+        200                                                                                                                                                                                             
+        201                                                                                                                                                                                             
+        202                                                                                                                                                                                             
+        205                                                                                                                                                                                             
+        206                                                                                                                                                                                             
+
+20 rows selected.
+
+SQL> SELECT EMPLOYEE_ID , MOD(EMPLOYEE_ID,10) FROM EMPLOYEES;
+
+EMPLOYEE_ID MOD(EMPLOYEE_ID,10)                                                                                                                                                                         
+----------- -------------------                                                                                                                                                                         
+        100                   0                                                                                                                                                                         
+        101                   1                                                                                                                                                                         
+        102                   2                                                                                                                                                                         
+        103                   3                                                                                                                                                                         
+        104                   4                                                                                                                                                                         
+        107                   7                                                                                                                                                                         
+        124                   4                                                                                                                                                                         
+        141                   1                                                                                                                                                                         
+        142                   2                                                                                                                                                                         
+        143                   3                                                                                                                                                                         
+        144                   4                                                                                                                                                                         
+        149                   9                                                                                                                                                                         
+        174                   4                                                                                                                                                                         
+        176                   6                                                                                                                                                                         
+        178                   8                                                                                                                                                                         
+        200                   0                                                                                                                                                                         
+        201                   1                                                                                                                                                                         
+        202                   2                                                                                                                                                                         
+        205                   5                                                                                                                                                                         
+        206                   6                                                                                                                                                                         
+
+20 rows selected.
+
+SQL> SELECT EMPLOYEE_ID , MOD(EMPLOYEE_ID,100) FROM EMPLOYEES;
+
+EMPLOYEE_ID MOD(EMPLOYEE_ID,100)                                                                                                                                                                        
+----------- --------------------                                                                                                                                                                        
+        100                    0                                                                                                                                                                        
+        101                    1                                                                                                                                                                        
+        102                    2                                                                                                                                                                        
+        103                    3                                                                                                                                                                        
+        104                    4                                                                                                                                                                        
+        107                    7                                                                                                                                                                        
+        124                   24                                                                                                                                                                        
+        141                   41                                                                                                                                                                        
+        142                   42                                                                                                                                                                        
+        143                   43                                                                                                                                                                        
+        144                   44                                                                                                                                                                        
+        149                   49                                                                                                                                                                        
+        174                   74                                                                                                                                                                        
+        176                   76                                                                                                                                                                        
+        178                   78                                                                                                                                                                        
+        200                    0                                                                                                                                                                        
+        201                    1                                                                                                                                                                        
+        202                    2                                                                                                                                                                        
+        205                    5                                                                                                                                                                        
+        206                    6                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT POWER(MOD(18,5),SQRT(9)) FROM DUAL;
+
+POWER(MOD(18,5),SQRT(9))                                                                                                                                                                                
+------------------------                                                                                                                                                                                
+                      27                                                                                                                                                                                
+
+SQL> REM FLOOR , CEIL : BUILDING
+SQL> 
+SQL> REM FLOOR : IT MAY RETURN SAME OR PREVIOUS LOWER INTEGER VALUE.
+SQL> 
+SQL> REM CEIL : IT MAY RETURN SAME OR NEXT HIGHER INTEGER VALUE.
+SQL> 
+SQL> 
+SQL> SELECT FLOOR(6) , CEIL(6) FROM DUAL;
+
+  FLOOR(6)    CEIL(6)                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         6          6                                                                                                                                                                                   
+
+SQL> SELECT FLOOR(6.01) , CEIL(6.01) FROM DUAL;
+
+FLOOR(6.01) CEIL(6.01)                                                                                                                                                                                  
+----------- ----------                                                                                                                                                                                  
+          6          7                                                                                                                                                                                  
+
+SQL> SELECT FLOOR(6.0000000000000000000000000001) , CEIL(6.000000000000000000000000000000001) FROM DUAL;
+
+FLOOR(6.0000000000000000000000000001) CEIL(6.000000000000000000000000000000001)                                                                                                                         
+------------------------------------- -----------------------------------------                                                                                                                         
+                                    6                                         7                                                                                                                         
+
+SQL> SELECT FLOOR(6.99) , CEIL(6.99) FROM DUAL;
+
+FLOOR(6.99) CEIL(6.99)                                                                                                                                                                                  
+----------- ----------                                                                                                                                                                                  
+          6          7                                                                                                                                                                                  
+
+SQL> SELECT FLOOR(6.9999999999999999999999999999999) , CEIL(6.9999999999999999999999999999999) FROM DUAL;
+
+FLOOR(6.9999999999999999999999999999999) CEIL(6.9999999999999999999999999999999)                                                                                                                        
+---------------------------------------- ---------------------------------------                                                                                                                        
+                                       6                                       7                                                                                                                        
+
+SQL> SELECT POWER(CEIL(2.01),FLOOR(2.99)) FROM DUAL;
+
+POWER(CEIL(2.01),FLOOR(2.99))                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                            9                                                                                                                                                                           
+
+SQL> SELECT FLOOR(-2.5) , CEIL(-2.5) FROM DUAL;
+
+FLOOR(-2.5) CEIL(-2.5)                                                                                                                                                                                  
+----------- ----------                                                                                                                                                                                  
+         -3         -2                                                                                                                                                                                  
+
+SQL> REM TRUNC : IT IS USED TO REMOVE SOME DIGITS WHICH ARE PLACED AFTER DECIMAL POINT.
+SQL> 
+SQL> REM TRUNC : IT CAN ADDITIONALLY REPLACE SOME DIGITS TO ZERO WHICH ARE PLACED BEFORE DECIMAL POINT.
+SQL> 
+SQL> 
+SQL> SELECT 4762.93 , TRUNC(4762.93) FROM DUAL;
+
+   4762.93 TRUNC(4762.93)                                                                                                                                                                               
+---------- --------------                                                                                                                                                                               
+   4762.93           4762                                                                                                                                                                               
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , 0) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,0)                                                                                                                                                                             
+---------- ----------------                                                                                                                                                                             
+   4762.93             4762                                                                                                                                                                             
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , 1) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,1)                                                                                                                                                                             
+---------- ----------------                                                                                                                                                                             
+   4762.93           4762.9                                                                                                                                                                             
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , 2) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,2)                                                                                                                                                                             
+---------- ----------------                                                                                                                                                                             
+   4762.93          4762.93                                                                                                                                                                             
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , 3) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,3)                                                                                                                                                                             
+---------- ----------------                                                                                                                                                                             
+   4762.93          4762.93                                                                                                                                                                             
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , -1) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,-1)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93              4760                                                                                                                                                                            
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , -2) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,-2)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93              4700                                                                                                                                                                            
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , -3) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,-3)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93              4000                                                                                                                                                                            
+
+SQL> SELECT 4762.93 , TRUNC(4762.93 , -4) FROM DUAL;
+
+   4762.93 TRUNC(4762.93,-4)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93                 0                                                                                                                                                                            
+
+SQL> REM ROUND :
+SQL> 
+SQL> REM 469 : 400 + 60 + 9 = 469 :    4 X 10^2 = 400  +      6 X 10^1 = 60 +            9 X 10^0 =9 == 469
+SQL> 
+SQL> REM DECIMAL NUMBER SYSTEM
+SQL> 
+SQL> REM BASE VALUE : 10
+SQL> 
+SQL> REM AVAILABLE DIGITS : 0 1 2 3 4 5 6 7 8 9
+SQL> 
+SQL> REM FIRST HALF : 0 1 2 3 4
+SQL> 
+SQL> REM SECOND HALF : 5 6 7 8 9
+SQL> 
+SQL> REM IF DIGIT TO BE COMPARED FALLS IN FIRST HALF, NO CHANGE TO PREVIOUS DIGIT.
+SQL> 
+SQL> REM IF DIGIT TO BE COMPARED FALLS IN SECOND HALF, ADD1 TO PREVIOUS DIGIT.
+SQL> 
+SQL> REM IF DIGIT TO BE COMPARED FALLS IN SECOND HALF, ADD 1 TO PREVIOUS DIGIT.
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT 4762.93 , ROUND(4762.93) FROM DUAL;
+
+   4762.93 ROUND(4762.93)                                                                                                                                                                               
+---------- --------------                                                                                                                                                                               
+   4762.93           4763                                                                                                                                                                               
+
+SQL> SELECT 4762.93 , ROUND(4762.93 , 0) FROM DUAL;
+
+   4762.93 ROUND(4762.93,0)                                                                                                                                                                             
+---------- ----------------                                                                                                                                                                             
+   4762.93             4763                                                                                                                                                                             
+
+SQL> SELECT 4762.93 , ROUND(4762.93 , 1) FROM DUAL;
+
+   4762.93 ROUND(4762.93,1)                                                                                                                                                                             
+---------- ----------------                                                                                                                                                                             
+   4762.93           4762.9                                                                                                                                                                             
+
+SQL> SELECT 4762.93 , ROUND(4762.93 , 2) FROM DUAL;
+
+   4762.93 ROUND(4762.93,2)                                                                                                                                                                             
+---------- ----------------                                                                                                                                                                             
+   4762.93          4762.93                                                                                                                                                                             
+
+SQL> SELECT 4762.93 , ROUND(4762.93 , -1) FROM DUAL;
+
+   4762.93 ROUND(4762.93,-1)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93              4760                                                                                                                                                                            
+
+SQL> SELECT 4762.93 , ROUND(4762.93 , -2) FROM DUAL;
+
+   4762.93 ROUND(4762.93,-2)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93              4800                                                                                                                                                                            
+
+SQL> SELECT 4762.93 , ROUND(4762.93 , -3) FROM DUAL;
+
+   4762.93 ROUND(4762.93,-3)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93              5000                                                                                                                                                                            
+
+SQL> SELECT 4762.93 , ROUND(4762.93 , -4) FROM DUAL;
+
+   4762.93 ROUND(4762.93,-4)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   4762.93                 0                                                                                                                                                                            
+
+SQL> SELECT 7762.93 , ROUND(7762.93 , -4) FROM DUAL;
+
+   7762.93 ROUND(7762.93,-4)                                                                                                                                                                            
+---------- -----------------                                                                                                                                                                            
+   7762.93             10000                                                                                                                                                                            
+
+SQL> SELECT TRUNC(67.67,-2) , ROUND(67.67,-2) FROM DUAL;
+
+TRUNC(67.67,-2) ROUND(67.67,-2)                                                                                                                                                                         
+--------------- ---------------                                                                                                                                                                         
+              0             100                                                                                                                                                                         
+
+SQL> SPOOL OFF

@@ -1,0 +1,344 @@
+SQL> 
+SQL> REM DISPLAY LAST_NAME AND SALARY FOR EMPLOYEES AND HIS/HER MANAGERIAL COLLEGUE.
+SQL> 
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         M.LAST_NAME MGR_LAST_NAME , M.SALARY MGR_SALARY
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES M ON E.MANAGER_ID =
+  5  
+SQL> 
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME MGR_LAST_NAME , C.SALARY MGR_SALARY
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.MANAGER_ID = C.MANAGER_ID
+  5  AND    E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY MGR_LAST_NAME   MGR_SALARY                                                                                                                                                   
+--------------- ---------- --------------- ----------                                                                                                                                                   
+Kochhar              17000 De Haan              17000                                                                                                                                                   
+Ernst                 6000 Lorentz               4200                                                                                                                                                   
+Kochhar              17000 Mourgos               5800                                                                                                                                                   
+De Haan              17000 Mourgos               5800                                                                                                                                                   
+Rajs                  3500 Davies                3100                                                                                                                                                   
+Rajs                  3500 Matos                 2600                                                                                                                                                   
+Davies                3100 Matos                 2600                                                                                                                                                   
+Rajs                  3500 Vargas                2500                                                                                                                                                   
+Davies                3100 Vargas                2500                                                                                                                                                   
+Matos                 2600 Vargas                2500                                                                                                                                                   
+Kochhar              17000 Zlotkey              10500                                                                                                                                                   
+De Haan              17000 Zlotkey              10500                                                                                                                                                   
+Mourgos               5800 Zlotkey              10500                                                                                                                                                   
+Abel                 11000 Taylor                8600                                                                                                                                                   
+Abel                 11000 Grant                 7000                                                                                                                                                   
+Taylor                8600 Grant                 7000                                                                                                                                                   
+Kochhar              17000 Hartstein            13000                                                                                                                                                   
+De Haan              17000 Hartstein            13000                                                                                                                                                   
+Mourgos               5800 Hartstein            13000                                                                                                                                                   
+Zlotkey              10500 Hartstein            13000                                                                                                                                                   
+Whalen                4400 Higgins              12000                                                                                                                                                   
+
+21 rows selected.
+
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME COLL_LAST_NAME , C.SALARY COLL_SALARY
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.MANAGER_ID = C.MANAGER_ID
+  5  AND    E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY COLL_LAST_NAME  COLL_SALARY                                                                                                                                                  
+--------------- ---------- --------------- -----------                                                                                                                                                  
+Kochhar              17000 De Haan               17000                                                                                                                                                  
+Ernst                 6000 Lorentz                4200                                                                                                                                                  
+Kochhar              17000 Mourgos                5800                                                                                                                                                  
+De Haan              17000 Mourgos                5800                                                                                                                                                  
+Rajs                  3500 Davies                 3100                                                                                                                                                  
+Rajs                  3500 Matos                  2600                                                                                                                                                  
+Davies                3100 Matos                  2600                                                                                                                                                  
+Rajs                  3500 Vargas                 2500                                                                                                                                                  
+Davies                3100 Vargas                 2500                                                                                                                                                  
+Matos                 2600 Vargas                 2500                                                                                                                                                  
+Kochhar              17000 Zlotkey               10500                                                                                                                                                  
+De Haan              17000 Zlotkey               10500                                                                                                                                                  
+Mourgos               5800 Zlotkey               10500                                                                                                                                                  
+Abel                 11000 Taylor                 8600                                                                                                                                                  
+Abel                 11000 Grant                  7000                                                                                                                                                  
+Taylor                8600 Grant                  7000                                                                                                                                                  
+Kochhar              17000 Hartstein             13000                                                                                                                                                  
+De Haan              17000 Hartstein             13000                                                                                                                                                  
+Mourgos               5800 Hartstein             13000                                                                                                                                                  
+Zlotkey              10500 Hartstein             13000                                                                                                                                                  
+Whalen                4400 Higgins               12000                                                                                                                                                  
+
+21 rows selected.
+
+SQL> REM EMP_NAME EMP_DEPT_NAME JOB_COLL_NAME JOB_COLL_DEPT_NAME
+SQL> 
+SQL> SELECT E.FIRST_NAME EMP_NAME , ED.DEPARTMENT_NAME EMP_DEPT_NAME,
+  2         C.FIRST_NAME JOB_COLL_NAME , CD.DEPARTMENT_NAME JOB_COLL_DEPT_NAME
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.JOB_ID = C.JOB_ID AND E.EMPLOYEE_ID < C.EMPLOYEE_ID
+  5  JOIN   DEPARTMENTS ED ON E.DEPARTMENT_ID = ED.DEPARTMENT_ID
+  6  JOIN   DEPARTMENTS CD ON C.DEPARTMENT_ID = CD.DEPARTMENT_ID;
+
+EMP_NAME        EMP_DEPT_NAME                  JOB_COLL_NAME   JOB_COLL_DEPT_NAME                                                                                                                       
+--------------- ------------------------------ --------------- ------------------------------                                                                                                           
+Trenna          Shiping                        Curtis          Shiping                                                                                                                                  
+Curtis          Shiping                        Randall         Shiping                                                                                                                                  
+Trenna          Shiping                        Randall         Shiping                                                                                                                                  
+Randall         Shiping                        Peter           Shiping                                                                                                                                  
+Curtis          Shiping                        Peter           Shiping                                                                                                                                  
+Trenna          Shiping                        Peter           Shiping                                                                                                                                  
+Alexander       IT                             Bruce           IT                                                                                                                                       
+Bruce           IT                             Diana           IT                                                                                                                                       
+Alexander       IT                             Diana           IT                                                                                                                                       
+Ellen           Sales                          Jonathon        Sales                                                                                                                                    
+Neena           Executive                      Lex             Executive                                                                                                                                
+
+11 rows selected.
+
+SQL> SELECT E.FIRST_NAME EMP_NAME , ED.DEPARTMENT_NAME EMP_DEPT_NAME,
+  2         C.FIRST_NAME JOB_COLL_NAME , CD.DEPARTMENT_NAME JOB_COLL_DEPT_NAME
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.JOB_ID = C.JOB_ID AND E.EMPLOYEE_ID < C.EMPLOYEE_ID
+  5  JOIN   DEPARTMENTS ED ON E.JOB_ID = ED.JOB_ID
+  6  JOIN   DEPARTMENTS CD ON C.JOB_ID = CD.JOB_ID;
+JOIN   DEPARTMENTS ED ON E.JOB_ID = ED.JOB_ID
+                                    *
+ERROR at line 5:
+ORA-00904: "ED"."JOB_ID": invalid identifier 
+
+
+SQL> SELECT E.FIRST_NAME EMP_NAME , ED.DEPARTMENT_NAME EMP_DEPT_NAME, E.JOB_ID EMP_JOB_ID,
+  2         C.FIRST_NAME JOB_COLL_NAME , CD.DEPARTMENT_NAME JOB_COLL_DEPT_NAME , C.JOB_ID COLL_JOB_ID
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.JOB_ID = C.JOB_ID AND E.EMPLOYEE_ID < C.EMPLOYEE_ID
+  5  JOIN   DEPARTMENTS ED ON E.DEPARTMENT_ID = ED.DEPARTMENT_ID
+  6  JOIN   DEPARTMENTS CD ON C.DEPARTMENT_ID = CD.DEPARTMENT_ID;
+
+EMP_NAME        EMP_DEPT_NAME                  EMP_JOB_ID JOB_COLL_NAME   JOB_COLL_DEPT_NAME             COLL_JOB_I                                                                                     
+--------------- ------------------------------ ---------- --------------- ------------------------------ ----------                                                                                     
+Trenna          Shiping                        ST_CLERK   Curtis          Shiping                        ST_CLERK                                                                                       
+Curtis          Shiping                        ST_CLERK   Randall         Shiping                        ST_CLERK                                                                                       
+Trenna          Shiping                        ST_CLERK   Randall         Shiping                        ST_CLERK                                                                                       
+Randall         Shiping                        ST_CLERK   Peter           Shiping                        ST_CLERK                                                                                       
+Curtis          Shiping                        ST_CLERK   Peter           Shiping                        ST_CLERK                                                                                       
+Trenna          Shiping                        ST_CLERK   Peter           Shiping                        ST_CLERK                                                                                       
+Alexander       IT                             IT_PROG    Bruce           IT                             IT_PROG                                                                                        
+Bruce           IT                             IT_PROG    Diana           IT                             IT_PROG                                                                                        
+Alexander       IT                             IT_PROG    Diana           IT                             IT_PROG                                                                                        
+Ellen           Sales                          SA_REP     Jonathon        Sales                          SA_REP                                                                                         
+Neena           Executive                      AD_VP      Lex             Executive                      AD_VP                                                                                          
+
+11 rows selected.
+
+SQL> SELECT E.FIRST_NAME EMP_NAME , ED.DEPARTMENT_NAME EMP_DEPT_NAME, E.JOB_ID EMP_JOB_ID,
+  2         C.FIRST_NAME JOB_COLL_NAME , CD.DEPARTMENT_NAME JOB_COLL_DEPT_NAME , C.JOB_ID COLL_JOB_ID
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.JOB_ID = C.JOB_ID AND E.EMPLOYEE_ID < C.EMPLOYEE_ID
+  5  JOIN   DEPARTMENTS ED ON E.DEPARTMENT_ID = ED.DEPARTMENT_ID AND C.DEPARTMENT_ID = ED.DEPARTMENT_ID;
+       C.FIRST_NAME JOB_COLL_NAME , CD.DEPARTMENT_NAME JOB_COLL_DEPT_NAME , C.JOB_ID COLL_JOB_ID
+                                    *
+ERROR at line 2:
+ORA-00904: "CD"."DEPARTMENT_NAME": invalid identifier 
+
+
+SQL> SELECT E.FIRST_NAME EMP_NAME , ED.DEPARTMENT_NAME EMP_DEPT_NAME, E.JOB_ID EMP_JOB_ID,
+  2         C.FIRST_NAME JOB_COLL_NAME , ED.DEPARTMENT_NAME JOB_COLL_DEPT_NAME , C.JOB_ID COLL_JOB_ID
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.JOB_ID = C.JOB_ID AND E.EMPLOYEE_ID < C.EMPLOYEE_ID
+  5  JOIN   DEPARTMENTS ED ON E.DEPARTMENT_ID = ED.DEPARTMENT_ID AND C.DEPARTMENT_ID = ED.DEPARTMENT_ID;
+
+EMP_NAME        EMP_DEPT_NAME                  EMP_JOB_ID JOB_COLL_NAME   JOB_COLL_DEPT_NAME             COLL_JOB_I                                                                                     
+--------------- ------------------------------ ---------- --------------- ------------------------------ ----------                                                                                     
+Neena           Executive                      AD_VP      Lex             Executive                      AD_VP                                                                                          
+Alexander       IT                             IT_PROG    Bruce           IT                             IT_PROG                                                                                        
+Bruce           IT                             IT_PROG    Diana           IT                             IT_PROG                                                                                        
+Alexander       IT                             IT_PROG    Diana           IT                             IT_PROG                                                                                        
+Trenna          Shiping                        ST_CLERK   Curtis          Shiping                        ST_CLERK                                                                                       
+Curtis          Shiping                        ST_CLERK   Randall         Shiping                        ST_CLERK                                                                                       
+Trenna          Shiping                        ST_CLERK   Randall         Shiping                        ST_CLERK                                                                                       
+Randall         Shiping                        ST_CLERK   Peter           Shiping                        ST_CLERK                                                                                       
+Curtis          Shiping                        ST_CLERK   Peter           Shiping                        ST_CLERK                                                                                       
+Trenna          Shiping                        ST_CLERK   Peter           Shiping                        ST_CLERK                                                                                       
+Ellen           Sales                          SA_REP     Jonathon        Sales                          SA_REP                                                                                         
+
+11 rows selected.
+
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME COLL_LAST_NAME , C.SALARY COLL_SALARY
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.JOB_ID = C.JOB_ID
+  5  WHERE  E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY COLL_LAST_NAME  COLL_SALARY                                                                                                                                                  
+--------------- ---------- --------------- -----------                                                                                                                                                  
+Kochhar              17000 De Haan               17000                                                                                                                                                  
+Hunold                9000 Ernst                  6000                                                                                                                                                  
+Hunold                9000 Lorentz                4200                                                                                                                                                  
+Ernst                 6000 Lorentz                4200                                                                                                                                                  
+Rajs                  3500 Davies                 3100                                                                                                                                                  
+Rajs                  3500 Matos                  2600                                                                                                                                                  
+Davies                3100 Matos                  2600                                                                                                                                                  
+Rajs                  3500 Vargas                 2500                                                                                                                                                  
+Davies                3100 Vargas                 2500                                                                                                                                                  
+Matos                 2600 Vargas                 2500                                                                                                                                                  
+Abel                 11000 Taylor                 8600                                                                                                                                                  
+Abel                 11000 Grant                  7000                                                                                                                                                  
+Taylor                8600 Grant                  7000                                                                                                                                                  
+
+13 rows selected.
+
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME COLL_LAST_NAME , C.SALARY COLL_SALARY , E.SALARY - C.SALARY DIFF
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.JOB_ID = C.JOB_ID
+  5  WHERE  E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY COLL_LAST_NAME  COLL_SALARY       DIFF                                                                                                                                       
+--------------- ---------- --------------- ----------- ----------                                                                                                                                       
+Kochhar              17000 De Haan               17000          0                                                                                                                                       
+Hunold                9000 Ernst                  6000       3000                                                                                                                                       
+Hunold                9000 Lorentz                4200       4800                                                                                                                                       
+Ernst                 6000 Lorentz                4200       1800                                                                                                                                       
+Rajs                  3500 Davies                 3100        400                                                                                                                                       
+Rajs                  3500 Matos                  2600        900                                                                                                                                       
+Davies                3100 Matos                  2600        500                                                                                                                                       
+Rajs                  3500 Vargas                 2500       1000                                                                                                                                       
+Davies                3100 Vargas                 2500        600                                                                                                                                       
+Matos                 2600 Vargas                 2500        100                                                                                                                                       
+Abel                 11000 Taylor                 8600       2400                                                                                                                                       
+Abel                 11000 Grant                  7000       4000                                                                                                                                       
+Taylor                8600 Grant                  7000       1600                                                                                                                                       
+
+13 rows selected.
+
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME COLL_LAST_NAME , C.SALARY COLL_SALARY , E.SALARY - C.SALARY DIFF
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.MANAGER_ID = C.MANAGER_ID
+  5  WHERE  E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY COLL_LAST_NAME  COLL_SALARY       DIFF                                                                                                                                       
+--------------- ---------- --------------- ----------- ----------                                                                                                                                       
+Kochhar              17000 De Haan               17000          0                                                                                                                                       
+Ernst                 6000 Lorentz                4200       1800                                                                                                                                       
+Kochhar              17000 Mourgos                5800      11200                                                                                                                                       
+De Haan              17000 Mourgos                5800      11200                                                                                                                                       
+Rajs                  3500 Davies                 3100        400                                                                                                                                       
+Rajs                  3500 Matos                  2600        900                                                                                                                                       
+Davies                3100 Matos                  2600        500                                                                                                                                       
+Rajs                  3500 Vargas                 2500       1000                                                                                                                                       
+Davies                3100 Vargas                 2500        600                                                                                                                                       
+Matos                 2600 Vargas                 2500        100                                                                                                                                       
+Kochhar              17000 Zlotkey               10500       6500                                                                                                                                       
+De Haan              17000 Zlotkey               10500       6500                                                                                                                                       
+Mourgos               5800 Zlotkey               10500      -4700                                                                                                                                       
+Abel                 11000 Taylor                 8600       2400                                                                                                                                       
+Abel                 11000 Grant                  7000       4000                                                                                                                                       
+Taylor                8600 Grant                  7000       1600                                                                                                                                       
+Kochhar              17000 Hartstein             13000       4000                                                                                                                                       
+De Haan              17000 Hartstein             13000       4000                                                                                                                                       
+Mourgos               5800 Hartstein             13000      -7200                                                                                                                                       
+Zlotkey              10500 Hartstein             13000      -2500                                                                                                                                       
+Whalen                4400 Higgins               12000      -7600                                                                                                                                       
+
+21 rows selected.
+
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME COLL_LAST_NAME , C.SALARY COLL_SALARY , SQRT(POWER(E.SALARY - C.SALARY,2)) DIFF
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.MANAGER_ID = C.MANAGER_ID
+  5  WHERE  E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY COLL_LAST_NAME  COLL_SALARY       DIFF                                                                                                                                       
+--------------- ---------- --------------- ----------- ----------                                                                                                                                       
+Kochhar              17000 De Haan               17000          0                                                                                                                                       
+Ernst                 6000 Lorentz                4200       1800                                                                                                                                       
+Kochhar              17000 Mourgos                5800      11200                                                                                                                                       
+De Haan              17000 Mourgos                5800      11200                                                                                                                                       
+Rajs                  3500 Davies                 3100        400                                                                                                                                       
+Rajs                  3500 Matos                  2600        900                                                                                                                                       
+Davies                3100 Matos                  2600        500                                                                                                                                       
+Rajs                  3500 Vargas                 2500       1000                                                                                                                                       
+Davies                3100 Vargas                 2500        600                                                                                                                                       
+Matos                 2600 Vargas                 2500        100                                                                                                                                       
+Kochhar              17000 Zlotkey               10500       6500                                                                                                                                       
+De Haan              17000 Zlotkey               10500       6500                                                                                                                                       
+Mourgos               5800 Zlotkey               10500       4700                                                                                                                                       
+Abel                 11000 Taylor                 8600       2400                                                                                                                                       
+Abel                 11000 Grant                  7000       4000                                                                                                                                       
+Taylor                8600 Grant                  7000       1600                                                                                                                                       
+Kochhar              17000 Hartstein             13000       4000                                                                                                                                       
+De Haan              17000 Hartstein             13000       4000                                                                                                                                       
+Mourgos               5800 Hartstein             13000       7200                                                                                                                                       
+Zlotkey              10500 Hartstein             13000       2500                                                                                                                                       
+Whalen                4400 Higgins               12000       7600                                                                                                                                       
+
+21 rows selected.
+
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME COLL_LAST_NAME , C.SALARY COLL_SALARY , ABS(E.SALARY - C.SALARY) DIFF
+  3  FROM   EMPLOYEES E
+  4  JOIN   EMPLOYEES C ON E.MANAGER_ID = C.MANAGER_ID
+  5  WHERE  E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY COLL_LAST_NAME  COLL_SALARY       DIFF                                                                                                                                       
+--------------- ---------- --------------- ----------- ----------                                                                                                                                       
+Kochhar              17000 De Haan               17000          0                                                                                                                                       
+Ernst                 6000 Lorentz                4200       1800                                                                                                                                       
+Kochhar              17000 Mourgos                5800      11200                                                                                                                                       
+De Haan              17000 Mourgos                5800      11200                                                                                                                                       
+Rajs                  3500 Davies                 3100        400                                                                                                                                       
+Rajs                  3500 Matos                  2600        900                                                                                                                                       
+Davies                3100 Matos                  2600        500                                                                                                                                       
+Rajs                  3500 Vargas                 2500       1000                                                                                                                                       
+Davies                3100 Vargas                 2500        600                                                                                                                                       
+Matos                 2600 Vargas                 2500        100                                                                                                                                       
+Kochhar              17000 Zlotkey               10500       6500                                                                                                                                       
+De Haan              17000 Zlotkey               10500       6500                                                                                                                                       
+Mourgos               5800 Zlotkey               10500       4700                                                                                                                                       
+Abel                 11000 Taylor                 8600       2400                                                                                                                                       
+Abel                 11000 Grant                  7000       4000                                                                                                                                       
+Taylor                8600 Grant                  7000       1600                                                                                                                                       
+Kochhar              17000 Hartstein             13000       4000                                                                                                                                       
+De Haan              17000 Hartstein             13000       4000                                                                                                                                       
+Mourgos               5800 Hartstein             13000       7200                                                                                                                                       
+Zlotkey              10500 Hartstein             13000       2500                                                                                                                                       
+Whalen                4400 Higgins               12000       7600                                                                                                                                       
+
+21 rows selected.
+
+SQL> SELECT E.LAST_NAME EMP_LAST_NAME , E.SALARY EMP_SALARY,
+  2         C.LAST_NAME COLL_LAST_NAME , C.SALARY COLL_SALARY ,
+  3  CASE WHEN E.SALARY > C.SALARY THEN E.SALARY - C.SALARY ELSE C.SALARY - E.SALARY END DIFF
+  4  FROM   EMPLOYEES E
+  5  JOIN   EMPLOYEES C ON E.MANAGER_ID = C.MANAGER_ID
+  6  WHERE  E.EMPLOYEE_ID < C.EMPLOYEE_ID;
+
+EMP_LAST_NAME   EMP_SALARY COLL_LAST_NAME  COLL_SALARY       DIFF                                                                                                                                       
+--------------- ---------- --------------- ----------- ----------                                                                                                                                       
+Kochhar              17000 De Haan               17000          0                                                                                                                                       
+Ernst                 6000 Lorentz                4200       1800                                                                                                                                       
+Kochhar              17000 Mourgos                5800      11200                                                                                                                                       
+De Haan              17000 Mourgos                5800      11200                                                                                                                                       
+Rajs                  3500 Davies                 3100        400                                                                                                                                       
+Rajs                  3500 Matos                  2600        900                                                                                                                                       
+Davies                3100 Matos                  2600        500                                                                                                                                       
+Rajs                  3500 Vargas                 2500       1000                                                                                                                                       
+Davies                3100 Vargas                 2500        600                                                                                                                                       
+Matos                 2600 Vargas                 2500        100                                                                                                                                       
+Kochhar              17000 Zlotkey               10500       6500                                                                                                                                       
+De Haan              17000 Zlotkey               10500       6500                                                                                                                                       
+Mourgos               5800 Zlotkey               10500       4700                                                                                                                                       
+Abel                 11000 Taylor                 8600       2400                                                                                                                                       
+Abel                 11000 Grant                  7000       4000                                                                                                                                       
+Taylor                8600 Grant                  7000       1600                                                                                                                                       
+Kochhar              17000 Hartstein             13000       4000                                                                                                                                       
+De Haan              17000 Hartstein             13000       4000                                                                                                                                       
+Mourgos               5800 Hartstein             13000       7200                                                                                                                                       
+Zlotkey              10500 Hartstein             13000       2500                                                                                                                                       
+Whalen                4400 Higgins               12000       7600                                                                                                                                       
+
+21 rows selected.
+
+SQL> SPOOL OFF
